@@ -1,10 +1,10 @@
 <template>
 
-  <div class="container">
-    <nav>
+  <div >
+    <!-- <nav>
       <router-link to="/">Home</router-link> |
       <router-link to="/admin">Admin</router-link>
-    </nav>
+    </nav> -->
     <router-view/>
   </div>
 </template>

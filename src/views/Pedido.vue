@@ -788,8 +788,6 @@
                             <i class="fa-brands fa-instagram m-2"></i>
                         </a>
                     </div>
-                    
-                    
                 </div>
             </div>
         </div>

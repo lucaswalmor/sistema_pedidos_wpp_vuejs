@@ -7,6 +7,7 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "bootstrap-icons": "^1.9.1",
     "core-js": "^3.8.3",
     "maska": "^1.5.0",
     "vue": "^3.2.13",
