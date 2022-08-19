@@ -10,9 +10,13 @@
                             <router-link to="/"><i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Home</span></router-link>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link px-0" @click="dashboardView"><i class="fa-lg fa-solid fa-chart-line"></i> <span class="d-none d-sm-inline">Dashboard</span></a>
+                    </li>
                     <li>
                         <a href="#submenu3" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-                        <i class="fa-lg fa-solid fa-user-plus"></i> <span class="ms-1 d-none d-sm-inline">Usuario</span> </a>
+                            <i class="fa-lg fa-solid fa-user-plus"></i> <span class="ms-1 d-none d-sm-inline">Usuario</span> 
+                        </a>
                         <ul class="collapse nav flex-column ms-1" id="submenu3" data-bs-parent="#menu">
                             <li class="w-100">
                                 <a href="#" class="nav-link px-0" @click="cadastrarNovoUsuario"> <span class="d-none d-sm-inline">Cadastrar</span></a>
@@ -58,7 +62,7 @@
             </div>
         </div>
         <div class="col py-3 body-dashboard">
-            <div class="dashboard">
+            <div class="dashboard" v-show="dashboard">
                 <div class="container">
                     <div class="row">
                         <div class="titulo col-md-12 m-5">
@@ -82,13 +86,13 @@
                             </div>
                             <div class="col-md-9 text-center">
                                 <div><h6>Total Pedidos</h6></div>
-                                <div><h1>R$ {{somaValorTotal}},00</h1></div>
+                                <div><h1>R$ {{somaValorTotal}}</h1></div>
                             </div>
                         </div>
                     </div>
                     <div class="mt-5">
                         <Message :msg="msg" v-show="msg" />
-                        <table class="table text-center">
+                        <table class="table text-center table-striped">
                             <thead class="table-dark">
                                 <tr>
                                     <th>Nº</th>
@@ -105,7 +109,7 @@
                                     <td>{{pedido.nome_cliente}}</td>
                                     <td>{{pedido.telefone}}</td>
                                     <td>{{pedido.forma_pagamento}}</td>
-                                    <td>R$ {{pedido.valor_total}},00</td>
+                                    <td>R$ {{pedido.valor_total}}</td>
                                     <td>
                                         <button class="btn btn-primary" @click="verPedido(pedido.id)"><i class="fa-solid fa-eye text-light"></i></button>
                                     </td>
@@ -116,7 +120,7 @@
                 </div>
             </div>
             <form @submit.prevent>
-                <CadastrarUsuario v-show="cadastroUsuario"></CadastrarUsuario>
+                <CadastrarUsuario v-show="cadastroUsuario" />
                 <CadastrarLanche v-show="cadastroLanche"/>
                 <CadastrarBebida v-show="cadastroBebida"/>
                 <ListaUsuarios v-show="listaUsuarios"/>
@@ -146,6 +150,7 @@ export default {
             listaLanches: false,
             cadastroLanche: false,
             cadastroBebida: false,
+            dashboard: true,
             dadosUsuario: [],
             pedidos: [],
             totalPedidos: '',
@@ -160,6 +165,7 @@ export default {
             this.listaUsuarios = false;
             this.listaLanches = false;
             this.listaBebidas = false;
+            this.dashboard = false;
         },
         cadastrarNovoLanche() {
             this.cadastroLanche = true;
@@ -168,9 +174,20 @@ export default {
             this.listaUsuarios = false;
             this.listaLanches = false;
             this.listaBebidas = false;
+            this.dashboard = false;
         },
         cadastrarNovaBebida() {
             this.cadastroBebida = true;
+            this.cadastroLanche = false;
+            this.cadastroUsuario = false;
+            this.listaUsuarios = false;
+            this.listaLanches = false;
+            this.listaBebidas = false;
+            this.dashboard = false;
+        },
+        dashboardView() {
+            this.dashboard = true;
+            this.cadastroBebida = false;
             this.cadastroLanche = false;
             this.cadastroUsuario = false;
             this.listaUsuarios = false;
@@ -184,6 +201,7 @@ export default {
             this.cadastroUsuario = false;
             this.listaLanches = false;
             this.listaBebidas = false;
+            this.dashboard = false;
         },
         listarLanches() {
             this.listaLanches = true;
@@ -192,6 +210,7 @@ export default {
             this.cadastroLanche = false;
             this.cadastroUsuario = false;
             this.listaBebidas = false;
+            this.dashboard = false;
         },
         listarBebidas() {
             this.listaBebidas = true;
@@ -200,12 +219,13 @@ export default {
             this.cadastroBebida = false;
             this.cadastroLanche = false;
             this.cadastroUsuario = false;
+            this.dashboard = false;
         },
         // carregar lista de usuarios
         async listarPedidos() {
             // cria um array com os dados do pedido 
-            const req = await fetch("http://127.0.0.1:8000/api/pedidos");
-            // const req = await fetch("https://pedidoparrilha.herokuapp.com/api/usuarios");
+            // const req = await fetch("http://127.0.0.1:8000/api/pedidos");
+            const req = await fetch("https://pedidoparrilha.herokuapp.com/api/pedidos");
             const data = await req.json();
             this.pedidos = data[0].pedidos;
             this.somaValorTotal = data[0].somas;

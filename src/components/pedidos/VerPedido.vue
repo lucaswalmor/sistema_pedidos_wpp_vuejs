@@ -53,8 +53,8 @@ export default {
       // cria um array com os dados do pedido
 
       try {
-        // const req = await fetch(`https://pedidoparrilha.herokuapp.com/api/pedidos/${id}`);
-        const req = await fetch(`http://127.0.0.1:8000/api/pedidos/${id}`);
+        const req = await fetch(`https://pedidoparrilha.herokuapp.com/api/pedidos/${id}`);
+        // const req = await fetch(`http://127.0.0.1:8000/api/pedidos/${id}`);
         const data = await req.json();
         this.dadosPedido = data;
       } catch (err) {

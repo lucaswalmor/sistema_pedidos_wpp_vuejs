@@ -1,8 +1,11 @@
 <template>
     <div class="container" v-show="cadastroLanche">
         <Message :msg="msg" v-show="msg"/>
-        <div class="row m-5">
-            <h2>Cadastro de Lanche</h2>
+
+        <div class="row">
+            <div class="titulo col-md-12 m-5">
+                <h1 class="text-secondary">Cadastrar Lanche</h1>
+            </div>
         </div>
         <form class="row g-3" autocomplete="off" @submit.prevent>
             <div class="col-md-6">

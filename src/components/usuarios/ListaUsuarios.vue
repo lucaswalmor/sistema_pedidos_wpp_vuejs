@@ -1,7 +1,12 @@
 <template>
 <div v-show="listaUsuarios">
     <Message :msg="msg" v-show="msg" />
-    <table class="table text-center">
+    <div class="row">
+        <div class="titulo col-md-12 m-5">
+            <h1 class="text-secondary">Editar Usuário</h1>
+        </div>
+    </div>
+    <table class="table text-center table-striped">
         <thead class="table-dark">
             <tr>
                 <th>#</th>

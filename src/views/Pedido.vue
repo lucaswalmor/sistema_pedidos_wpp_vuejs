@@ -182,42 +182,9 @@
               id="lanche"
               class="form-select"
               v-model="tipoLanche"
-              @change="mudarLanche($event)"
+              @change="mudarLanche($event), alterarPrecoLanche($event)"
             >
-              <option disabled selected>Selecione...</option>
-              <option value="PARRILLA BERRY">PARRILLA BERRY</option>
-              <option value="PARRILLA BERRY COMBO">PARRILLA BERRY COMBO</option>
-              <option value="PARRILLA CANDY">PARRILLA CANDY</option>
-              <option value="PARRILLA GRILLED HERBS">
-                PARRILLA GRILLED HERBS
-              </option>
-              <option value="PARRILLA GRILLED HERBS COMBO">
-                PARRILLA GRILLED HERBS COMBO
-              </option>
-              <option value="PARRILLA BURGER">PARRILLA BURGER</option>
-              <option value="PARRILLA BURGER COMBO">
-                PARRILLA BURGER COMBO
-              </option>
-              <option value="PARRILLA CATUPIRY ANGUS">
-                PARRILLA CATUPIRY ANGUS
-              </option>
-              <option value="PARRILLA CATUPIRY ANGUS COMBO">
-                PARRILLA CATUPIRY ANGUS COMBO
-              </option>
-              <option value="PARRILLA CLASSIC">PARRILLA CLASSIC</option>
-              <option value="PARRILLA CLASSIC COMBO">
-                PARRILLA CLÁSSIC COMBO
-              </option>
-              <option value="PARRILLA SPECIAL DUPLO">
-                PARRILLA SPECIAL DUPLO
-              </option>
-              <option value="PARRILLA SPECIAL DUPLO COMBO">
-                PARRILLA SPECIAL DUPLO COMBO
-              </option>
-              <option value="PARRILLA CHICKEN">PARRILLA CHICKEN</option>
-              <option value="PARRILLA CHICKEN COMBO">
-                PARRILLA CHICKEN COMBO
-              </option>
+              <option v-for="lanche in dadosLanches" :key="lanche.id">{{ lanche.nome }}</option> 
             </select>
             <div class="form-group mt-3">
               <label for="preco_lanche">Preço</label>
@@ -226,7 +193,10 @@
                 class="form-control mt-1"
                 id="preco_lanche"
                 name="preco_lanche"
-                v-model="dadosPedido.preco_lanche"
+                readonly
+                v-for="lanche in dadosLanches" :key="lanche.id"
+                v-show="lanche.nome == testeTipoLanche ? true : ''"
+                v-model="lanche.preco"
               />
             </div>
             <div class="form-group mt-3">
@@ -623,19 +593,9 @@
         <div class="row">
           <div class="col-md-4">
             <label for="bebida" class="form-label">Bebidas</label>
-            <select id="bebida" class="form-select" @change="mudarBebida($event)">
-              <option disabled selected>Selecione...</option>
-              <optgroup label="Refrigerantes">
-                <option value="Coca-Cola">Coca</option>
-                <option value="Pepsi">Pepsi</option>
-              </optgroup>
-              <optgroup label="Cervejas">
-                <option value="Brahma">Brahma</option>
-                <option value="Amstel">Amstel</option>
-              </optgroup>
-              <optgroup label="Outros">
-                <option value="Agua">Agua</option>
-              </optgroup>
+            <select id="bebida" class="form-select" @change="mudarBebida($event), alterarPrecoBebida($event)">
+              <option>...</option>
+              <option v-for="bebida in dadosBebidas" :key="bebida.id">{{bebida.nome}}</option> 
             </select>
             <div class="form-group mt-3">
               <label for="preco_bebida">Preço</label>
@@ -643,8 +603,10 @@
                 type="text"
                 class="form-control mt-1"
                 id="preco_bebida"
-                v-model="dadosPedido.preco_bebida"
                 readonly
+                v-for="bebida in dadosBebidas" :key="bebida.id"
+                v-show="bebida.nome == TipoBebida ? true : ''"
+                v-model="bebida.preco"
               />
             </div>
           </div>
@@ -750,7 +712,7 @@
             <strong>Valor Total: R$</strong> {{ dadosPedido.valor_total }}
           </div>
           <div v-if="dadosPedido.troco != ''">
-            <strong>Troco:</strong> {{ dadosPedido.troco }}
+            <strong>R$ Troco:</strong> {{ dadosPedido.troco }}
           </div>
           <div>
             <strong>Forma de pagamento:</strong> {{ dadosPedido.forma_pagamento }}
@@ -832,7 +794,11 @@ export default {
       tipoLanche: "",
       src: '',
       href: '',
-      pedido_wpp: ''
+      pedido_wpp: '',
+      dadosLanches: [],
+      dadosBebidas: [],
+      preco: '',
+      TipoBebida: ''
     };
   },
   methods: {
@@ -1032,8 +998,8 @@ export default {
         // transforma o array de dados do pedido em texto 
         const dataJson = JSON.stringify(data);
 
-        const req = await fetch("http://127.0.0.1:8000/api/pedidos", {
-        // const req = await fetch("https://pedidoparrilha.herokuapp.com/api/register", {
+        // const req = await fetch("http://127.0.0.1:8000/api/pedidos", {
+        const req = await fetch("https://pedidoparrilha.herokuapp.com/api/pedidos", {
             method: "POST",
             headers: { "Content-Type": "application/json", "X-CSRF-Token": this.csrf },
             body: dataJson
@@ -1041,6 +1007,31 @@ export default {
 
         // traz a resposta dos dados criado
         const res = await req.json();
+    },
+    // carregar lista de usuarios
+    async listarLanche() {
+        // cria um array com os dados do pedido 
+        // const req = await fetch("http://127.0.0.1:8000/api/lanches");
+        const req = await fetch("https://pedidoparrilha.herokuapp.com/api/lanches");
+        const data = await req.json();
+        this.dadosLanches = data;
+
+
+    },
+    // carregar lista de usuarios
+    async listarBebidas() {
+        // cria um array com os dados do pedido 
+        const req = await fetch("https://pedidoparrilha.herokuapp.com/api/bebidas");
+        const data = await req.json();
+        this.dadosBebidas = data;
+    },
+    alterarPrecoLanche(event) {
+      const option = event.target.value;
+      this.testeTipoLanche = option;
+    },
+    alterarPrecoBebida(event) {
+      const option = event.target.value;
+      this.TipoBebida = option;
     }
   },
   watch: {
@@ -1079,9 +1070,11 @@ export default {
           });
       }
     },
-    dados() {
-    }
   },
+  mounted() {
+    this.listarLanche();
+    this.listarBebidas();
+  }
 }
 </script>
 <style scoped>

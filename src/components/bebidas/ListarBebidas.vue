@@ -1,10 +1,13 @@
 <template>
 <div v-show="listaBebidas">
     <Message :msg="msg" v-show="msg" />
-    <div class="row col-12 m-5">
-        <h2>Bebidas</h2>
+
+    <div class="row">
+        <div class="titulo col-md-12 m-5">
+            <h1 class="text-secondary">Editar Bebida</h1>
+        </div>
     </div>
-    <table class="table text-center">
+    <table class="table text-center table-striped">
         <thead class="table-dark">
             <tr>
                 <th>#</th>
