@@ -30,7 +30,7 @@
                                 <a href="#" class="nav-link px-0" @click="cadastrarNovoLanche"> <span class="d-none d-sm-inline">Cadastrar</span></a>
                             </li>
                             <li>
-                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Editar / Excluir</span></a>
+                                <a href="#" class="nav-link px-0" @click="listarLanches"> <span class="d-none d-sm-inline">Editar / Excluir</span></a>
                             </li>
                         </ul>
                     </li>
@@ -42,7 +42,7 @@
                                 <a href="#" class="nav-link px-0" @click="cadastrarNovaBebida"> <span class="d-none d-sm-inline">Cadastrar</span></a>
                             </li>
                             <li>
-                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Editar / Excluir</span></a>
+                                <a href="#" class="nav-link px-0" @click="listarBebidas"> <span class="d-none d-sm-inline">Editar / Excluir</span></a>
                             </li>
                         </ul>
                     </li>
@@ -58,40 +58,71 @@
             </div>
         </div>
         <div class="col py-3 body-dashboard">
+            <div class="dashboard">
+                <div class="container">
+                    <div class="row">
+                        <div class="titulo col-md-12 m-5">
+                            <h1 class="text-secondary">Dashboard</h1>
+                        </div>
+                    </div>
+                    <div class="row col-md-12 d-flex justify-content-around">
+                        <div class="col-md-5 d-flex cards text-card-pedidos card-pedidos">
+                            <div class="col-md-3">
+                                <i class="fa-5x fa-solid fa-scroll"></i>
+                            </div>
+                            <div class="col-md-9 text-center">
+                                <div><h6>Total Pedidos</h6></div>
+                                <div><h1>{{totalPedidos}}</h1></div>
+                            </div>
+                        </div>
+                            
+                        <div class="col-md-5 d-flex cards text-card-valor-total card-valor-total">
+                            <div class="col-md-3">
+                                <i class="fa-5x fa-solid fa-scroll"></i>
+                            </div>
+                            <div class="col-md-9 text-center">
+                                <div><h6>Total Pedidos</h6></div>
+                                <div><h1>R$ {{somaValorTotal}},00</h1></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-5">
+                        <Message :msg="msg" v-show="msg" />
+                        <table class="table text-center">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Nº</th>
+                                    <th>Nome Cliente</th>
+                                    <th>Telefone</th>
+                                    <th>Forma Pag</th>
+                                    <th>Total</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="pedido in pedidos" :key="pedido.id">
+                                    <th>{{pedido.id}}</th>
+                                    <td>{{pedido.nome_cliente}}</td>
+                                    <td>{{pedido.telefone}}</td>
+                                    <td>{{pedido.forma_pagamento}}</td>
+                                    <td>R$ {{pedido.valor_total}},00</td>
+                                    <td>
+                                        <button class="btn btn-primary" @click="verPedido(pedido.id)"><i class="fa-solid fa-eye text-light"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
             <form @submit.prevent>
                 <CadastrarUsuario v-show="cadastroUsuario"></CadastrarUsuario>
-                <ListaUsuarios  v-show="listaUsuarios"/>
+                <CadastrarLanche v-show="cadastroLanche"/>
+                <CadastrarBebida v-show="cadastroBebida"/>
+                <ListaUsuarios v-show="listaUsuarios"/>
+                <ListarLanches v-show="listaLanches"/>
+                <ListarBebidas v-show="listaBebidas"/>
             </form>
-            <div class="container" v-show="cadastroLanche">
-                <div class="row m-5">
-                    <h2>Cadastro de Lanche</h2>
-                </div>
-                <form class="row g-3" autocomplete="off" @submit.prevent>
-                    <div class="col-md-6">
-                        <label for="name_lanche" class="form-label">Nome:</label>
-                        <input type="text" class="form-control" id="name_lanche">
-                    </div>
-                    <div class="col-md-6">
-                        <label for="preco_lanche" class="form-label">Preco:</label>
-                        <input type="text" class="form-control" id="preco_lanche">
-                    </div>
-                </form>
-            </div>
-            <div class="container" v-show="cadastroBebida">
-                <div class="row m-5">
-                    <h2>Cadastro de Bebida</h2>
-                </div>
-                <form class="row g-3" autocomplete="off" @submit.prevent>
-                    <div class="col-md-6">
-                        <label for="name_lanche" class="form-label">Nome:</label>
-                        <input type="text" class="form-control" id="name_lanche">
-                    </div>
-                    <div class="col-md-6">
-                        <label for="preco_lanche" class="form-label">Preco:</label>
-                        <input type="text" class="form-control" id="preco_lanche">
-                    </div>
-                </form>
-            </div>
         </div>
     </div>
 </div>
@@ -100,17 +131,25 @@
 <script>
 import CadastrarUsuario from "./usuarios/CadastrarUsuario.vue";
 import ListaUsuarios from "./usuarios/ListaUsuarios.vue";
+import CadastrarLanche from "./lanches/CadastrarLanche.vue";
+import ListarLanches from "./lanches/ListarLanches.vue";
+import ListarBebidas from "./bebidas/ListarBebidas.vue";
+import CadastrarBebida from "./bebidas/CadastrarBebida.vue";
 
 export default {
     name: "Dashboard",
-    components: { CadastrarUsuario, ListaUsuarios },
+    components: { CadastrarUsuario, ListaUsuarios, CadastrarLanche, ListarLanches, ListarBebidas, CadastrarBebida },
     data() {
         return {
             cadastroUsuario: false,
             listaUsuarios: false,
+            listaLanches: false,
             cadastroLanche: false,
             cadastroBebida: false,
             dadosUsuario: [],
+            pedidos: [],
+            totalPedidos: '',
+            somaValorTotal: ''
         };
     },
     methods: {
@@ -119,32 +158,97 @@ export default {
             this.cadastroLanche = false;
             this.cadastroBebida = false;
             this.listaUsuarios = false;
+            this.listaLanches = false;
+            this.listaBebidas = false;
         },
         cadastrarNovoLanche() {
             this.cadastroLanche = true;
             this.cadastroUsuario = false;
             this.cadastroBebida = false;
             this.listaUsuarios = false;
+            this.listaLanches = false;
+            this.listaBebidas = false;
         },
         cadastrarNovaBebida() {
             this.cadastroBebida = true;
             this.cadastroLanche = false;
             this.cadastroUsuario = false;
             this.listaUsuarios = false;
+            this.listaLanches = false;
+            this.listaBebidas = false;
         },
         listarUsuarios() {
             this.listaUsuarios = true;
             this.cadastroBebida = false;
             this.cadastroLanche = false;
             this.cadastroUsuario = false;
+            this.listaLanches = false;
+            this.listaBebidas = false;
+        },
+        listarLanches() {
+            this.listaLanches = true;
+            this.listaUsuarios = false;
+            this.cadastroBebida = false;
+            this.cadastroLanche = false;
+            this.cadastroUsuario = false;
+            this.listaBebidas = false;
+        },
+        listarBebidas() {
+            this.listaBebidas = true;
+            this.listaLanches = false;
+            this.listaUsuarios = false;
+            this.cadastroBebida = false;
+            this.cadastroLanche = false;
+            this.cadastroUsuario = false;
+        },
+        // carregar lista de usuarios
+        async listarPedidos() {
+            // cria um array com os dados do pedido 
+            const req = await fetch("http://127.0.0.1:8000/api/pedidos");
+            // const req = await fetch("https://pedidoparrilha.herokuapp.com/api/usuarios");
+            const data = await req.json();
+            this.pedidos = data[0].pedidos;
+            this.somaValorTotal = data[0].somas;
+            this.totalPedidos = this.pedidos.length;
+            
+        },
+        verPedido(id) {
+            this.$router.push({ path: `/ver-pedido/${id}`, params: {id: id}} );            
         }
     },
     mounted() {
+        this.listarPedidos();
     }
 }
 </script>
 
 <style scoped>
+    .cards {
+        box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.46);
+        padding: 30px;
+        background-color: #fff;
+    }
+
+    .card-pedidos {
+        border-left: 5px solid green;
+        border-radius: 10px;
+        color: black;
+    }
+
+    .card-valor-total {
+        border-left: 5px solid blue;
+        border-radius: 10px;
+        color: black;
+    }
+
+    .text-card-pedidos div i {
+        color: #008000ad;
+    }
+
+    .text-card-valor-total div i {
+        color: rgba(0, 0, 255, 0.459);
+    }
+
     #menu li span:hover {
         color: #666;
     }
@@ -169,10 +273,10 @@ export default {
     }
 
     .body-dashboard {
-        background-color: #fff;
+        background-color: #e5e3e3;
     }
 
-    label, h2 {
+    label, h2, .text-card {
         color: black;
     }
 </style>

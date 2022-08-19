@@ -16,7 +16,7 @@
                 <td>{{usuario.name}}</td>
                 <td>{{usuario.email}}</td>
                 <td>
-                    <button class="btn btn-primary"><i class="fa-solid fa-user-pen"></i></button>
+                    <button class="btn btn-primary" @click="editUsuario(usuario.id)"><i class="fa-solid fa-user-pen"></i></button>
                     <button @click="deleteUser(usuario.id)" class="btn btn-danger ms-3"><i class="fa-solid fa-user-xmark"></i></button>
                 </td>
             </tr>
@@ -40,12 +40,10 @@ export default {
     methods: {
         // carregar lista de usuarios
         async editarUsuario() {
-            this.divEditarUsuario = true;
-            this.cadastroBebida = false;
-            this.cadastroLanche = false;
-            this.cadastroUsuario = false;
+            
             // cria um array com os dados do pedido 
-            const req = await fetch("http://127.0.0.1:8000/api/usuarios");
+            // const req = await fetch("http://127.0.0.1:8000/api/usuarios");
+            const req = await fetch("https://pedidoparrilha.herokuapp.com/api/usuarios");
             const data = await req.json();
             this.dadosUsuario = data;
         },
@@ -53,7 +51,7 @@ export default {
         // deletar usuario 
         async deleteUser(id) {
             // requisicao feita para o backend
-            const req = await fetch(`http://127.0.0.1:8000/api/usuarios/${id}`, {
+            const req = await fetch(`https://pedidoparrilha.herokuapp.com/api/usuarios/${id}`, {
                 method: "DELETE"
             });
             const res = await req.json();
@@ -66,6 +64,9 @@ export default {
 
             this.$router.go(this.$router.currentRoute)
         },
+        editUsuario(id) {
+            this.$router.push({ path: `/editar-usuario/${id}`, params: {id: id}} );
+        }
     },
     mounted() {
         this.editarUsuario();

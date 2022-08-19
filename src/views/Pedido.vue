@@ -729,10 +729,10 @@
             <strong>Bairro:</strong> {{ dadosPedido.bairro }}
           </div>
           <div v-if="dadosPedido.apartamento != ''">
-            <strong>Bairro:</strong> {{ dadosPedido.apartamento }}
+            <strong>Apartamento:</strong> {{ dadosPedido.apartamento }}
           </div>
           <div v-if="dadosPedido.bloco != ''">
-            <strong>Bairro:</strong> {{ dadosPedido.bloco }}
+            <strong>Bloco:</strong> {{ dadosPedido.bloco }}
           </div>
           <div>
             <strong>Telefone:</strong> {{ dadosPedido.telefone }}
@@ -762,7 +762,7 @@
         v-show="divFinPedido"
         id="link_wpp"
       >
-        <a :href="href" id="finalizar_pedido" class="enviar_pedido mb-3"
+        <a :href="href" id="finalizar_pedido" @click="salvarPedidoDB" class="enviar_pedido mb-3"
           >Enviar Pedido</a
         >
       </div>
@@ -798,7 +798,7 @@
 <script>
 
 export default {
-    name: "Pedido",
+  name: "Pedido",
   data() {
     return {
       divDataUser: true,
@@ -865,47 +865,17 @@ export default {
       var soma = preco_bebida + preco_lanche + taxa_entrega;
       this.dadosPedido.valor_total = soma;
 
-      console.log(this.dadosPedido)
       this.divPagamento = !this.divPagamento;
       this.divBebida = !this.divBebida;
     },
     etapa_4() {
       // se tiver troco, ap e bloco no pedido, entrara neste bloco 
-    if (this.dadosPedido.troco != '' && this.dadosPedido.apartamento != '' && this.dadosPedido.bloco != '') {
-      this.pedido_wpp = '*Agradecemos pela preferência, seu pedido está sendo preparado!*%0A*Nome:* ' + this.dadosPedido.nome +
-        '%0A*Rua:* ' + this.dadosPedido.rua + ' Nº ' + this.dadosPedido.numero +
-        '%0A*Bairro:* ' + this.dadosPedido.bairro +
-        '%0A*Apartamento:* ' + this.dadosPedido.apartamento +
-        '%0A*Bloco:* ' + this.dadosPedido.bloco +
-        '%0A*Telefone:* ' + this.dadosPedido.telefone +
-        '%0A*Lanche:* ' + this.dadosPedido.lanche +
-        '%0A*Bebida:* ' + this.dadosPedido.bebida +
-        '%0A*Observações:* ' + this.dadosPedido.observacoes +
-        '%0A*Preço Total:* R$ ' + this.dadosPedido.valor_total +
-        '%0A*Troco para:* R$ ' + this.dadosPedido.troco +
-        '%0A*Forma de pagamento:* ' + this.dadosPedido.forma_pagamento;
-    } else if (this.dadosPedido.troco === '' && this.dadosPedido.apartamento != '' && this.dadosPedido.bloco != '') {
-      // se tiver ap e bloco no pedido, entrara neste bloco
-      // variavel pedido monta o pedido que será enviado no html 
-      this.pedido_wpp = '*Agradecemos pela preferência, seu pedido está sendo preparado!*%0A*Nome:* ' + this.dadosPedido.nome +
-        '%0A*Rua:* ' + this.dadosPedido.rua + ' Nº ' + this.dadosPedido.numero +
-        '%0A*Bairro:* ' + this.dadosPedido.bairro +
-        '%0A*Apartamento:* ' + this.dadosPedido.apartamento +
-        '%0A*Bloco:* ' + this.dadosPedido.bloco +
-        '%0A*Telefone:* ' + this.dadosPedido.telefone +
-        '%0A*Lanche:* ' + this.dadosPedido.lanche +
-        '%0A*Bebida:* ' + this.dadosPedido.bebida +
-        '%0A*Observações:* ' + this.dadosPedido.observacoes +
-        '%0A*Preço Total:* R$ ' + this.dadosPedido.valor_total +
-        '%0A*Forma de pagamento:* ' + this.dadosPedido.forma_pagamento;
-    } else if (this.dadosPedido.troco != '' && this.dadosPedido.apartamento != '') {
-      // se tiver ap e troco no pedido, entrara neste bloco 
-
-      // variavel pedido monta o pedido que será enviado no html 
-      this.pedido_wpp = '*Agradecemos pela preferência, seu pedido está sendo preparado!*%0A*Nome:* ' + this.dadosPedido.nome +
+      if (this.dadosPedido.troco != '' && this.dadosPedido.apartamento != '' && this.dadosPedido.bloco != '') {
+        this.pedido_wpp = '*Agradecemos pela preferência, seu pedido está sendo preparado!*%0A*Nome:* ' + this.dadosPedido.nome +
           '%0A*Rua:* ' + this.dadosPedido.rua + ' Nº ' + this.dadosPedido.numero +
           '%0A*Bairro:* ' + this.dadosPedido.bairro +
           '%0A*Apartamento:* ' + this.dadosPedido.apartamento +
+          '%0A*Bloco:* ' + this.dadosPedido.bloco +
           '%0A*Telefone:* ' + this.dadosPedido.telefone +
           '%0A*Lanche:* ' + this.dadosPedido.lanche +
           '%0A*Bebida:* ' + this.dadosPedido.bebida +
@@ -913,19 +883,48 @@ export default {
           '%0A*Preço Total:* R$ ' + this.dadosPedido.valor_total +
           '%0A*Troco para:* R$ ' + this.dadosPedido.troco +
           '%0A*Forma de pagamento:* ' + this.dadosPedido.forma_pagamento;
-    } else {
-      // se não tiver troco, ap e bloco no pedido, entrara neste bloco 
-      // variavel pedido monta o pedido que será enviado no html 
-      this.pedido_wpp = '*Agradecemos pela preferência, seu pedido está sendo preparado!*%0A*Nome:* ' + this.dadosPedido.nome +
+      } else if (this.dadosPedido.troco === '' && this.dadosPedido.apartamento != '' && this.dadosPedido.bloco != '') {
+        // se tiver ap e bloco no pedido, entrara neste bloco
+        // variavel pedido monta o pedido que será enviado no html 
+        this.pedido_wpp = '*Agradecemos pela preferência, seu pedido está sendo preparado!*%0A*Nome:* ' + this.dadosPedido.nome +
           '%0A*Rua:* ' + this.dadosPedido.rua + ' Nº ' + this.dadosPedido.numero +
           '%0A*Bairro:* ' + this.dadosPedido.bairro +
+          '%0A*Apartamento:* ' + this.dadosPedido.apartamento +
+          '%0A*Bloco:* ' + this.dadosPedido.bloco +
           '%0A*Telefone:* ' + this.dadosPedido.telefone +
           '%0A*Lanche:* ' + this.dadosPedido.lanche +
           '%0A*Bebida:* ' + this.dadosPedido.bebida +
           '%0A*Observações:* ' + this.dadosPedido.observacoes +
           '%0A*Preço Total:* R$ ' + this.dadosPedido.valor_total +
           '%0A*Forma de pagamento:* ' + this.dadosPedido.forma_pagamento;
-    }
+      } else if (this.dadosPedido.troco != '' && this.dadosPedido.apartamento != '') {
+        // se tiver ap e troco no pedido, entrara neste bloco 
+
+        // variavel pedido monta o pedido que será enviado no html 
+        this.pedido_wpp = '*Agradecemos pela preferência, seu pedido está sendo preparado!*%0A*Nome:* ' + this.dadosPedido.nome +
+            '%0A*Rua:* ' + this.dadosPedido.rua + ' Nº ' + this.dadosPedido.numero +
+            '%0A*Bairro:* ' + this.dadosPedido.bairro +
+            '%0A*Apartamento:* ' + this.dadosPedido.apartamento +
+            '%0A*Telefone:* ' + this.dadosPedido.telefone +
+            '%0A*Lanche:* ' + this.dadosPedido.lanche +
+            '%0A*Bebida:* ' + this.dadosPedido.bebida +
+            '%0A*Observações:* ' + this.dadosPedido.observacoes +
+            '%0A*Preço Total:* R$ ' + this.dadosPedido.valor_total +
+            '%0A*Troco para:* R$ ' + this.dadosPedido.troco +
+            '%0A*Forma de pagamento:* ' + this.dadosPedido.forma_pagamento;
+      } else {
+        // se não tiver troco, ap e bloco no pedido, entrara neste bloco 
+        // variavel pedido monta o pedido que será enviado no html 
+        this.pedido_wpp = '*Agradecemos pela preferência, seu pedido está sendo preparado!*%0A*Nome:* ' + this.dadosPedido.nome +
+            '%0A*Rua:* ' + this.dadosPedido.rua + ' Nº ' + this.dadosPedido.numero +
+            '%0A*Bairro:* ' + this.dadosPedido.bairro +
+            '%0A*Telefone:* ' + this.dadosPedido.telefone +
+            '%0A*Lanche:* ' + this.dadosPedido.lanche +
+            '%0A*Bebida:* ' + this.dadosPedido.bebida +
+            '%0A*Observações:* ' + this.dadosPedido.observacoes +
+            '%0A*Preço Total:* R$ ' + this.dadosPedido.valor_total +
+            '%0A*Forma de pagamento:* ' + this.dadosPedido.forma_pagamento;
+      }
 
       var telefone_replace = this.dadosPedido.telefone.replace("(", "")
       .replace(")", "").replace(" ", "")
@@ -1013,6 +1012,35 @@ export default {
       } else if(option === 'Dinheiro') {
         this.dadosPedido.forma_pagamento = option
       }
+    },
+    async salvarPedidoDB() {
+        // cria um array com os dados do pedido 
+        const data = {
+            nome_cliente: this.dadosPedido.nome,
+            rua: this.dadosPedido.rua,
+            bairro: this.dadosPedido.bairro,
+            apartamento: this.dadosPedido.apartamento,
+            bloco: this.dadosPedido.bloco,
+            telefone: this.dadosPedido.telefone,
+            lanche: this.dadosPedido.lanche,
+            observacoes: this.dadosPedido.observacoes,
+            valor_total: this.dadosPedido.valor_total,
+            troco: this.dadosPedido.troco,
+            forma_pagamento: this.dadosPedido.forma_pagamento,
+        };
+
+        // transforma o array de dados do pedido em texto 
+        const dataJson = JSON.stringify(data);
+
+        const req = await fetch("http://127.0.0.1:8000/api/pedidos", {
+        // const req = await fetch("https://pedidoparrilha.herokuapp.com/api/register", {
+            method: "POST",
+            headers: { "Content-Type": "application/json", "X-CSRF-Token": this.csrf },
+            body: dataJson
+        });
+
+        // traz a resposta dos dados criado
+        const res = await req.json();
     }
   },
   watch: {

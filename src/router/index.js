@@ -16,6 +16,26 @@ const routes = [
     path: '/dashboard',
     name: 'Dashboard',
     component: () => import('../components/Dashboard.vue')
+  },
+  {
+    path: '/editar-bebida/:id',
+    name: 'EditarBebida',
+    component: () => import('../components/bebidas/EditarBebida.vue')
+  },
+  {
+    path: '/editar-lanche/:id',
+    name: 'EditarLanche',
+    component: () => import('../components/lanches/EditarLanche.vue')
+  },
+  {
+    path: '/editar-usuario/:id',
+    name: 'EditarUsuario',
+    component: () => import('../components/usuarios/EditarUsuario.vue')
+  },
+  {
+    path: '/ver-pedido/:id',
+    name: 'VerPedido',
+    component: () => import('../components/pedidos/VerPedido.vue')
   }
 ]
 
