@@ -70,7 +70,6 @@ export default {
             const req = await fetch(`https://pedidoparrilha.herokuapp.com/api/lanches/${id}`);
             const data = await req.json();
             this.dadosLanche = data;
-            console.log(this.dadosLanche)
         },
     },
     mounted() {

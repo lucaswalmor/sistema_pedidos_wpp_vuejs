@@ -14,30 +14,6 @@
                 <Message :msg="msg" v-show="msg"/>
 
                 <div class="col-lg-12 login-form">
-                        <form @submit.prevent="createUser" autocomplete="off" v-show="novoCadastro">
-                            <div class="form-group">
-                                <label class="form-control-label">Email</label>
-                                <input type="email" class="form-control" name="email" v-model="email">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-control-label">Senha</label>
-                                <input type="password" class="form-control" name="password" v-model="password">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-control-label">Nome</label>
-                                <input type="name" class="form-control" name="name" v-model="name">
-                            </div>
-
-                            <div class="col-lg-12 loginbttm">
-                                <div class="col-lg-6 login-btm login-text">
-                                    <!-- Error Message -->
-                                </div>
-                                <div class="col-lg-12 text-center login-btm login-button">
-                                    <button @click="fazerLogin" type="submit" class="btn btn-outline-primary">LOGIN</button>
-                                </div>
-                            </div>
-                        </form>
-
                         <form @submit.prevent="login" autocomplete="off">
                             <div class="col-12 d-flex align-items-center flex-column">
                                 <div class="form-group col-md-6">
@@ -78,7 +54,8 @@ export default {
             password: null,
             email: null,
             novoCadastro: false,
-            msg: ""
+            msg: "",
+            token: ''
         };
     },
     methods: {
@@ -120,15 +97,14 @@ export default {
                 headers: { "Content-Type": "application/json" },
                 body: dataJson
             });
-            console.log(req)
             // traz a resposta dos dados criado
             const res = await req.json();
+            this.token = res.access_token
             // verifica se o usuario é válido, se for faz o login se não for retorna mensagem de erro 
             if (res.error == "UnAuthorised Access") {
                 this.msg = 'Usuário ou senha inválido!'
-            }
-            else {
-                this.$router.push({ path: "/dashboard" });
+            } else {
+                this.$router.push({ path: `/dashboard/${this.token}`} );
             }
         }
     }

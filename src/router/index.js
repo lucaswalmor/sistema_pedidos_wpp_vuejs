@@ -13,7 +13,7 @@ const routes = [
     component: () => import('../views/Admin.vue')
   },
   {
-    path: '/dashboard',
+    path: '/dashboard/:token',
     name: 'Dashboard',
     component: () => import('../components/Dashboard.vue')
   },
