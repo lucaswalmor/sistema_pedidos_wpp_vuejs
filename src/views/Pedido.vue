@@ -166,7 +166,7 @@
             style="text-transform: capitalize"
           />
         </div>
-        <div class="col-12 mt-3" id="proximo">
+        <div class="col-12 mt-3 d-flex justify-content-center" id="proximo">
           <button type="submit" @click="etapa_1" class="btn etapa_1">
             Próxima Etapa
           </button>
@@ -580,7 +580,7 @@
             </div>
           </div>
 
-          <div class="col-12 mt-3" id="botao_etapa_2">
+          <div class="col-12 mt-3 d-flex justify-content-center" id="botao_etapa_2">
             <button type="submit" @click="etapa_2" class="btn etapa_2">
               Próxima Etapa
             </button>
@@ -611,9 +611,10 @@
             </div>
           </div>
           <div class="col-md-4">
+            <img src="/img/sem_imagem.png" alt="" class="mt-3" style="width: 250px;" v-if="src === ''">
             <img :src="src" alt="" class="img-lanche" />
           </div>
-          <div class="col-12 mt-3" id="botao">
+          <div class="col-12 mt-3 d-flex justify-content-center" id="botao">
             <button type="submit" @click="etapa_3" class="btn etapa_3">
               Confirmar Pedido
             </button>
@@ -668,7 +669,7 @@
             />
           </div>
 
-          <div class="col-12 mt-3" id="botao">
+          <div class="col-12 mt-3 d-flex justify-content-center" id="botao">
             <button type="submit" @click="etapa_4" class="btn confirmar_pedido">
               Confirmar Pedido
             </button>
@@ -731,7 +732,7 @@
 
       <hr />
     </form>
-    <div class="row col-12">
+    <div class="row col-12 pb-4">
         <div class="col-12 text-center">
             <div class="row">
                 <div>
@@ -961,8 +962,8 @@ export default {
         this.src = '/img/bebidas/agua.jpg'
         this.dadosPedido.bebida = option
         this.dadosPedido.preco_bebida = 'R$ 2.00'
-      } else {
-        this.src = ''
+      } else if(option == '...') {
+        this.src = '/img/logo_teste.png'
         this.dadosPedido.bebida = ''
         this.dadosPedido.preco_bebida = ''
       }
@@ -1165,5 +1166,17 @@ hr {
 
 .alerta-validacao {
   display: block;
+}
+
+@media screen and (max-width: 425px) {
+  .body {
+    height: 100%;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .body {
+    height: 100%;
+  }
 }
 </style>

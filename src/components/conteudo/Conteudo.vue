@@ -116,8 +116,9 @@
                                 <td>{{pedido.telefone}}</td>
                                 <td>{{pedido.forma_pagamento}}</td>
                                 <td>R$ {{pedido.valor_total}}</td>
-                                <td>
-                                    <button class="btn btn-primary" @click="verPedido(pedido.id)"><i class="fa-solid fa-eye text-light"></i></button>
+                                <td class="botao-acao-tabela">
+                                    <button class="btn btn-dark" @click="verPedido(pedido.id)"><i class="fa-solid fa-eye text-light"></i></button>
+                                    <button class="btn btn-danger" @click="cancelarPedido(pedido.id)"><i class="fa-solid fa-trash"></i></button>
                                 </td>
                             </tr>
                         </tbody>
@@ -226,7 +227,6 @@ export default {
             this.cadastroUsuario = false;
             this.dashboard = false;
         },
-        // carregar lista de usuarios
         async listarPedidos() {
             // cria um array com os dados do pedido 
             // const req = await fetch("http://127.0.0.1:8000/api/pedidos");
@@ -235,6 +235,33 @@ export default {
             this.pedidos = data[0].pedidos;
             this.somaValorTotal = data[0].somas;
             this.totalPedidos = this.pedidos.length;
+            
+        },
+        async cancelarPedido(id) {
+        //     // cria um array com os dados do pedido 
+        //     // const req = await fetch("http://127.0.0.1:8000/api/pedidos");
+        //     const req = await fetch("https://pedidoparrilha.herokuapp.com/api/pedidos");
+        //     const data = await req.json();
+        //     this.pedidos = data[0].pedidos;
+        //     this.somaValorTotal = data[0].somas;
+        //     this.totalPedidos = this.pedidos.length;
+        //     // requisicao feita para o backend
+
+
+            // const req = await fetch(`http://127.0.0.1:8000/api/pedidos/${id}`, {
+            const req = await fetch(`https://pedidoparrilha.herokuapp.com/api/pedidos/${id}`, {
+                method: "DELETE"
+            });
+            console.log('req ' + req)
+            const res = await req.json();
+            console.log('res ' + res)
+            // msg de pedido deletado
+            this.msg = `bebida Nº ${id} deletado com sucesso`;
+            setTimeout(() => {
+                this.msg = "";
+            }, 3000);
+
+            this.$router.go(this.$router.currentRoute)
             
         },
         verPedido(id) {
@@ -265,6 +292,12 @@ export default {
 </script>
 
 <style scoped>
+.botao-acao-tabela button {
+    padding: 2px;
+    margin-left: 2px !important;
+    margin-top: 3px;
+}
+
 .logo {
     width: 100px;
     margin-left: 50px;

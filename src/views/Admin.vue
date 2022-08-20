@@ -1,11 +1,11 @@
 <template>
 
-    <div class="container">
-        <div class="row">
+    <div class="container-fluid body">
+        <div class="row col-md-8 card-login">
             <div class="col-lg-3 col-md-2"></div>
             <div class="col-lg-6 col-md-8 login-box">
                 <div class="col-lg-12 login-key row justify-content-center mb-5 mt-3">
-                  <img src="/img/logo_teste.png" alt="" class="logo">
+                  <img src="/img/logo_teste.png" alt="" class="logo mt-3">
                 </div>
                 <div class="col-lg-12 login-title">
                     <h2>PAINEL ADMIN</h2>
@@ -16,11 +16,11 @@
                 <div class="col-lg-12 login-form">
                         <form @submit.prevent="login" autocomplete="off">
                             <div class="col-12 d-flex align-items-center flex-column">
-                                <div class="form-group col-md-6">
+                                <div class="form-group ">
                                     <label class="form-control-label">Email</label>
                                     <input type="email" class="form-control" name="email" v-model="email">
                                 </div>
-                                <div class="form-group col-md-6">
+                                <div class="form-group ">
                                     <label class="form-control-label">Senha</label>
                                     <input type="password" class="form-control" name="password" v-model="password">
                                 </div>
@@ -112,12 +112,26 @@ export default {
 </script>
 
 <style scoped>
+.card-login {
+    margin-top: -50px;
+}
+
+.body {
+    width: 100%;
+    height: 100vh;
+    margin: 0;
+    background-color: #666;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
 .logo {
     border-radius: 50%;
 }
 
 .login-box {
-    margin-top: 91px;
     border-radius: 20px;
     height: auto;
     background: #333;
