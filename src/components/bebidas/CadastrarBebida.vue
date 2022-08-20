@@ -2,7 +2,7 @@
     <div class="container" v-show="cadastroBebida">
         <Message :msg="msg" v-show="msg"/>
         <div class="row">
-            <div class="titulo col-md-12 m-5">
+            <div class="titulo col-md-12 p-5">
                 <h1 class="text-secondary">Cadastrar Bebida</h1>
             </div>
         </div>

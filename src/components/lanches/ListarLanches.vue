@@ -1,33 +1,36 @@
 <template>
 <div v-show="listaLanches">
-    <Message :msg="msg" v-show="msg" />
+    <div class="container">
 
-    <div class="row">
-        <div class="titulo col-md-12 m-5">
-            <h1 class="text-secondary">Editar Lanche</h1>
+        <Message :msg="msg" v-show="msg" />
+
+        <div class="row">
+            <div class="titulo col-md-12 p-5">
+                <h1 class="text-secondary">Editar Lanche</h1>
+            </div>
         </div>
+        <table class="table text-center table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Nome</th>
+                    <th>Preço</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="lanche in dadosLanches" :key="lanche">
+                    <th>{{lanche.id}}</th>
+                    <td>{{lanche.nome}}</td>
+                    <td>{{lanche.preco}}</td>
+                    <td class="botao-acao-tabela">
+                        <button class="btn btn-primary" @click="editarLanche(lanche.id)"><i class="fa-solid fa-user-pen"></i></button>
+                        <button @click="deletarLanche(lanche.id)" class="btn btn-danger ms-3"><i class="fa-solid fa-user-xmark"></i></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-    <table class="table text-center table-striped">
-        <thead class="table-dark">
-            <tr>
-                <th>#</th>
-                <th>Nome</th>
-                <th>Preço</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="lanche in dadosLanches" :key="lanche">
-                <th>{{lanche.id}}</th>
-                <td>{{lanche.nome}}</td>
-                <td>{{lanche.preco}}</td>
-                <td>
-                    <button class="btn btn-primary" @click="editarLanche(lanche.id)"><i class="fa-solid fa-user-pen"></i></button>
-                    <button @click="deletarLanche(lanche.id)" class="btn btn-danger ms-3"><i class="fa-solid fa-user-xmark"></i></button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
 </div>
 
 </template>
@@ -81,6 +84,11 @@ export default {
 </script>
 
 <style scoped>
+    .botao-acao-tabela button {
+        padding: 2px;
+        margin-left: 2px !important;
+        margin-top: 3px;
+    }
 
     label, h2 {
         color: black;

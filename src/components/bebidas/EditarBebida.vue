@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <Message :msg="msg" v-show="msg"/>
-        <div class="row m-5">
+        <div class="row p-5">
             <h2>Editar Bebida</h2>
         </div>
         <form class="row g-3" autocomplete="off" @submit.prevent>

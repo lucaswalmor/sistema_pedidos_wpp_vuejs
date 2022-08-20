@@ -1,72 +1,97 @@
 <template>
-    <div class="header">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
-                <button class="btn btn-dark" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
-                    <i class="fa-solid fa-bars"></i>
-                </button>
-                <span id="data-hora"></span>
-            </div>
-        </nav>
-    </div>
-    <div class="sidenav">
-        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-            <div class="offcanvas-header">
-                <img src="/img/logo_teste.png" alt="" class="logo">
-                <button type="button" class="btn-close text-reset text-light" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body">
-                <div class="row text-center text-light">
-                    <h2>Nome cliente</h2>
-                </div>
-                <ul class="mt-5 nav flex-column" id="menu">
-                    <li class="nav-item">
-                        <router-link to="/"><i class="fs-4 bi-house"></i> Home</router-link>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link px-0" @click="dashboardView"><i class="fa-lg fa-solid fa-chart-line"></i> Dashboard</a>
-                    </li>
-                    <li>
-                        <a href="#submenu3" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-                            <i class="fa-lg fa-solid fa-user-plus"></i> Usuario 
-                        </a>
-                        <ul class="collapse nav flex-column ms-1" id="submenu3" data-bs-parent="#menu">
-                            <li class="w-100 ms-4">
-                                <a href="#" class="nav-link px-0" @click="cadastrarNovoUsuario"> Cadastrar</a>
-                            </li>
-                            <li class="ms-4">
-                                <a href="#" class="nav-link px-0" @click="listarUsuarios"> Editar / Excluir</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#submenu4" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-                        <i class="fa-lg fa-solid fa-burger"></i> Lanches </a>
-                        <ul class="collapse nav flex-column ms-1" id="submenu4" data-bs-parent="#menu">
-                            <li class="w-100 ms-4">
-                                <a href="#" class="nav-link px-0" @click="cadastrarNovoLanche">Cadastrar</a>
-                            </li>
-                            <li class=" ms-4">
-                                <a href="#" class="nav-link px-0" @click="listarLanches">Editar / Excluir</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#submenu2" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-                        <i class="fa-lg fa-solid fa-martini-glass"></i> Bebidas </a>
-                        <ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
-                            <li class="w-100 ms-4">
-                                <a href="#" class="nav-link px-0" @click="cadastrarNovaBebida">Cadastrar</a>
-                            </li>
-                            <li class=" ms-4">
-                                <a href="#" class="nav-link px-0" @click="listarBebidas">Editar / Excluir</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
+    
+    <div class="area"></div>
+    <nav class="main-menu">
+        <ul>
+            <li>
+                <a href="http://justinfarrow.com">
+                    <i class="fa fa-home fa-2x"></i>
+                    <span class="nav-text">
+                        Dashboard
+                    </span>
+                </a>
+
+            </li>
+            <li class="has-subnav">
+                <a href="#">
+                    <i class="fa fa-laptop fa-2x"></i>
+                    <span class="nav-text">
+                        Stars Components
+                    </span>
+                </a>
+
+            </li>
+            <li class="has-subnav">
+                <a href="#">
+                    <i class="fa fa-list fa-2x"></i>
+                    <span class="nav-text">
+                        Forms
+                    </span>
+                </a>
+
+            </li>
+            <li class="has-subnav">
+                <a href="#">
+                    <i class="fa fa-folder-open fa-2x"></i>
+                    <span class="nav-text">
+                        Pages
+                    </span>
+                </a>
+
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-bar-chart-o fa-2x"></i>
+                    <span class="nav-text">
+                        Graphs and Statistics
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-font fa-2x"></i>
+                    <span class="nav-text">
+                        Quotes
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-table fa-2x"></i>
+                    <span class="nav-text">
+                        Tables
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-map-marker fa-2x"></i>
+                    <span class="nav-text">
+                        Maps
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-info fa-2x"></i>
+                    <span class="nav-text">
+                        Documentation
+                    </span>
+                </a>
+            </li>
+        </ul>
+
+        <ul class="logout">
+            <li>
+                <a href="#">
+                    <i class="fa fa-power-off fa-2x"></i>
+                    <span class="nav-text">
+                        Logout
+                    </span>
+                </a>
+            </li>
+        </ul>
+    </nav>
     <div class="col py-3 body-dashboard">
         <div class="dashboard" v-show="dashboard">
             <div class="container">
@@ -158,8 +183,7 @@ export default {
             dadosUsuario: [],
             pedidos: [],
             totalPedidos: '',
-            somaValorTotal: '',
-            dataHora: ''
+            somaValorTotal: ''
         };
     },
     methods: {
@@ -239,51 +263,17 @@ export default {
         },
         verPedido(id) {
             this.$router.push({ path: `/ver-pedido/${id}`, params: {id: id}} );            
-        },
-        horas() {
-            const zeroFill = n => {
-                return ('0' + n).slice(-2);
-            }
-
-            // Cria intervalo
-            const interval = setInterval(() => {
-                // Pega o horário atual
-                const now = new Date();
-
-                // Formata a data conforme dd/mm/aaaa hh:ii:ss
-                const dataHora = zeroFill(now.getUTCDate()) + '/' + zeroFill((now.getMonth() + 1)) + '/' + now.getFullYear() + ' ' + zeroFill(now.getHours()) + ':' + zeroFill(now.getMinutes()) + ':' + zeroFill(now.getSeconds());
-                // Exibe na tela usando a div#data-hora
-                document.getElementById('data-hora').innerHTML = dataHora;
-            }, 1000);
         }
     },
     mounted() {
-        this.horas();
         this.listarPedidos();
     }
 }
 </script>
 
 <style scoped>
-.logo {
-    width: 100px;
-    margin-left: 50px;
-    border-radius: 50%;
-}
-
-.offcanvas {
-    width: 250px;
-    background-color: #333;
-}
-
-.offcanvas-body ul li a {
-    color: #fff;
-    text-decoration: none;
-}
-
-.offcanvas-body ul li a i {
-    color: #f9a529;
-    padding-right: 15px;
+.body-dashboard {
+    padding-left: 60px;
 }
 
 .fa-2x {
@@ -409,31 +399,6 @@ nav ul,nav li {
     height: 100%;
 }
 
-.cards {
-    box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.46);
-    padding: 30px;
-    background-color: #fff;
-}
-
-.card-pedidos {
-    border-left: 5px solid green;
-    border-radius: 10px;
-    color: black;
-}
-
-.card-valor-total {
-    border-left: 5px solid blue;
-    border-radius: 10px;
-    color: black;
-}
-
-.text-card-pedidos div i {
-    color: #008000ad;
-}
-
-.text-card-valor-total div i {
-    color: rgba(0, 0, 255, 0.459);
-}
 @font-face {
     font-family: 'Titillium Web';
     font-style: normal;
@@ -442,13 +407,5 @@ nav ul,nav li {
 }
 
 @media screen and (max-width: 425px) {
-    .card-valor-total {
-        margin: 35px;
-    }
-
-    .cards {
-        width: 85%;
-        justify-content: space-around;
-    }
 }
 </style>

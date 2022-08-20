@@ -8,7 +8,7 @@
                   <img src="/img/logo_teste.png" alt="">
                 </div>
                 <div class="col-lg-12">
-                    <h2>ADMIN PAINEL</h2>
+                    <h2>PAINEL ADMIN</h2>
                 </div>
 
                 <Message :msg="msg" v-show="msg"/>
@@ -30,8 +30,8 @@
                                 <div class="col-lg-6 login-btm login-text">
                                     <!-- Error Message -->
                                 </div>
-                                <div class="col-lg-12 text-center login-btm login-button">
-                                    <button @click="fazerLogin" type="submit" class="btn btn-outline-primary">LOGIN</button>
+                                <div class="col-lg-12 text-center login-button">
+                                    <button @click="fazerLogin" type="submit" class="fw-bold btn btn-warning text-dark ">LOGIN</button>
                                 </div>
                             </div>
                         </form>
@@ -112,16 +112,13 @@ export default {
 </script>
 
 <style scoped>
-body {
-    background: #222D32;
-    font-family: 'Roboto', sans-serif;
-}
 
 .login-box {
     margin-top: 91px;
     border-radius: 20px;
     height: auto;
-    background: #1A2226;
+    background: transparent;
+    /* background: #1A2226; */
     text-align: center;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
@@ -141,45 +138,9 @@ body {
     text-align: left;
 }
 
-input[type=text] {
-    background-color: #1A2226;
-    border: none;
-    border-bottom: 2px solid #0DB8DE;
-    border-top: 0px;
-    border-radius: 0px;
-    font-weight: bold;
-    outline: 0;
-    margin-bottom: 20px;
-    padding-left: 0px;
-    color: #ECF0F5;
-}
-
-input[type=password] {
-    background-color: #1A2226;
-    border: none;
-    border-bottom: 2px solid #0DB8DE;
-    border-top: 0px;
-    border-radius: 0px;
-    font-weight: bold;
-    outline: 0;
-    padding-left: 0px;
-    margin-bottom: 20px;
-    color: #ECF0F5;
-}
-
 .form-group {
     margin-bottom: 40px;
     outline: 0px;
-}
-
-.form-control:focus {
-    border-color: inherit;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-    border-bottom: 2px solid #0DB8DE;
-    outline: 0;
-    background-color: #1A2226;
-    color: #ECF0F5;
 }
 
 input:focus {
@@ -196,20 +157,6 @@ label {
     color: #6C6C6C;
     font-weight: bold;
     letter-spacing: 1px;
-}
-
-.btn-outline-primary {
-    border-color: #0DB8DE;
-    color: #0DB8DE;
-    border-radius: 0px;
-    font-weight: bold;
-    letter-spacing: 1px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-}
-
-.btn-outline-primary:hover {
-    background-color: #333;
-    right: 0px;
 }
 
 .login-btm {

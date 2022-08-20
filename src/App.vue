@@ -15,9 +15,4 @@
   padding: 0;
   box-sizing: border-box;
 }
-
-body {
-  background-color: #212529;
-  color: #f9a529;
-}
 </style>

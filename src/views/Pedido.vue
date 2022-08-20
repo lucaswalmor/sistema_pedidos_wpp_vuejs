@@ -1,5 +1,5 @@
 <template>
-  <div class="container mt-3">
+  <div class="container-fluid body">
     <div class="col-12 row d-flex justify-content-center">
       <img src="/img/logo_teste.png" alt="logo" class="logo" />
     </div>
@@ -740,13 +740,13 @@
                     </p>
                 </div>
                 <div class="col-12 row">
-                    <div class="col-6 d-flex justify-content-end rodape">
+                    <div class="col-6 d-flex justify-content-end rodape" target="_blank">
                         <a href="https://api.whatsapp.com/send?phone=5534992021394&text=Ol%C3%A1%20Lucas%2C%20gostaria%20de%20fazer%20um%20or%C3%A7amento%20de%20site.">
                             <i class="fa-brands fa-whatsapp m-2"></i>
                         </a>
                     </div>
                     <div class="col-6 d-flex rodape">
-                        <a href="https://www.instagram.com/lucassteinbach/">
+                        <a href="https://www.instagram.com/lucassteinbach/" target="_blank">
                             <i class="fa-brands fa-instagram m-2"></i>
                         </a>
                     </div>
@@ -1078,6 +1078,14 @@ export default {
 }
 </script>
 <style scoped>
+
+.body {
+  width: 100%;
+  height: 100vh;
+  margin: 0;
+  background-color: #212529 !important;
+  color: #f9a529;
+}
 
 .logo {
   width: 250px;

@@ -1,12 +1,13 @@
 <template>
-  <Sidebar />
+  <Header />
+
 </template>
 
 <script>
-import Sidebar from './Sidebar.vue';
+import Header from './Header.vue';
 
 export default {
-    components: { Sidebar }
+    components: {Header }
 }
 </script>
 

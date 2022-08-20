@@ -6,9 +6,7 @@
                 <a class="navbar-brand m-4" href="#"><img src="/img/logo_teste.png" alt=""></a>
                 <ul class="mt-5 nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                     <li class="nav-item">
-                        <a href="#" class="nav-link align-middle px-0">
                             <router-link to="/"><i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Home</span></router-link>
-                        </a>
                     </li>
                     <li class="nav-item">
                         <a href="#" class="nav-link px-0" @click="dashboardView"><i class="fa-lg fa-solid fa-chart-line"></i> <span class="d-none d-sm-inline">Dashboard</span></a>
@@ -65,13 +63,13 @@
             <div class="dashboard" v-show="dashboard">
                 <div class="container">
                     <div class="row">
-                        <div class="titulo col-md-12 m-5">
+                        <div class="titulo col-md-12 p-5">
                             <h1 class="text-secondary">Dashboard</h1>
                         </div>
                     </div>
                     <div class="row col-md-12 d-flex justify-content-around">
                         <div class="col-md-5 d-flex cards text-card-pedidos card-pedidos">
-                            <div class="col-md-3">
+                            <div class="col-md-3 div-icon-dashboard">
                                 <i class="fa-5x fa-solid fa-scroll"></i>
                             </div>
                             <div class="col-md-9 text-center">
@@ -81,16 +79,16 @@
                         </div>
                             
                         <div class="col-md-5 d-flex cards text-card-valor-total card-valor-total">
-                            <div class="col-md-3">
-                                <i class="fa-5x fa-solid fa-scroll"></i>
+                            <div class="col-md-3 div-icon-dashboard">
+                                <i class="fa-5x fa-solid fa-cash-register"></i>
                             </div>
                             <div class="col-md-9 text-center">
-                                <div><h6>Total Pedidos</h6></div>
+                                <div><h6>Valor Total</h6></div>
                                 <div><h1>R$ {{somaValorTotal}}</h1></div>
                             </div>
                         </div>
                     </div>
-                    <div class="mt-5">
+                    <div class="mt-5 div-table">
                         <Message :msg="msg" v-show="msg" />
                         <table class="table text-center table-striped">
                             <thead class="table-dark">
@@ -119,7 +117,7 @@
                     </div>
                 </div>
             </div>
-            <form @submit.prevent>
+            <form @submit.prevent class="div-form-cadastro">
                 <CadastrarUsuario v-show="cadastroUsuario" />
                 <CadastrarLanche v-show="cadastroLanche"/>
                 <CadastrarBebida v-show="cadastroBebida"/>
@@ -242,7 +240,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style  scoped>
     .cards {
         box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.46);
         padding: 30px;
@@ -298,5 +296,55 @@ export default {
 
     label, h2, .text-card {
         color: black;
+    }
+
+    @media screen and (max-width: 768px) {
+        .div-icon-dashboard i {
+            font-size: 32px;
+            padding-top: 25px;
+        }
+
+        .div-table {
+            padding-right: 20px;
+        }
+
+        .div-form-cadastro {
+            padding-right: 20px;
+        }
+
+        .div-form-cadastro {
+            padding-right: 20px;
+        }
+
+        .div-form-cadastro {
+            padding-right: 20px;
+        }
+    }
+
+    @media screen and (max-width: 415px) {
+        img {
+            display: none;
+        }
+
+        .div-icon-dashboard i {
+            font-size: 32px;
+            padding-top: 25px;
+        }
+
+        .div-table {
+            padding-right: 20px;
+        }
+
+        .div-form-cadastro {
+            padding-right: 20px;
+        }
+
+        .div-form-cadastro {
+            padding-right: 20px;
+        }
+
+        .div-form-cadastro {
+            padding-right: 20px;
+        }
     }
 </style>
