@@ -5,9 +5,9 @@
             <div class="col-lg-3 col-md-2"></div>
             <div class="col-lg-6 col-md-8 login-box">
                 <div class="col-lg-12 login-key row justify-content-center mb-5 mt-3">
-                  <img src="/img/logo_teste.png" alt="">
+                  <img src="/img/logo_teste.png" alt="" class="logo">
                 </div>
-                <div class="col-lg-12">
+                <div class="col-lg-12 login-title">
                     <h2>PAINEL ADMIN</h2>
                 </div>
 
@@ -112,13 +112,15 @@ export default {
 </script>
 
 <style scoped>
+.logo {
+    border-radius: 50%;
+}
 
 .login-box {
     margin-top: 91px;
     border-radius: 20px;
     height: auto;
-    background: transparent;
-    /* background: #1A2226; */
+    background: #333;
     text-align: center;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
