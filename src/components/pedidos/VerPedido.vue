@@ -62,7 +62,7 @@ export default {
       }
     },
     voltar() {
-        this.$router.push({ path: `/dashboard`} );
+        this.$router.go(-1)
     }
   },
   mounted() {

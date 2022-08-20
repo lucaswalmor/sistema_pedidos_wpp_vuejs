@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import Message from "../components/Message.vue";
+import Message from "../components/message/Message.vue";
 
 export default {
     name: "Admin",

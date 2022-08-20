@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import Message from '../Message.vue';
+import Message from '../message/Message.vue';
 export default {
     name: "EditarBebida",
     components: { Message },

@@ -4,10 +4,10 @@
 </template>
 
 <script>
-import Header from './Header.vue';
+import Header from './conteudo/Conteudo.vue';
 
 export default {
-    components: {Header }
+    components: {Header}
 }
 </script>
 
