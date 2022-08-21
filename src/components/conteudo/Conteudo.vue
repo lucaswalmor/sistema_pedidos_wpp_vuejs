@@ -21,14 +21,39 @@
                 </div>
                 <ul class="mt-5 nav flex-column" id="menu">
                     <li class="nav-item">
-                        <router-link to="/"><i class="fa-solid fa-shop"></i>Pedidos</router-link>
+                        <router-link to="/" class="col-md-12 d-flex nav-link px-0">
+                            <div class="col-md-2">
+                                <i class="fa-lg fa-solid fa-shop"></i>
+                            </div>
+                            <div class="col-md-6">
+                                <span>
+                                    Pedidos
+                                </span>
+                            </div>
+                        </router-link>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link px-0" @click="dashboardView"><i class="fa-lg fa-solid fa-chart-line"></i> Dashboard</a>
+                        <a href="#" class="col-md-12 d-flex nav-link px-0" @click="dashboardView">
+                            <div class="col-md-2">
+                                <i class="fa-lg fa-solid fa-gauge"></i> 
+                            </div>
+                            <div class="col-md-6">
+                            <span>
+                                Dashboard
+                            </span>
+                            </div>
+                        </a>
                     </li>
                     <li>
-                        <a href="#submenu3" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-                            <i class="fa-lg fa-solid fa-user-plus"></i> Usuario 
+                        <a href="#submenu3" data-bs-toggle="collapse"  class="col-md-12 d-flex nav-link px-0">
+                            <div class="col-md-2">
+                                <i class="fa-lg fa-solid fa-user-plus"></i>
+                            </div>
+                            <div class="col-md-6">
+                                <span>
+                                    Usuario
+                                </span>
+                            </div>
                         </a>
                         <ul class="collapse nav flex-column ms-1" id="submenu3" data-bs-parent="#menu">
                             <li class="w-100 ms-4">
@@ -127,12 +152,12 @@
             </div>
         </div>
         <form @submit.prevent class="div-form-cadastro">
-            <CadastrarUsuario v-show="cadastroUsuario" />
-            <CadastrarLanche v-show="cadastroLanche"/>
-            <CadastrarBebida v-show="cadastroBebida"/>
-            <ListaUsuarios v-show="listaUsuarios"/>
-            <ListarLanches v-show="listaLanches"/>
-            <ListarBebidas v-show="listaBebidas"/>
+            <CadastrarUsuario :token_storage="token_storage" v-show="cadastroUsuario" />
+            <CadastrarLanche :token_storage="token_storage" v-show="cadastroLanche"/>
+            <CadastrarBebida :token_storage="token_storage" v-show="cadastroBebida"/>
+            <ListaUsuarios :token_storage="token_storage" v-show="listaUsuarios"/>
+            <ListarLanches :token_storage="token_storage" v-show="listaLanches"/>
+            <ListarBebidas :token_storage="token_storage" v-show="listaBebidas"/>
         </form>
     </div>
 </template>
@@ -160,7 +185,8 @@ export default {
             pedidos: [],
             totalPedidos: '',
             somaValorTotal: '',
-            dataHora: ''
+            dataHora: '',
+            token_storage: ''
         };
     },
     methods: {
@@ -238,31 +264,22 @@ export default {
             
         },
         async cancelarPedido(id) {
-        //     // cria um array com os dados do pedido 
-        //     // const req = await fetch("http://127.0.0.1:8000/api/pedidos");
-        //     const req = await fetch("https://pedidoparrilha.herokuapp.com/api/pedidos");
-        //     const data = await req.json();
-        //     this.pedidos = data[0].pedidos;
-        //     this.somaValorTotal = data[0].somas;
-        //     this.totalPedidos = this.pedidos.length;
-        //     // requisicao feita para o backend
+            if (confirm(`Você realmente deseja deletar o pedido Nº ${id} `)) {
+                // const req = await fetch(`http://127.0.0.1:8000/api/pedidos/${id}`, {
+                const req = await fetch(`https://pedidoparrilha.herokuapp.com/api/pedidos/${id}`, {
+                    method: "DELETE"
+                });
 
+                const res = await req.json();
+                // msg de pedido deletado
+                this.msg = `bebida Nº ${id} deletado com sucesso`;
 
-            // const req = await fetch(`http://127.0.0.1:8000/api/pedidos/${id}`, {
-            const req = await fetch(`https://pedidoparrilha.herokuapp.com/api/pedidos/${id}`, {
-                method: "DELETE"
-            });
-            console.log('req ' + req)
-            const res = await req.json();
-            console.log('res ' + res)
-            // msg de pedido deletado
-            this.msg = `bebida Nº ${id} deletado com sucesso`;
-            setTimeout(() => {
-                this.msg = "";
-            }, 3000);
+                setTimeout(() => {
+                    this.msg = "";
+                }, 3000);
 
-            this.$router.go(this.$router.currentRoute)
-            
+                this.$router.go(this.$router.currentRoute)
+            }
         },
         verPedido(id) {
             this.$router.push({ path: `/ver-pedido/${id}`, params: {id: id}} );            
@@ -282,9 +299,13 @@ export default {
                 // Exibe na tela usando a div#data-hora
                 document.getElementById('data-hora').innerHTML = dataHora;
             }, 1000);
+        },
+        token() {
+            this.token_storage = this.$route.params.token
         }
     },
     mounted() {
+        this.token();
         this.horas();
         this.listarPedidos();
     }
@@ -293,9 +314,7 @@ export default {
 
 <style scoped>
 .botao-acao-tabela button {
-    padding: 2px;
-    margin-left: 2px !important;
-    margin-top: 3px;
+    margin-left: 10px !important;
 }
 
 .logo {
@@ -482,6 +501,12 @@ nav ul,nav li {
     .cards {
         width: 85%;
         justify-content: space-around;
+    }
+    
+    .botao-acao-tabela button {
+        padding: 2px;
+        margin-left: 10px !important;
+        margin-top: 3px;
     }
 }
 </style>

@@ -13,12 +13,13 @@
             </div>
             <div class="col-md-6">
                 <label for="preco" class="form-label">Preco:</label>
-                <input type="number" class="form-control" id="preco" v-model="preco">
+                <input type="number" class="form-control" placeholder="00.00" id="preco" min="0" v-model="preco">
             </div>
             <div class="col-md-12">
                 <input type="submit" class="form-control btn btn-secondary" @click="createBebida">
             </div>
         </form>
+        <p class="mt-3"><small>* Favor seguir o modelo de preço na hora do cadastro "00.00", sempre colocar os valores decimais</small></p>
     </div>  
 </template>
 
@@ -40,7 +41,7 @@ export default {
             // cria um array com os dados do pedido 
             const data = {
                 nome: this.nome,
-                preco: this.preco,
+                preco: 'R$ ' + this.preco,
             };
             
             if(data.nome === null || data.preco === null) {
@@ -63,6 +64,8 @@ export default {
                 setTimeout(() => {
                     this.msg = "";
                 }, 2000);
+                
+                this.$router.go(-1)
             }
         }
     },

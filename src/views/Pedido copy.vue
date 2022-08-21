@@ -1,5 +1,4 @@
 <template>
-
   <div class="container-fluid body">
     <div class="col-12 row d-flex justify-content-center">
       <img src="/img/logo_teste.png" alt="logo" class="logo" />
@@ -186,7 +185,7 @@
               id="lanche"
               class="form-select"
               v-model="tipoLanche"
-              @change="alterarPrecoLanche($event)"
+              @change="mudarLanche($event)"
             >
               <option selected>Selecione um Lanche</option>
               <option v-for="lanche in dadosLanches" :key="lanche.id">{{ lanche.nome }}</option> 
@@ -194,7 +193,7 @@
             <div class="form-group mt-3">
               <label for="preco_lanche">Preço</label>
               <input
-                type="text"
+                type="number"
                 class="form-control mt-1"
                 id="preco_lanche"
                 name="preco_lanche"
@@ -596,14 +595,14 @@
         <div class="row">
           <div class="col-md-4">
             <label for="bebida" class="form-label">Bebidas</label>
-            <select id="bebida" class="form-select" @change="alterarPrecoBebida($event)">
+            <select id="bebida" class="form-select" @change="mudarBebida($event), alterarPrecoBebida($event)">
               <option selected>Selecione uma bebida</option>
               <option v-for="bebida in dadosBebidas" :key="bebida.id">{{bebida.nome}}</option> 
             </select>
             <div class="form-group mt-3">
               <label for="preco_bebida">Preço</label>
               <input
-                type="text"
+                type="number"
                 class="form-control mt-1"
                 id="preco_bebida"
                 readonly
@@ -785,7 +784,6 @@ export default {
         lanche: '',
         preco_lanche: "",
         bebida: "",
-        preco_bebida: "",
         observacoes: "",
         forma_pagamento: "",
         troco: "",
@@ -842,11 +840,17 @@ export default {
     },
     etapa_3() {
         // formata o texto dos preços e transforma em float para somar 
+        // var preco_bebida = parseFloat(this.dadosPedido.preco_bebida.replace('R$ ', ''));
+
+        
         var preco_bebida = parseFloat(this.dadosPedido.preco_bebida.replace('R$ ', ''));
         var preco_lanche = parseFloat(this.dadosPedido.preco_lanche.replace('R$ ', ''));
         var taxa_entrega = parseFloat(this.dadosPedido.taxa_entrega.replace('R$ ', ''));
         var soma = preco_bebida + preco_lanche + taxa_entrega;
+
         console.log(soma)
+        // console.log('bebida = ' + this.dadosPedido.bebida)
+
         this.dadosPedido.valor_total = soma;
         this.divBebida = !this.divBebida;
         this.divPagamento = !this.divPagamento;
@@ -922,6 +926,8 @@ export default {
     mudarLanche(event) {
       const option = event.target.value;
       this.dadosPedido.lanche = option;
+      console.log(option)
+      console.log(this.dadosPedido.preco_lanche)
       if(option == 'PARRILLA BERRY') {
         this.dadosPedido.preco_lanche = 'R$ 29.50'
       } else if (option == 'PARRILLA BERRY COMBO') {
@@ -958,7 +964,6 @@ export default {
     },
     mudarBebida(event) {
       const option = event.target.value;
-      this.dadosPedido.bebida = option;
       if(option == 'Coca-Cola') {
         this.src = '/img/bebidas/coca_lata.png'
         this.dadosPedido.bebida = option
@@ -1033,6 +1038,8 @@ export default {
         const req = await fetch("https://pedidoparrilha.herokuapp.com/api/lanches");
         const data = await req.json();
         this.dadosLanches = data;
+
+
     },
     // carregar lista de usuarios
     async listarBebidas() {
@@ -1043,34 +1050,11 @@ export default {
     },
     alterarPrecoLanche(event) {
       const option = event.target.value;
-      this.dadosPedido.lanche = option;
-      var precoLanche = this.dadosLanches;
-      // percorre o array de lanches que vem do banco de dados e seta o valor do preco 
-      for (var item in precoLanche){
-        var nome = precoLanche[item].nome;
-        var preco = precoLanche[item].preco;
-        if(option == nome) {
-          this.dadosPedido.preco_lanche =  preco
-          console.log(this.dadosPedido.preco_lanche)
-        }
-      }
+      this.testeTipoLanche = option;
     },
     alterarPrecoBebida(event) {
       const option = event.target.value;
-      this.dadosPedido.bebida = option;
-      var precoBebida = this.dadosBebidas;
-
-      // const option = event.target.value;
-      // var precoLanche = this.dadosLanches;
-      // percorre o array de lanches que vem do banco de dados e seta o valor do preco 
-      for (var item in precoBebida){
-        var nome = precoBebida[item].nome;
-        var preco = precoBebida[item].preco;
-        if(option == nome) {
-          this.dadosPedido.preco_bebida = preco
-          console.log(this.dadosPedido.preco_bebida)
-        }
-      }
+      this.TipoBebida = option;
     }
   },
   watch: {

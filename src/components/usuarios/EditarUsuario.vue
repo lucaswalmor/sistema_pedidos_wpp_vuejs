@@ -1,4 +1,5 @@
 <template>
+    <Header />
     <div class="container">
         <Message :msg="msg" v-show="msg"/>
         <div class="row m-5">
@@ -17,8 +18,13 @@
                 <label for="inputPassword4" class="form-label">Password</label>
                 <input type="password" class="form-control" id="inputPassword4" v-model="dadosUsuarios.password">
             </div>
-            <div class="col-md-12">
-                <input type="submit" class="form-control btn btn-secondary" @click="updateUsuario">
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <input type="submit" value="Atualizar" class="form-control btn btn-success" @click="updateUsuario">
+                </div>
+                <div class="col-md-6">
+                    <input type="submit" value="Voltar" class="form-control btn btn-secondary" @click="voltar">
+                </div>
             </div>
         </form>
     </div>    
@@ -26,9 +32,10 @@
 
 <script>
 import Message from '../message/Message.vue';
+import Header from '../conteudo/Header.vue';
 export default {
     name: "EditarUsuario",
-    components: { Message },
+    components: { Message, Header },
     data() {
         return {
             name: null,
@@ -83,6 +90,9 @@ export default {
                 console.log('error', err);
             }
         },
+        voltar() {
+            this.$router.go(-1)
+        }
     },
     mounted() {
         this.listarUsuario();

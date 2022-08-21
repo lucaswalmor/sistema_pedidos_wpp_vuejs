@@ -1,4 +1,5 @@
 <template>
+    <Header />
     <div class="container">
         <Message :msg="msg" v-show="msg"/>
         <div class="row p-5">
@@ -11,20 +12,25 @@
             </div>
             <div class="col-md-6">
                 <label for="preco" class="form-label">Preco:</label>
-                <input type="number" class="form-control" id="preco" v-model="dadosLanche.preco">
+                <input type="text" class="form-control" id="preco" placeholder="R$ 00.00" v-model="dadosLanche.preco">
             </div>
-            <div class="col-md-12">
-                <input type="submit" class="form-control btn btn-secondary" @click="updateLanche">
+            <div class="col-md-6">
+                <input type="submit" value="Atualizar" class="form-control btn btn-success" @click="updateLanche">
+            </div>
+            <div class="col-md-6">
+                <input type="submit" value="Voltar" class="form-control btn btn-secondary" @click="voltar">
             </div>
         </form>
+        <p class="mt-3"><small>* Favor seguir o modelo de preço na hora do cadastro "R$ 00.00"</small></p>
     </div>    
 </template>
 
 <script>
 import Message from '../message/Message.vue';
+import Header from '../conteudo/Header.vue';
 export default {
     name: "EditarLanche",
-    components: { Message },
+    components: { Message, Header },
     data() {
         return {
             nome: null,
@@ -58,8 +64,7 @@ export default {
                     this.preco = "";
                 }
 
-                this.$router.push({ path: '/dashboard'} );
-
+                this.$router.go(-1)
             }
 
         },
@@ -71,6 +76,9 @@ export default {
             const data = await req.json();
             this.dadosLanche = data;
         },
+        voltar() {
+            this.$router.go(-1)
+        }
     },
     mounted() {
         this.listarLanche();

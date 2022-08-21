@@ -58,20 +58,21 @@ export default {
         },
         // deletar usuario 
         async deletarBebida(id) {
-            // requisicao feita para o backend
-            // const req = await fetch(`http://127.0.0.1:8000/api/bebidas/${id}`, {
-            const req = await fetch(`https://pedidoparrilha.herokuapp.com/api/bebidas/${id}`, {
-                method: "DELETE"
-            });
-            const res = await req.json();
+            if (confirm(`Você realmente deseja deletar o pedido Nº ${id} `)) {
+                // const req = await fetch(`http://127.0.0.1:8000/api/bebidas/${id}`, {
+                const req = await fetch(`https://pedidoparrilha.herokuapp.com/api/bebidas/${id}`, {
+                    method: "DELETE"
+                });
+                const res = await req.json();
 
-            // msg de pedido deletado
-            this.msg = `bebida Nº ${id} deletado com sucesso`;
-            setTimeout(() => {
-                this.msg = "";
-            }, 3000);
+                // msg de pedido deletado
+                this.msg = `bebida Nº ${id} deletado com sucesso`;
+                setTimeout(() => {
+                    this.msg = "";
+                }, 3000);
 
-            this.$router.go(this.$router.currentRoute)
+                this.$router.go(this.$router.currentRoute)
+            }
         },
         editarBebida(id) {
             this.$router.push({ path: `/editar-bebida/${id}`, params: {id: id}} );
@@ -84,14 +85,20 @@ export default {
 </script>
 
 <style scoped>
+
     .botao-acao-tabela button {
-        padding: 2px;
-        margin-left: 2px !important;
-        margin-top: 3px;
+        margin-left: 10px !important;
     }
 
     label, h2 {
         color: black;
     }
 
+    @media screen and (max-width: 425px ) {
+        .botao-acao-tabela button {
+            padding: 2px;
+            margin-left: 2px !important;
+            margin-top: 3px;
+        }
+    }
 </style>

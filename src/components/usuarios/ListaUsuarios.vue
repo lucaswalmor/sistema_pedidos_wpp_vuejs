@@ -57,19 +57,22 @@ export default {
 
         // deletar usuario 
         async deleteUser(id) {
-            // requisicao feita para o backend
-            const req = await fetch(`https://pedidoparrilha.herokuapp.com/api/usuarios/${id}`, {
-                method: "DELETE"
-            });
-            const res = await req.json();
+            if (confirm(`Você realmente deseja deletar o pedido Nº ${id} `)) {
+                // requisicao feita para o backend
+                const req = await fetch(`https://pedidoparrilha.herokuapp.com/api/usuarios/${id}`, {
+                    method: "DELETE"
+                });
+                const res = await req.json();
 
-            // msg de pedido deletado
-            this.msg = `Usuário Nº ${id} deletado com sucesso`;
-            setTimeout(() => {
-                this.msg = "";
-            }, 3000);
+                // msg de pedido deletado
+                this.msg = `Usuário Nº ${id} deletado com sucesso`;
+                setTimeout(() => {
+                    this.msg = "";
+                }, 3000);
 
-            this.$router.go(this.$router.currentRoute)
+                this.$router.go(this.$router.currentRoute)
+            }
+
         },
         editUsuario(id) {
             this.$router.push({ path: `/editar-usuario/${id}`, params: {id: id}} );
@@ -82,14 +85,21 @@ export default {
 </script>
 
 <style scoped>
+
     .botao-acao-tabela button {
-        padding: 2px;
-        margin-left: 2px !important;
-        margin-top: 3px;
+        margin-left: 10px !important;
     }
 
     label, h2 {
         color: black;
+    }
+
+    @media screen and (max-width: 425px ) {
+        .botao-acao-tabela button {
+            padding: 2px;
+            margin-left: 2px !important;
+            margin-top: 3px;
+        }
     }
 
 </style>

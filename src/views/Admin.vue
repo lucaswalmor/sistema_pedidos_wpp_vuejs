@@ -100,11 +100,14 @@ export default {
             // traz a resposta dos dados criado
             const res = await req.json();
             this.token = res.access_token
+
+            // salva o token no localstorage 
+            
             // verifica se o usuario é válido, se for faz o login se não for retorna mensagem de erro 
             if (res.error == "UnAuthorised Access") {
                 this.msg = 'Usuário ou senha inválido!'
             } else {
-                this.$router.push({ path: `/dashboard/${this.token}`} );
+                this.$router.push({ path: `/dashboard/${this.token}`, params: {token: res.access_token}} );
             }
         }
     }

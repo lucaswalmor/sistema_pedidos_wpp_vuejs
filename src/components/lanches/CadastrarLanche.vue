@@ -14,12 +14,13 @@
             </div>
             <div class="col-md-6">
                 <label for="preco" class="form-label">Preco:</label>
-                <input type="number" class="form-control" id="preco" v-model="preco">
+                <input type="number" class="form-control" id="preco" placeholder="00.00" min="0" v-model="preco">
             </div>
             <div class="col-md-12">
                 <input type="submit" class="form-control btn btn-secondary" @click="createLanche">
             </div>
         </form>
+        <p class="mt-3"><small>* Favor seguir o modelo de preço na hora do cadastro "00.00", sempre colocar os valores decimais</small></p>
     </div>  
 </template>
 
@@ -27,11 +28,15 @@
 import Message from '../message/Message.vue';
 export default {
     name: "CadastarLanche",
+    props: {
+        token_storage: String
+    },
     data() {
         return {
             nome: null,
             preco: null,
-            msg: ''
+            msg: '',
+            token_storage: ''
         };
     },
     methods: {
@@ -39,7 +44,7 @@ export default {
             // cria um array com os dados do pedido 
             const data = {
                 nome: this.nome,
-                preco: this.preco,
+                preco: 'R$ ' + this.preco,
             };
             // transforma o array de dados do pedido em texto 
             const dataJson = JSON.stringify(data);
@@ -62,7 +67,15 @@ export default {
                 setTimeout(() => {
                     this.msg = "";
                 }, 2000);
+                
+                
+                var token = location.pathname.replace('/dashboard/', '');
+
+                // this.$router.go(-1)
+                this.$router.push({ path: `/dashboard/${token}`} );
             }
+        },
+        teste () {
         }
     },
     components: { Message }
