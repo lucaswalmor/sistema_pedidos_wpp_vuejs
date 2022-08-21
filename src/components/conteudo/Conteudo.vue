@@ -21,18 +21,6 @@
                 </div>
                 <ul class="mt-5 nav flex-column" id="menu">
                     <li class="nav-item">
-                        <router-link to="/" class="col-md-12 d-flex nav-link px-0">
-                            <div class="col-md-2">
-                                <i class="fa-lg fa-solid fa-shop"></i>
-                            </div>
-                            <div class="col-md-6">
-                                <span>
-                                    Pedidos
-                                </span>
-                            </div>
-                        </router-link>
-                    </li>
-                    <li class="nav-item">
                         <a href="#" class="col-md-12 d-flex nav-link px-0" @click="dashboardView">
                             <div class="col-md-2">
                                 <i class="fa-lg fa-solid fa-gauge"></i> 
@@ -121,7 +109,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="mt-5 div-table">
+                
+        <div class="row">
+            <div class="titulo col-md-12 p-5">
+                <h1 class="text-secondary">Pedidos</h1>
+            </div>
+        </div>
+                <div class="div-table">
                     <Message :msg="msg" v-show="msg" />
                     <table class="table text-center table-striped table-responsive">
                         <thead class="table-dark">

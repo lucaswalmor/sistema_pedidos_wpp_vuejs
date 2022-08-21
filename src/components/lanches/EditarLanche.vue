@@ -12,7 +12,7 @@
             </div>
             <div class="col-md-6">
                 <label for="preco" class="form-label">Preco:</label>
-                <input type="text" class="form-control" id="preco" placeholder="R$ 00.00" v-model="dadosLanche.preco">
+                <input type="text" class="form-control" id="preco" placeholder="00.00" v-model="dadosLanche.preco">
             </div>
             <div class="col-md-6">
                 <input type="submit" value="Atualizar" class="form-control btn btn-success" @click="updateLanche">
@@ -21,7 +21,7 @@
                 <input type="submit" value="Voltar" class="form-control btn btn-secondary" @click="voltar">
             </div>
         </form>
-        <p class="mt-3"><small>* Favor seguir o modelo de preço na hora do cadastro "R$ 00.00"</small></p>
+        <p class="mt-3"><small>* Favor seguir o modelo de preço na hora do cadastro "00.00", sempre colocar os valores decimais</small></p>
     </div>    
 </template>
 
@@ -44,7 +44,7 @@ export default {
             var id = this.$route.params.id;
             const data = {
                 nome: this.dadosLanche.nome,
-                preco: this.dadosLanche.preco,
+                preco: 'R$ ' + this.dadosLanche.preco,
             };
 
             if(data.nome === null || data.preco === null) {

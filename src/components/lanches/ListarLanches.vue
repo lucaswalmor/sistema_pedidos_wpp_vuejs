@@ -43,7 +43,7 @@ export default {
     data() {
         return {
             dadosLanches: [],
-            msg: ""
+            msg: "",
         };
     },
     methods: {
@@ -54,8 +54,8 @@ export default {
             const req = await fetch("https://pedidoparrilha.herokuapp.com/api/lanches");
             const data = await req.json();
             this.dadosLanches = data;
-        },
 
+        },
         // deletar usuario 
         async deletarLanche(id) {
             if (confirm(`Você realmente deseja deletar o pedido Nº ${id} `)) {
@@ -70,21 +70,17 @@ export default {
                 setTimeout(() => {
                     this.msg = "";
                 }, 3000);
-
-                // var token = location.pathname.replace('/dashboard/', '');
-
-                // this.$router.push({ path: `/dashboard/${token}`} );
-                // this.$router.go(this.$router.currentRoute)
+                this.$router.go(this.$router.currentRoute)
             }
         },
-        editarLanche(id) {
 
+        editarLanche(id) {
             this.$router.push({ path: `/editar-lanche/${id}`, params: {id: id}} );
         }
     },
     mounted() {
         this.listarLanche();
-    }
+    },
 }
 </script>
 
