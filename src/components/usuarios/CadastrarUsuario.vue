@@ -51,6 +51,7 @@ export default {
             };
             // transforma o array de dados do pedido em texto 
             const dataJson = JSON.stringify(data);
+
             // const req = await fetch("http://127.0.0.1:8000/api/register", {
             const req = await fetch("https://pedidoparrilha.herokuapp.com/api/register", {
                 method: "POST",
@@ -70,7 +71,7 @@ export default {
             setTimeout(() => {
                 this.msg = ''
             }, 2000);
-        }
+        },
     },
 }
 </script>

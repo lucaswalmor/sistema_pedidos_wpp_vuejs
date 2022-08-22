@@ -7,16 +7,22 @@
                 <h1 class="text-secondary">Cadastrar Lanche</h1>
             </div>
         </div>
-        <form class="row g-3" autocomplete="off" @submit.prevent>
+        <!-- <form class="row g-3" autocomplete="off" @submit.prevent="createLanche" id="formulario"> -->
+        <form class="row g-3" autocomplete="off" @submit.prevent id="formulario">
             <div class="col-md-6">
                 <label for="nome" class="form-label">Nome:</label>
-                <input type="text" class="form-control" id="nome" v-model="nome">
+                <input type="text" class="form-control" name="nome" id="nome" v-model="nome">
             </div>
             <div class="col-md-6">
                 <label for="preco" class="form-label">Preco:</label>
-                <input type="number" class="form-control" id="preco" placeholder="00.00" min="0" v-model="preco">
+                <input type="number" class="form-control" name="preco" id="preco" placeholder="00.00" min="0" v-model="preco">
             </div>
+            <!-- <div class="col-md-6">
+                <label for="foto" class="form-label">foto</label>
+                <input type="file" class="form-control" id="foto" name="foto" @change="upload($event)">
+            </div>   -->
             <div class="col-md-12">
+                <!-- <input type="submit" class="form-control btn btn-secondary" > -->
                 <input type="submit" class="form-control btn btn-secondary" @click="createLanche">
             </div>
         </form>
@@ -35,8 +41,15 @@ export default {
         return {
             nome: null,
             preco: null,
+            foto: [],
             msg: '',
-            token_storage: ''
+            
+            dados: {
+                name: null,
+                email: null,
+                password: null,
+                foto: ''
+            },
         };
     },
     methods: {
@@ -44,38 +57,42 @@ export default {
             // cria um array com os dados do pedido 
             const data = {
                 nome: this.nome,
-                preco: 'R$ ' + this.preco,
+                preco: 'R$ ' + this.preco
             };
-            // transforma o array de dados do pedido em texto 
+
+            // // transforma o array de dados do pedido em texto 
             const dataJson = JSON.stringify(data);
 
-            if(data.nome === null || data.preco === null) {
-                alert('Porfavor preencha todos os campos');
-            } else {
-                // const req = await fetch("http://127.0.0.1:8000/api/lanches", {
-                const req = await fetch("https://pedidoparrilha.herokuapp.com/api/lanches", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json", "X-CSRF-Token": this.csrf },
-                    body: dataJson
-                });
+            // const form = document.querySelector('#formulario');
+            // const formData = new FormData(form);
+            // const values = [...formData.entries()];
+            // console.log(values)
 
-                if (req.status === 200) {
-                    this.msg = "Lanche criado com sucesso";
-                    this.nome = "";
-                    this.preco = "";
-                }
-                setTimeout(() => {
-                    this.msg = "";
-                }, 2000);
-                
-                
-                var token = location.pathname.replace('/dashboard/', '');
+            const req = await fetch("http://127.0.0.1:8000/api/lanches", {
+            // const req = await fetch("https://pedidoparrilha.herokuapp.com/api/lanches", {
+                method: "POST",
+                headers: { "Content-Type": "application/json"},
+                body: dataJson
+            });
 
-                // this.$router.go(-1)
-                this.$router.push({ path: `/dashboard/${token}`} );
+            if (req.status === 200) {
+                this.msg = "Lanche criado com sucesso";
+                this.nome = "";
+                this.preco = "";
             }
+            setTimeout(() => {
+                this.msg = "";
+            }, 2000);
+                
+                // this.$router.go(-1)
+            // if(values.nome === null || values.preco === null) {
+            //     alert('Porfavor preencha todos os campos');
+            // } else {
+            // }
         },
-        teste () {
+        upload(event){
+            let file = event.target.files[0];
+            this.foto = file
         }
     },
     components: { Message }

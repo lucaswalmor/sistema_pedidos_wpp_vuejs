@@ -31,7 +31,7 @@
                                     <!-- Error Message -->
                                 </div>
                                 <div class="col-lg-12 text-center login-button">
-                                    <button @click="fazerLogin" type="submit" class="fw-bold btn btn-warning text-dark ">LOGIN</button>
+                                    <button type="submit" class="fw-bold btn btn-warning text-dark ">LOGIN</button>
                                 </div>
                             </div>
                         </form>
@@ -59,9 +59,6 @@ export default {
         };
     },
     methods: {
-        fazerLogin() {
-            console.log("entrou");
-        },
         async createUser() {
             // cria um array com os dados do pedido 
             const data = {
@@ -69,19 +66,17 @@ export default {
                 password: this.password,
                 email: this.email
             };
-            console.log("DATA = " + data);
             // transforma o array de dados do pedido em texto 
             const dataJson = JSON.stringify(data);
-            console.log("DATAJSON = " + dataJson);
-            const req = await fetch("http://127.0.0.1:8000/api/register", {
+
+            // const req = await fetch("http://127.0.0.1:8000/api/register", {
+            const req = await fetch("https://pedidoparrilha.herokuapp.com/api/register", {
                 method: "POST",
                 headers: { "Content-Type": "application/json", "X-CSRF-Token": this.csrf },
                 body: dataJson
             });
-            console.log("REQ = " + dataJson);
             // traz a resposta dos dados criado
             const res = await req.json();
-            console.log("RES = " + res);
         },
         async login() {
             // cria um array com os dados do pedido 
@@ -109,7 +104,8 @@ export default {
             } else {
                 this.$router.push({ path: `/dashboard/${this.token}`, params: {token: res.access_token}} );
             }
-        }
+        },
+        
     }
 }
 </script>

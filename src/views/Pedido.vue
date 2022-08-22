@@ -611,7 +611,7 @@
               />
             </div>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-4 text-center">
             <img src="/img/sem_imagem.png" alt="" class="mt-3" style="width: 250px;" v-if="src === ''">
             <img :src="src" alt="" class="img-lanche" />
           </div>
@@ -801,7 +801,8 @@ export default {
       dadosLanches: [],
       dadosBebidas: [],
       preco: '',
-      TipoBebida: ''
+      TipoBebida: '',
+      bairros_banco: []
     };
   },
   methods: {
@@ -846,7 +847,7 @@ export default {
         var preco_lanche = parseFloat(this.dadosPedido.preco_lanche.replace('R$ ', ''));
         var taxa_entrega = parseFloat(this.dadosPedido.taxa_entrega.replace('R$ ', ''));
         var soma = preco_bebida + preco_lanche + taxa_entrega;
-        console.log(soma)
+
         this.dadosPedido.valor_total = soma;
         this.divBebida = !this.divBebida;
         this.divPagamento = !this.divPagamento;
@@ -919,72 +920,6 @@ export default {
       this.divFinPedido = !this.divFinPedido;
       this.divPagamento = !this.divPagamento;
     },
-    mudarLanche(event) {
-      const option = event.target.value;
-      this.dadosPedido.lanche = option;
-      if(option == 'PARRILLA BERRY') {
-        this.dadosPedido.preco_lanche = 'R$ 29.50'
-      } else if (option == 'PARRILLA BERRY COMBO') {
-        this.dadosPedido.preco_lanche = 'R$ 37.00'
-      } else if (option == 'PARRILLA CANDY') {
-        this.dadosPedido.preco_lanche = 'R$ 14.00'
-      } else if (option == 'PARRILLA GRILLED HERBS') {
-        this.dadosPedido.preco_lanche = 'R$ 27.00'
-      } else if (option == 'PARRILLA GRILLED HERBS COMBO') {
-        this.dadosPedido.preco_lanche = 'R$ 35.00'
-      } else if (option == 'PARRILLA BURGER') {
-        this.dadosPedido.preco_lanche = 'R$ 22.00'
-      } else if (option == 'PARRILLA BURGER COMBO') {
-        this.dadosPedido.preco_lanche = 'R$ 30.00'
-      } else if (option == 'PARRILLA CATUPIRY ANGUS') {
-        this.dadosPedido.preco_lanche = 'R$ 29.00'
-      } else if (option == 'PARRILLA CATUPIRY ANGUS COMBO') {
-        this.dadosPedido.preco_lanche = 'R$ 37.00'
-      } else if (option == 'PARRILLA CLASSIC') {
-        this.dadosPedido.preco_lanche = 'R$ 25.00'
-      } else if (option == 'PARRILLA CLASSIC COMBO') {
-        this.dadosPedido.preco_lanche = 'R$ 33.00'
-      } else if (option == 'PARRILLA SPECIAL DUPLO') {
-        this.dadosPedido.preco_lanche = 'R$ 29.00'
-      } else if (option == 'PARRILLA SPECIAL DUPLO COMBO') {
-        this.dadosPedido.preco_lanche = 'R$ 37.00'
-      } else if (option == 'PARRILLA CHICKEN') {
-        this.dadosPedido.preco_lanche = 'R$ 25.00'
-      } else if (option == 'PARRILLA CHICKEN COMBO') {
-        this.dadosPedido.preco_lanche = 'R$ 35.00'
-      } else {
-        this.dadosPedido.preco_lanche = ''
-      }
-    },
-    mudarBebida(event) {
-      const option = event.target.value;
-      this.dadosPedido.bebida = option;
-      if(option == 'Coca-Cola') {
-        this.src = '/img/bebidas/coca_lata.png'
-        this.dadosPedido.bebida = option
-        this.dadosPedido.preco_bebida = 'R$ 4.00'
-      } else if (option == 'Pepsi') {
-        this.src = '/img/bebidas/pepsi.png'
-        this.dadosPedido.bebida = option
-        this.dadosPedido.preco_bebida = 'R$ 3.00'
-      } else if (option == 'Brahma') {
-        this.src = '/img/bebidas/brahma.jpg'
-        this.dadosPedido.bebida = option
-        this.dadosPedido.preco_bebida = 'R$ 4.00'
-      } else if (option == 'Amstel') {
-        this.src = '/img/bebidas/amstel.jpg'
-        this.dadosPedido.bebida = option
-        this.dadosPedido.preco_bebida = 'R$ 5.00'
-      } else if (option == 'Agua') {
-        this.src = '/img/bebidas/agua.jpg'
-        this.dadosPedido.bebida = option
-        this.dadosPedido.preco_bebida = 'R$ 2.00'
-      } else if(option == '...') {
-        this.src = '/img/logo_teste.png'
-        this.dadosPedido.bebida = ''
-        this.dadosPedido.preco_bebida = ''
-      }
-    },
     formaPagamento(event) {
       const option = event.target.value;
       if(option === 'Cartão de crédito') {
@@ -1051,7 +986,6 @@ export default {
         var preco = precoLanche[item].preco;
         if(option == nome) {
           this.dadosPedido.preco_lanche =  preco
-          console.log(this.dadosPedido.preco_lanche)
         }
       }
     },
@@ -1068,9 +1002,40 @@ export default {
         var preco = precoBebida[item].preco;
         if(option == nome) {
           this.dadosPedido.preco_bebida = preco
-          console.log(this.dadosPedido.preco_bebida)
         }
       }
+
+      if(option == 'Coca Cola') {
+        this.src = '/img/bebidas/coca_lata.png'
+        this.dadosPedido.bebida = option
+        this.dadosPedido.preco_bebida = 'R$ 4.00'
+      } else if (option == 'Pepsi') {
+        this.src = '/img/bebidas/pepsi.png'
+        this.dadosPedido.bebida = option
+        this.dadosPedido.preco_bebida = 'R$ 3.00'
+      } else if (option == 'Brahma') {
+        this.src = '/img/bebidas/brahma.jpg'
+        this.dadosPedido.bebida = option
+        this.dadosPedido.preco_bebida = 'R$ 4.00'
+      } else if (option == 'Amstel') {
+        this.src = '/img/bebidas/amstel.jpg'
+        this.dadosPedido.bebida = option
+        this.dadosPedido.preco_bebida = 'R$ 5.00'
+      } else if (option == 'Agua') {
+        this.src = '/img/bebidas/agua.jpg'
+        this.dadosPedido.bebida = option
+        this.dadosPedido.preco_bebida = 'R$ 2.00'
+      } else if(option == 'Selecione uma bebida') {
+        this.src = '/img/sem_imagem.png'
+        this.dadosPedido.bebida = ''
+        this.dadosPedido.preco_bebida = ''
+      }
+    },
+    async listarBairros() {
+        const req = await fetch("http://127.0.0.1:8000/api/taxa_entrega");
+        // const req = await fetch("https://pedidoparrilha.herokuapp.com/api/taxa_entrega");
+        const data = await req.json();
+        this.bairros_banco = data;
     }
   },
   watch: {
@@ -1084,25 +1049,14 @@ export default {
             this.dadosPedido.rua = r.logradouro
             this.dadosPedido.bairro = r.bairro
             // bairros de uberaba taxa de entrega
-            const info_bairros = [
-              {
-                bairros_por_taxa: ["Residencial Estados Unidos", "Centro"],
-                valor_taxa: "R$ 8,00",
-              },
-              {
-                bairros_por_taxa: ["Boa Vista"],
-                valor_taxa: "R$ 10,00",
-              },
-              {
-                bairros_por_taxa: ["Conjunto Alfredo Freire"],
-                valor_taxa: "R$ 12,00",
-              },
-            ];
-            info_bairros.forEach((bairro) => {
-              if (bairro.bairros_por_taxa.includes(r.bairro)) {
-                return (this.dadosPedido.taxa_entrega = bairro.valor_taxa);
+            var bairros = this.bairros_banco
+            for (var item in bairros){
+              var bairro = bairros[item].bairro;
+              var preco = bairros[item].preco;
+              if(r.bairro == bairro) {
+                this.dadosPedido.taxa_entrega = preco
               }
-            });
+            }
           })
           .catch((error) => {
             console.log(error);
@@ -1111,8 +1065,9 @@ export default {
     },
   },
   mounted() {
-    this.listarLanche();
     this.listarBebidas();
+    this.listarBairros();
+    this.listarLanche();
   }
 }
 </script>
@@ -1134,6 +1089,7 @@ export default {
 
 .img-lanche {
   width: 270px;
+  min-height: 270px;
   margin-top: 30px;
 }
 

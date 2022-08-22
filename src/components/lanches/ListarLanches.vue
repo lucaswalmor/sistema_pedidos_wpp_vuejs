@@ -70,17 +70,17 @@ export default {
                 setTimeout(() => {
                     this.msg = "";
                 }, 3000);
+
                 this.$router.go(this.$router.currentRoute)
             }
         },
-
         editarLanche(id) {
             this.$router.push({ path: `/editar-lanche/${id}`, params: {id: id}} );
         }
     },
     mounted() {
         this.listarLanche();
-    },
+    }
 }
 </script>
 

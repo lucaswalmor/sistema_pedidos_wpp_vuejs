@@ -76,6 +76,26 @@
                             </li>
                         </ul>
                     </li>
+                    <li>
+                        <a href="#submenu1" data-bs-toggle="collapse" class="col-md-12 d-flex nav-link px-0">
+                            <div class="col-md-2">
+                                <i class="fa-lg fa-solid fa-dollar-sign"></i>
+                            </div>
+                            <div class="col-md-10">
+                            <span>
+                                Taxa de Entrega 
+                            </span>
+                            </div>
+                        </a>
+                        <ul class="collapse nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
+                            <li class="w-100 ms-4">
+                                <a href="#" class="nav-link px-0" @click="cadastrarNovaTaxa">Cadastrar</a>
+                            </li>
+                            <li class=" ms-4">
+                                <a href="#" class="nav-link px-0" @click="listarTaxas">Editar</a>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -110,11 +130,11 @@
                     </div>
                 </div>
                 
-        <div class="row">
-            <div class="titulo col-md-12 p-5">
-                <h1 class="text-secondary">Pedidos</h1>
-            </div>
-        </div>
+                <div class="row">
+                    <div class="titulo col-md-12 p-5">
+                        <h1 class="text-secondary">Pedidos</h1>
+                    </div>
+                </div>
                 <div class="div-table">
                     <Message :msg="msg" v-show="msg" />
                     <table class="table text-center table-striped table-responsive">
@@ -145,13 +165,15 @@
                 </div>
             </div>
         </div>
-        <form @submit.prevent class="div-form-cadastro">
-            <CadastrarUsuario :token_storage="token_storage" v-show="cadastroUsuario" />
-            <CadastrarLanche :token_storage="token_storage" v-show="cadastroLanche"/>
-            <CadastrarBebida :token_storage="token_storage" v-show="cadastroBebida"/>
-            <ListaUsuarios :token_storage="token_storage" v-show="listaUsuarios"/>
-            <ListarLanches :token_storage="token_storage" v-show="listaLanches"/>
-            <ListarBebidas :token_storage="token_storage" v-show="listaBebidas"/>
+        <form @submit.prevent class="div-form-cadastro" enctype="multipart/form-data">
+            <CadastrarUsuario v-show="cadastroUsuario" />
+            <CadastrarLanche v-show="cadastroLanche"/>
+            <CadastrarBebida v-show="cadastroBebida"/>
+            <CadastrarTaxa v-show="cadastroTaxa"/>
+            <ListarTaxaEntrega v-show="listaTaxa"/>
+            <ListaUsuarios v-show="listaUsuarios"/>
+            <ListarLanches v-show="listaLanches"/>
+            <ListarBebidas v-show="listaBebidas"/>
         </form>
     </div>
 </template>
@@ -163,17 +185,21 @@ import CadastrarLanche from "../lanches/CadastrarLanche.vue";
 import ListarLanches from "../lanches/ListarLanches.vue";
 import ListarBebidas from "../bebidas/ListarBebidas.vue";
 import CadastrarBebida from "../bebidas/CadastrarBebida.vue";
+import CadastrarTaxa from "../taxa_entrega/CadastrarTaxa.vue";
+import ListarTaxaEntrega from "../taxa_entrega/ListarTaxaEntrega.vue";
 
 export default {
     name: "Dashboard",
-    components: { CadastrarUsuario, ListaUsuarios, CadastrarLanche, ListarLanches, ListarBebidas, CadastrarBebida },
+    components: { CadastrarUsuario, ListaUsuarios, CadastrarLanche, ListarLanches, ListarBebidas, CadastrarBebida, CadastrarTaxa, ListarTaxaEntrega },
     data() {
         return {
             cadastroUsuario: false,
-            listaUsuarios: false,
-            listaLanches: false,
             cadastroLanche: false,
             cadastroBebida: false,
+            cadastroTaxa: false,
+            listaUsuarios: false,
+            listaTaxa: false,
+            listaLanches: false,
             dashboard: true,
             dadosUsuario: [],
             pedidos: [],
@@ -211,14 +237,16 @@ export default {
             this.listaBebidas = false;
             this.dashboard = false;
         },
-        dashboardView() {
-            this.dashboard = true;
+        cadastrarNovaTaxa() {
+            this.cadastroTaxa = true;
             this.cadastroBebida = false;
             this.cadastroLanche = false;
             this.cadastroUsuario = false;
             this.listaUsuarios = false;
             this.listaLanches = false;
             this.listaBebidas = false;
+            this.dashboard = false;
+            this.listaTaxa = false;
         },
         listarUsuarios() {
             this.listaUsuarios = true;
@@ -246,6 +274,26 @@ export default {
             this.cadastroLanche = false;
             this.cadastroUsuario = false;
             this.dashboard = false;
+        },
+        listarTaxas() {
+            this.listaTaxa = true;
+            this.listaBebidas = false;
+            this.listaLanches = false;
+            this.listaUsuarios = false;
+            this.cadastroBebida = false;
+            this.cadastroTaxa = false;
+            this.cadastroLanche = false;
+            this.cadastroUsuario = false;
+            this.dashboard = false;
+        },
+        dashboardView() {
+            this.dashboard = true;
+            this.cadastroBebida = false;
+            this.cadastroLanche = false;
+            this.cadastroUsuario = false;
+            this.listaUsuarios = false;
+            this.listaLanches = false;
+            this.listaBebidas = false;
         },
         async listarPedidos() {
             // cria um array com os dados do pedido 
@@ -325,6 +373,10 @@ export default {
 .offcanvas-body ul li a {
     color: #fff;
     text-decoration: none;
+}
+
+.offcanvas-body ul li a:hover {
+    opacity: 0.6;
 }
 
 .offcanvas-body ul li a i {

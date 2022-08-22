@@ -1,20 +1,50 @@
-<div id="data-hora"></div>
-<script>
-    // Função para formatar 1 em 01
-    const zeroFill = n => {
-        return ('0' + n).slice(-2);
-    }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form id="subscription">
+        <h1>Subscribe</h1>
+        <div id="message"></div>
+        <div class="field">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" placeholder="Enter your fullname" required />
+            <small></small>
+        </div>
+        <div class="field">
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email" placeholder="Enter your email address" required />
+            <small></small>
+        </div>
+        
+        <div class="field">
+            <label for="email">Email:</label>
+            <input type="file" id="foto" name="foto" required />
+            <small></small>
+        </div>
+        <div class="field">
+            <button type="submit" class="full" id="submit">Subscribe</button>
+        </div>
+    </form>
 
-    // Cria intervalo
-    const interval = setInterval(() => {
-        // Pega o horário atual
-        const now = new Date();
+      <script>
+          const btn = document.querySelector('#submit');
+          const form = document.querySelector('#subscription');
+          const formData = new FormData(form);
 
-        // Formata a data conforme dd/mm/aaaa hh:ii:ss
-        const dataHora = zeroFill(now.getUTCDate()) + '/' + zeroFill((now.getMonth() + 1)) + '/' + now.getFullYear() + ' ' + zeroFill(now.getHours()) + ':' + zeroFill(now.getMinutes()) + ':' + zeroFill(now.getSeconds());
+            btn.addEventListener('click', (e) => {
+                // prevent the form from submitting
+                e.preventDefault();
 
-        // Exibe na tela usando a div#data-hora
-        document.getElementById('data-hora').innerHTML = dataHora;
-    }, 1000);
-</script>
+                // show the form values
+                const formData = new FormData(form);
+                const values = [...formData.entries()];
+                console.log(values);
+            });
+      </script>
 </body>
+</html>
