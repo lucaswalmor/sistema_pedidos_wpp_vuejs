@@ -51,26 +51,31 @@ export default {
             };
             // transforma o array de dados do pedido em texto 
             const dataJson = JSON.stringify(data);
+                
+            if(values.nome === null || values.preco === null) {
+                alert('Porfavor preencha todos os campos');
+            } else {
+                // const req = await fetch("http://127.0.0.1:8000/api/register", {
+                const req = await fetch("https://pedidoparrilha.herokuapp.com/api/register", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json", "X-CSRF-Token": this.csrf },
+                    body: dataJson
+                });
 
-            // const req = await fetch("http://127.0.0.1:8000/api/register", {
-            const req = await fetch("https://pedidoparrilha.herokuapp.com/api/register", {
-                method: "POST",
-                headers: { "Content-Type": "application/json", "X-CSRF-Token": this.csrf },
-                body: dataJson
-            });
+                // traz a resposta dos dados criado
+                const res = await req.json();
+                if (res.message === "User successfully register.") {
+                    this.msg = "Usuario criado com sucesso"
+                    this.name = "";
+                    this.email = "";
+                    this.password = "";
+                    this.$router.go(this.$router.currentRoute)
+                }
 
-            // traz a resposta dos dados criado
-            const res = await req.json();
-            if (res.message === "User successfully register.") {
-                this.msg = "Usuario criado com sucesso"
-                this.name = "";
-                this.email = "";
-                this.password = "";
+                setTimeout(() => {
+                    this.msg = ''
+                }, 2000);
             }
-
-            setTimeout(() => {
-                this.msg = ''
-            }, 2000);
         },
     },
 }

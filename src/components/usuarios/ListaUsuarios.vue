@@ -3,8 +3,13 @@
     <div class="container">
         <Message :msg="msg" v-show="msg" />
         <div class="row">
-            <div class="titulo col-md-12 p-5">
-                <h1 class="text-secondary">Editar Usuário</h1>
+            <div class="titulo col-md-12 p-5 d-flex">
+                <div class="col-md-6">
+                    <h1 class="text-secondary">Editar Usuário</h1>
+                </div>
+                <div class="col-md-5 pt-2">
+                    <input type="text" name="filtro_usuarios" id="filtro_usuarios" class="form-control" placeholder="Pesquisar...">
+                </div>
             </div>
         </div>
         <table class="table text-center table-striped">
@@ -16,7 +21,7 @@
                     <th>Ações</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="tabela_usuarios">
                 <tr v-for="usuario in dadosUsuario" :key="usuario">
                     <th>{{usuario.id}}</th>
                     <td>{{usuario.name}}</td>
@@ -34,6 +39,15 @@
 </template>
 
 <script>
+// script de filtro de tabela
+$(document).ready(function(){
+  $("#filtro_usuarios").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#tabela_usuarios tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
 import Message from '../message/Message.vue';
 export default {
     name: "ListaUsuarios",

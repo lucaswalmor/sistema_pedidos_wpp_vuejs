@@ -1,7 +1,6 @@
 <template>
     <Header />
     <div class="container">
-        <Message :msg="msg" v-show="msg"/>
         <div class="row m-5">
             <h2>Editar Usuario</h2>
         </div>
@@ -31,17 +30,15 @@
 </template>
 
 <script>
-import Message from '../message/Message.vue';
 import Header from '../conteudo/Header.vue';
 export default {
     name: "EditarUsuario",
-    components: { Message, Header },
+    components: { Header },
     data() {
         return {
             name: null,
             password: null,
             email: null,
-            msg: "",
             dadosUsuarios: []
         };
     },

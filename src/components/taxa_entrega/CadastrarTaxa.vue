@@ -49,20 +49,19 @@ export default {
             // transforma o array de dados do pedido em texto 
             const dataJson = JSON.stringify(data);
 
-            const req = await fetch("http://127.0.0.1:8000/api/taxa_entrega", {
-                // const req = await fetch("https://pedidoparrilha.herokuapp.com/api/taxa_entrega", {
+            // const req = await fetch("http://127.0.0.1:8000/api/taxa_entrega", {
+            const req = await fetch("https://pedidoparrilha.herokuapp.com/api/taxa_entrega", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: dataJson
             });
-
             // traz a resposta dos dados criado
 
             if (req.status === 200) {
                 this.bairro = "";
                 // this.valor_taxa = "";
             }
-            
+
             setTimeout(() => {
                 this.msg = ''
             }, 2000);

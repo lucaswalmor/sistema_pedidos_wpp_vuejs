@@ -7,7 +7,7 @@
                     <h1 class="text-secondary">Editar Taxa de Entrega</h1>
                 </div>
                 <div class="col-md-5 pt-2">
-                    <input type="text" name="filter" id="filter" class="form-control" placeholder="Pesquisar...">
+                    <input type="text" name="filtro_taxa" id="filtro_taxa" class="form-control" placeholder="Pesquisar...">
                 </div>
             </div>
         </div>
@@ -20,7 +20,7 @@
                     <th>Ações</th>
                 </tr>
             </thead>
-            <tbody id="myTable">
+            <tbody id="tabela_taxa">
                 <tr v-for="taxa in dadosTaxa" :key="taxa">
                     <th>{{taxa.id}}</th>
                     <td>{{taxa.bairro}}</td>
@@ -39,9 +39,9 @@
 <script>
 // script de filtro de tabela
 $(document).ready(function(){
-  $("#filter").on("keyup", function() {
+  $("#filtro_taxa").on("keyup", function() {
     var value = $(this).val().toLowerCase();
-    $("#myTable tr").filter(function() {
+    $("#tabela_taxa tr").filter(function() {
       $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
     });
   });
@@ -57,13 +57,32 @@ export default {
     },
     methods: {
         async editarTaxa() {
-            const req = await fetch("http://127.0.0.1:8000/api/taxa_entrega");
-            // const req = await fetch("https://pedidoparrilha.herokuapp.com/api/taxa_entrega");
+            // const req = await fetch("http://127.0.0.1:8000/api/taxa_entrega");
+            const req = await fetch("https://pedidoparrilha.herokuapp.com/api/taxa_entrega");
             const data = await req.json();
             this.dadosTaxa = data;
+
+        },
+        // deletar usuario 
+        async deletarLanche(id) {
+            if (confirm(`Você realmente deseja deletar o pedido Nº ${id} `)) {
+                // const req = await fetch(`http://127.0.0.1:8000/api/taxa_entrega/${id}`, {
+                const req = await fetch(`https://pedidoparrilha.herokuapp.com/api/taxa_entrega/${id}`, {
+                    method: "DELETE"
+                });
+                const res = await req.json();
+                console.log(req)
+                // msg de pedido deletado
+                this.msg = `Lanche Nº ${id} deletado com sucesso`;
+                setTimeout(() => {
+                    this.msg = "";
+                }, 3000);
+
+                this.$router.go(this.$router.currentRoute)
+            }
         },
         editTaxa(id) {
-            this.$router.push({ path: `/editar-usuario/${id}`, params: {id: id}} );
+            this.$router.push({ path: `/editar-taxa/${id}`, params: {id: id}} );
         }
     },
     mounted() {

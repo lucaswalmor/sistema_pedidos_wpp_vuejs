@@ -33,6 +33,11 @@ const routes = [
     component: () => import('../components/usuarios/EditarUsuario.vue')
   },
   {
+    path: '/editar-taxa/:id',
+    name: 'EditarTaxa',
+    component: () => import('../components/taxa_entrega/EditarTaxa.vue')
+  },
+  {
     path: '/ver-pedido/:id',
     name: 'VerPedido',
     component: () => import('../components/pedidos/VerPedido.vue')

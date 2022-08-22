@@ -2,10 +2,14 @@
 <div v-show="listaBebidas">
     <div class="container">
         <Message :msg="msg" v-show="msg" />
-
         <div class="row">
-            <div class="titulo col-md-12 p-5">
-                <h1 class="text-secondary">Editar Bebida</h1>
+            <div class="titulo col-md-12 p-5 d-flex">
+                <div class="col-md-6">
+                    <h1 class="text-secondary">Editar Bebida</h1>
+                </div>
+                <div class="col-md-5 pt-2">
+                    <input type="text" name="filtr_bebida" id="filtr_bebida" class="form-control" placeholder="Pesquisar...">
+                </div>
             </div>
         </div>
         <table class="table text-center table-striped">
@@ -17,7 +21,7 @@
                     <th>Ações</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="tabela_bebidas">
                 <tr v-for="bebida in dadosBebidas" :key="bebida">
                     <th>{{bebida.id}}</th>
                     <td>{{bebida.nome}}</td>
@@ -34,6 +38,15 @@
 </template>
 
 <script>
+// script de filtro de tabela
+$(document).ready(function(){
+  $("#filtr_bebida").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#tabela_bebidas tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
 import Message from '../message/Message.vue';
 export default {
     name: "ListarBebidas",

@@ -1,6 +1,5 @@
 <template>
     <div class="container" v-show="cadastroBebida">
-        <Message :msg="msg" v-show="msg"/>
         <div class="row">
             <div class="titulo col-md-12 p-5">
                 <h1 class="text-secondary">Cadastrar Bebida</h1>
@@ -13,7 +12,7 @@
             </div>
             <div class="col-md-6">
                 <label for="preco" class="form-label">Preco:</label>
-                <input type="number" class="form-control" placeholder="00.00" id="preco" min="0" v-model="preco">
+                <input type="text" class="form-control" placeholder="00.00" id="preco" min="0" v-model="preco">
             </div>
             <div class="col-md-12">
                 <input type="submit" class="form-control btn btn-secondary" @click="createBebida">
@@ -24,16 +23,12 @@
 </template>
 
 <script>
-import Message from '../message/Message.vue';
-
 export default {
     name: "CadastarBebida",
-    components: { Message },
     data() {
         return {
             nome: null,
             preco: null,
-            msg: ''
         };
     },
     methods: {
@@ -55,17 +50,15 @@ export default {
                     headers: { "Content-Type": "application/json" },
                     body: dataJson
                 });
-
+                
                 if (req.status === 200) {
-                    this.msg = "Bebida criado com sucesso";
                     this.nome = "";
                     this.preco = "";
+                    this.$router.go(this.$router.currentRoute)
                 }
                 setTimeout(() => {
                     this.msg = "";
                 }, 2000);
-                
-                this.$router.go(-1)
             }
         }
     },

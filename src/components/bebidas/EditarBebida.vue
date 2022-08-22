@@ -1,7 +1,6 @@
 <template>
     <Header />
     <div class="container">
-        <Message :msg="msg" v-show="msg"/>
         <div class="row p-5">
             <h2>Editar Bebida</h2>
         </div>
@@ -26,11 +25,10 @@
 </template>
 
 <script>
-import Message from '../message/Message.vue';
 import Header from '../conteudo/Header.vue';
 export default {
     name: "EditarBebida",
-    components: { Message, Header },
+    components: { Header },
     data() {
         return {
             nome: null,
@@ -60,7 +58,6 @@ export default {
                 });
 
                 if (req.status === 200) {
-                    this.msg = "Bebida criado com sucesso";
                     this.nome = "";
                     this.preco = "";
                 }

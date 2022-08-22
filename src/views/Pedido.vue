@@ -179,7 +179,7 @@
 
       <!-- PEDIDO DE LANCHE -->
       <div class="row mt-3" id="pedido_lanche" v-show="divLanches">
-        <div class="row">
+        <div class="row d-flex justify-content-around">
           <div class="col-md-4">
             <label for="lanche" class="form-label">Lanche</label>
             <select
@@ -216,7 +216,7 @@
           </div>
 
           <!-- IMAGENS LANCHES -->
-          <div class="col-md-4 d-flex justify-content-center">
+          <!-- <div class="col-md-4 d-flex justify-content-center">
             <img
               src="/img/sem_imagem.png"
               alt=""
@@ -307,7 +307,7 @@
               class="img-lanche candy"
               v-if="tipoLanche == 'PARRILLA CHICKEN COMBO'"
             />
-          </div>
+          </div> -->
 
           <!-- INGREDIENTES LANCHES -->
           <div class="col-md-4 mt-4">
@@ -593,7 +593,7 @@
 
       <!-- PEDIDO DE BEBIDA -->
       <div class="row mt-3" id="pedido_bebida" v-show="divBebida">
-        <div class="row">
+        <div class="row d-flex justify-content-around">
           <div class="col-md-4">
             <label for="bebida" class="form-label">Bebidas</label>
             <select id="bebida" class="form-select" @change="alterarPrecoBebida($event)">
@@ -611,10 +611,10 @@
               />
             </div>
           </div>
-          <div class="col-md-4 text-center">
+          <!-- <div class="col-md-4 text-center">
             <img src="/img/sem_imagem.png" alt="" class="mt-3" style="width: 250px;" v-if="src === ''">
             <img :src="src" alt="" class="img-lanche" />
-          </div>
+          </div> -->
           <div class="col-12 mt-3 d-flex justify-content-center" id="botao">
             <button type="submit" @click="etapa_3($event)" class="btn etapa_3">
               Confirmar Pedido
@@ -625,7 +625,7 @@
 
       <!-- FORMAS DE PAGAMENTO -->
       <div class="row mt-3" id="pagamento" v-show="divPagamento">
-        <div class="row">
+        <div class="row d-flex justify-content-around">
           <div class="col-md-4">
             <label for="forma_pagamento" class="form-label"
               >Forma de pagamento</label
@@ -714,13 +714,14 @@
             <strong>Valor Total: R$</strong> {{ dadosPedido.valor_total }}
           </div>
           <div v-if="dadosPedido.troco != ''">
-            <strong>R$ Troco:</strong> {{ dadosPedido.troco }}
+            <strong> Troco: </strong> R$ {{ dadosPedido.troco }}
           </div>
           <div>
             <strong>Forma de pagamento:</strong> {{ dadosPedido.forma_pagamento }}
           </div>
         </div>
       </div>
+      
       <div
         class="col-12 mt-3 text-center"
         v-show="divFinPedido"
@@ -856,58 +857,84 @@ export default {
       // se tiver troco, ap e bloco no pedido, entrara neste bloco 
       if (this.dadosPedido.troco != '' && this.dadosPedido.apartamento != '' && this.dadosPedido.bloco != '') {
         this.pedido_wpp = '*Agradecemos pela preferência, seu pedido está sendo preparado!*%0A*Nome:* ' + this.dadosPedido.nome +
+          '%0A*--------------------------------------------------------------------------------* ' +
+          '%0A' +
           '%0A*Rua:* ' + this.dadosPedido.rua + ' Nº ' + this.dadosPedido.numero +
+          '%0A' +
           '%0A*Bairro:* ' + this.dadosPedido.bairro +
+          '%0A' +
           '%0A*Apartamento:* ' + this.dadosPedido.apartamento +
+          '%0A' +
           '%0A*Bloco:* ' + this.dadosPedido.bloco +
+          '%0A' +
           '%0A*Telefone:* ' + this.dadosPedido.telefone +
+          '%0A' +
           '%0A*Lanche:* ' + this.dadosPedido.lanche +
+          '%0A' +
           '%0A*Bebida:* ' + this.dadosPedido.bebida +
+          '%0A' +
           '%0A*Observações:* ' + this.dadosPedido.observacoes +
+          '%0A' +
           '%0A*Preço Total:* R$ ' + this.dadosPedido.valor_total +
+          '%0A' +
           '%0A*Troco para:* R$ ' + this.dadosPedido.troco +
-          '%0A*Forma de pagamento:* ' + this.dadosPedido.forma_pagamento;
+          '%0A' +
+          '%0A*Forma de pagamento:* ' + this.dadosPedido.forma_pagamento +
+          '%0A*--------------------------------------------------------------------------------* ';
       } else if (this.dadosPedido.troco === '' && this.dadosPedido.apartamento != '' && this.dadosPedido.bloco != '') {
         // se tiver ap e bloco no pedido, entrara neste bloco
         // variavel pedido monta o pedido que será enviado no html 
         this.pedido_wpp = '*Agradecemos pela preferência, seu pedido está sendo preparado!*%0A*Nome:* ' + this.dadosPedido.nome +
+          '%0A*--------------------------------------------------------------------------------* ' +
+          '%0A' +
           '%0A*Rua:* ' + this.dadosPedido.rua + ' Nº ' + this.dadosPedido.numero +
+          '%0A' +
           '%0A*Bairro:* ' + this.dadosPedido.bairro +
+          '%0A' +
           '%0A*Apartamento:* ' + this.dadosPedido.apartamento +
+          '%0A' +
           '%0A*Bloco:* ' + this.dadosPedido.bloco +
-          '%0A*Telefone:* ' + this.dadosPedido.telefone +
-          '%0A*Lanche:* ' + this.dadosPedido.lanche +
-          '%0A*Bebida:* ' + this.dadosPedido.bebida +
-          '%0A*Observações:* ' + this.dadosPedido.observacoes +
-          '%0A*Preço Total:* R$ ' + this.dadosPedido.valor_total +
-          '%0A*Forma de pagamento:* ' + this.dadosPedido.forma_pagamento;
+          '%0A' +
+          '%0A*Telefone:* ' + this.dadosPedido.telefone +'%0A' +
+          '%0A*Lanche:* ' + this.dadosPedido.lanche +'%0A' +
+          '%0A*Bebida:* ' + this.dadosPedido.bebida +'%0A' +
+          '%0A*Observações:* ' + this.dadosPedido.observacoes +'%0A' +
+          '%0A*Preço Total:* R$ ' + this.dadosPedido.valor_total +'%0A' +
+          '%0A*Forma de pagamento:* ' + this.dadosPedido.forma_pagamento
+          '%0A*--------------------------------------------------------------------------------* ';
       } else if (this.dadosPedido.troco != '' && this.dadosPedido.apartamento != '') {
         // se tiver ap e troco no pedido, entrara neste bloco 
 
         // variavel pedido monta o pedido que será enviado no html 
         this.pedido_wpp = '*Agradecemos pela preferência, seu pedido está sendo preparado!*%0A*Nome:* ' + this.dadosPedido.nome +
-            '%0A*Rua:* ' + this.dadosPedido.rua + ' Nº ' + this.dadosPedido.numero +
-            '%0A*Bairro:* ' + this.dadosPedido.bairro +
-            '%0A*Apartamento:* ' + this.dadosPedido.apartamento +
-            '%0A*Telefone:* ' + this.dadosPedido.telefone +
-            '%0A*Lanche:* ' + this.dadosPedido.lanche +
-            '%0A*Bebida:* ' + this.dadosPedido.bebida +
-            '%0A*Observações:* ' + this.dadosPedido.observacoes +
-            '%0A*Preço Total:* R$ ' + this.dadosPedido.valor_total +
-            '%0A*Troco para:* R$ ' + this.dadosPedido.troco +
-            '%0A*Forma de pagamento:* ' + this.dadosPedido.forma_pagamento;
+            '%0A*--------------------------------------------------------------------------------* ' +
+            '%0A' +
+            '%0A*Rua:* ' + this.dadosPedido.rua + ' Nº ' + this.dadosPedido.numero +'%0A' +
+            '%0A*Bairro:* ' + this.dadosPedido.bairro +'%0A' +
+            '%0A*Apartamento:* ' + this.dadosPedido.apartamento +'%0A' +
+            '%0A*Telefone:* ' + this.dadosPedido.telefone +'%0A' +
+            '%0A*Lanche:* ' + this.dadosPedido.lanche +'%0A' +
+            '%0A*Bebida:* ' + this.dadosPedido.bebida +'%0A' +
+            '%0A*Observações:* ' + this.dadosPedido.observacoes +'%0A' +
+            '%0A*Preço Total:* R$ ' + this.dadosPedido.valor_total +'%0A' +
+            '%0A*Troco para:* R$ ' + this.dadosPedido.troco +'%0A' +
+            '%0A*Forma de pagamento:* ' + this.dadosPedido.forma_pagamento
+          '%0A*--------------------------------------------------------------------------------* ';
       } else {
         // se não tiver troco, ap e bloco no pedido, entrara neste bloco 
         // variavel pedido monta o pedido que será enviado no html 
         this.pedido_wpp = '*Agradecemos pela preferência, seu pedido está sendo preparado!*%0A*Nome:* ' + this.dadosPedido.nome +
-            '%0A*Rua:* ' + this.dadosPedido.rua + ' Nº ' + this.dadosPedido.numero +
-            '%0A*Bairro:* ' + this.dadosPedido.bairro +
-            '%0A*Telefone:* ' + this.dadosPedido.telefone +
-            '%0A*Lanche:* ' + this.dadosPedido.lanche +
-            '%0A*Bebida:* ' + this.dadosPedido.bebida +
-            '%0A*Observações:* ' + this.dadosPedido.observacoes +
-            '%0A*Preço Total:* R$ ' + this.dadosPedido.valor_total +
-            '%0A*Forma de pagamento:* ' + this.dadosPedido.forma_pagamento;
+            '%0A*--------------------------------------------------------------------------------* ' +
+            '%0A' +
+            '%0A*Rua:* ' + this.dadosPedido.rua + ' Nº ' + this.dadosPedido.numero +'%0A' +
+            '%0A*Bairro:* ' + this.dadosPedido.bairro +'%0A' +
+            '%0A*Telefone:* ' + this.dadosPedido.telefone +'%0A' +
+            '%0A*Lanche:* ' + this.dadosPedido.lanche +'%0A' +
+            '%0A*Bebida:* ' + this.dadosPedido.bebida +'%0A' +
+            '%0A*Observações:* ' + this.dadosPedido.observacoes +'%0A' +
+            '%0A*Preço Total:* R$ ' + this.dadosPedido.valor_total +'%0A' +
+            '%0A*Forma de pagamento:* ' + this.dadosPedido.forma_pagamento
+          '%0A*--------------------------------------------------------------------------------* ';
       }
 
       var telefone_replace = this.dadosPedido.telefone.replace("(", "")
@@ -1005,35 +1032,35 @@ export default {
         }
       }
 
-      if(option == 'Coca Cola') {
-        this.src = '/img/bebidas/coca_lata.png'
-        this.dadosPedido.bebida = option
-        this.dadosPedido.preco_bebida = 'R$ 4.00'
-      } else if (option == 'Pepsi') {
-        this.src = '/img/bebidas/pepsi.png'
-        this.dadosPedido.bebida = option
-        this.dadosPedido.preco_bebida = 'R$ 3.00'
-      } else if (option == 'Brahma') {
-        this.src = '/img/bebidas/brahma.jpg'
-        this.dadosPedido.bebida = option
-        this.dadosPedido.preco_bebida = 'R$ 4.00'
-      } else if (option == 'Amstel') {
-        this.src = '/img/bebidas/amstel.jpg'
-        this.dadosPedido.bebida = option
-        this.dadosPedido.preco_bebida = 'R$ 5.00'
-      } else if (option == 'Agua') {
-        this.src = '/img/bebidas/agua.jpg'
-        this.dadosPedido.bebida = option
-        this.dadosPedido.preco_bebida = 'R$ 2.00'
-      } else if(option == 'Selecione uma bebida') {
-        this.src = '/img/sem_imagem.png'
-        this.dadosPedido.bebida = ''
-        this.dadosPedido.preco_bebida = ''
-      }
+      // if(option == 'Coca Cola') {
+      //   this.src = '/img/bebidas/coca_lata.png'
+      //   this.dadosPedido.bebida = option
+      //   this.dadosPedido.preco_bebida = 'R$ 4.00'
+      // } else if (option == 'Pepsi') {
+      //   this.src = '/img/bebidas/pepsi.png'
+      //   this.dadosPedido.bebida = option
+      //   this.dadosPedido.preco_bebida = 'R$ 3.00'
+      // } else if (option == 'Brahma') {
+      //   this.src = '/img/bebidas/brahma.jpg'
+      //   this.dadosPedido.bebida = option
+      //   this.dadosPedido.preco_bebida = 'R$ 4.00'
+      // } else if (option == 'Amstel') {
+      //   this.src = '/img/bebidas/amstel.jpg'
+      //   this.dadosPedido.bebida = option
+      //   this.dadosPedido.preco_bebida = 'R$ 5.00'
+      // } else if (option == 'Agua') {
+      //   this.src = '/img/bebidas/agua.jpg'
+      //   this.dadosPedido.bebida = option
+      //   this.dadosPedido.preco_bebida = 'R$ 2.00'
+      // } else if(option == 'Selecione uma bebida') {
+      //   this.src = '/img/sem_imagem.png'
+      //   this.dadosPedido.bebida = ''
+      //   this.dadosPedido.preco_bebida = ''
+      // }
     },
     async listarBairros() {
-        const req = await fetch("http://127.0.0.1:8000/api/taxa_entrega");
-        // const req = await fetch("https://pedidoparrilha.herokuapp.com/api/taxa_entrega");
+        // const req = await fetch("http://127.0.0.1:8000/api/taxa_entrega");
+        const req = await fetch("https://pedidoparrilha.herokuapp.com/api/taxa_entrega");
         const data = await req.json();
         this.bairros_banco = data;
     }

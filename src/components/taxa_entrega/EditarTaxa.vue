@@ -2,19 +2,19 @@
     <Header />
     <div class="container">
         <div class="row p-5">
-            <h2>Editar Lanche</h2>
+            <h2>Editar Taxa de Entrega</h2>
         </div>
         <form class="row g-3" autocomplete="off" @submit.prevent>
             <div class="col-md-6">
-                <label for="nome" class="form-label">Nome:</label>
-                <input type="text" class="form-control" id="nome" v-model="dadosLanche.nome">
+                <label for="bairro" class="form-label">Bairro:</label>
+                <input type="text" class="form-control" id="bairro" v-model="dadosTaxa.bairro">
             </div>
             <div class="col-md-6">
                 <label for="preco" class="form-label">Preco:</label>
-                <input type="text" class="form-control" id="preco" placeholder="00.00" v-model="dadosLanche.preco">
+                <input type="text" class="form-control" id="preco" placeholder="00.00" v-model="dadosTaxa.preco">
             </div>
             <div class="col-md-6">
-                <input type="submit" value="Atualizar" class="form-control btn btn-success" @click="updateLanche">
+                <input type="submit" value="Atualizar" class="form-control btn btn-success" @click="updateTaxa">
             </div>
             <div class="col-md-6">
                 <input type="submit" value="Voltar" class="form-control btn btn-secondary" @click="voltar">
@@ -31,32 +31,33 @@ export default {
     components: { Header },
     data() {
         return {
-            nome: null,
+            bairro: null,
             preco: null,
-            dadosLanche: []
+            dadosTaxa: []
         };
     },
     methods: {
-        async updateLanche() {
+        async updateTaxa() {
             var id = this.$route.params.id;
             const data = {
-                nome: this.dadosLanche.nome,
-                preco: 'R$ ' + this.dadosLanche.preco,
+                bairro: this.dadosTaxa.bairro,
+                preco: 'R$ ' + this.dadosTaxa.preco,
             };
 
-            if(data.nome === null || data.preco === null) {
+            if(data.bairro === null || data.preco === null) {
                 alert('Porfavor preencha os campos')
             } else {
                 const dataJson = JSON.stringify(data);
-                // const req = await fetch(`http://127.0.0.1:8000/api/lanches/${id}`, {
-                const req = await fetch(`https://pedidoparrilha.herokuapp.com/api/lanches/${id}`, {
+                // const req = await fetch(`http://127.0.0.1:8000/api/taxa_entrega/${id}`, {
+                const req = await fetch(`https://pedidoparrilha.herokuapp.com/api/taxa_entrega/${id}`, {
                     method: "PATCH",
                     headers: { "Content-Type": "application/json" },
                     body: dataJson
                 });
 
                 if (req.status === 200) {
-                    this.nome = "";
+                    this.msg = "Lanche criado com sucesso";
+                    this.bairro = "";
                     this.preco = "";
                 }
 
@@ -65,19 +66,19 @@ export default {
 
         },
         // carregar lista de usuarios
-        async listarLanche() {
+        async listarTaxa() {
             var id = this.$route.params.id;
             // cria um array com os dados do pedido 
-            const req = await fetch(`https://pedidoparrilha.herokuapp.com/api/lanches/${id}`);
+            const req = await fetch(`https://pedidoparrilha.herokuapp.com/api/taxa_entrega/${id}`);
             const data = await req.json();
-            this.dadosLanche = data;
+            this.dadosTaxa = data;
         },
         voltar() {
             this.$router.go(-1)
         }
     },
     mounted() {
-        this.listarLanche();
+        this.listarTaxa();
     }
 }
 </script>

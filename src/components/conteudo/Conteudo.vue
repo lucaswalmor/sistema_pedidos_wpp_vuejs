@@ -88,13 +88,27 @@
                             </div>
                         </a>
                         <ul class="collapse nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
-                            <li class="w-100 ms-4">
+                            <!-- <li class="w-100 ms-4">
                                 <a href="#" class="nav-link px-0" @click="cadastrarNovaTaxa">Cadastrar</a>
-                            </li>
+                            </li> -->
                             <li class=" ms-4">
                                 <a href="#" class="nav-link px-0" @click="listarTaxas">Editar</a>
                             </li>
                         </ul>
+                    </li>
+                </ul>
+                <ul class="nav fixed-bottom">
+                    <li class="nav-item">
+                        <a href="#" class="col-md-12 d-flex nav-link justify-content-around" @click="logout('/dashboard')">
+                            <div class="col-md-2">
+                                <i class="fa-lg fa-solid fa-power-off"></i>
+                            </div>
+                            <div class="col-md-6">
+                            <span>
+                                Desconectar
+                            </span>
+                            </div>
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -129,14 +143,18 @@
                         </div>
                     </div>
                 </div>
-                
                 <div class="row">
-                    <div class="titulo col-md-12 p-5">
-                        <h1 class="text-secondary">Pedidos</h1>
+                    <div class="titulo col-md-12 p-5 d-flex">
+                        <div class="col-md-6">
+                            <h1 class="text-secondary">Pedidos</h1>
+                        </div>
+                        <div class="col-md-5 pt-2">
+                            <input type="text" name="filter" id="filter" class="form-control" placeholder="Pesquisar...">
+                        </div>
                     </div>
                 </div>
                 <div class="div-table">
-                    <Message :msg="msg" v-show="msg" />
+                    <Message :msg="msg" v-show="msg"/>
                     <table class="table text-center table-striped table-responsive">
                         <thead class="table-dark">
                             <tr>
@@ -148,7 +166,7 @@
                                 <th>Ações</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="myTable">
                             <tr v-for="pedido in pedidos" :key="pedido.id">
                                 <th>{{pedido.id}}</th>
                                 <td>{{pedido.nome_cliente}}</td>
@@ -179,6 +197,15 @@
 </template>
 
 <script>
+// script de filtro de tabela
+$(document).ready(function(){
+  $("#filter").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
 import CadastrarUsuario from "../usuarios/CadastrarUsuario.vue";
 import ListaUsuarios from "../usuarios/ListaUsuarios.vue";
 import CadastrarLanche from "../lanches/CadastrarLanche.vue";
@@ -206,7 +233,8 @@ export default {
             totalPedidos: '',
             somaValorTotal: '',
             dataHora: '',
-            token_storage: ''
+            token_storage: '',
+            email: ''
         };
     },
     methods: {
@@ -218,6 +246,8 @@ export default {
             this.listaLanches = false;
             this.listaBebidas = false;
             this.dashboard = false;
+            this.listaTaxa = false;
+            this.cadastroTaxa = false;
         },
         cadastrarNovoLanche() {
             this.cadastroLanche = true;
@@ -227,6 +257,8 @@ export default {
             this.listaLanches = false;
             this.listaBebidas = false;
             this.dashboard = false;
+            this.listaTaxa = false;
+            this.cadastroTaxa = false;
         },
         cadastrarNovaBebida() {
             this.cadastroBebida = true;
@@ -236,6 +268,8 @@ export default {
             this.listaLanches = false;
             this.listaBebidas = false;
             this.dashboard = false;
+            this.listaTaxa = false;
+            this.cadastroTaxa = false;
         },
         cadastrarNovaTaxa() {
             this.cadastroTaxa = true;
@@ -256,6 +290,8 @@ export default {
             this.listaLanches = false;
             this.listaBebidas = false;
             this.dashboard = false;
+            this.listaTaxa = false;
+            this.cadastroTaxa = false;
         },
         listarLanches() {
             this.listaLanches = true;
@@ -265,6 +301,8 @@ export default {
             this.cadastroUsuario = false;
             this.listaBebidas = false;
             this.dashboard = false;
+            this.listaTaxa = false;
+            this.cadastroTaxa = false;
         },
         listarBebidas() {
             this.listaBebidas = true;
@@ -274,6 +312,8 @@ export default {
             this.cadastroLanche = false;
             this.cadastroUsuario = false;
             this.dashboard = false;
+            this.listaTaxa = false;
+            this.cadastroTaxa = false;
         },
         listarTaxas() {
             this.listaTaxa = true;
@@ -294,6 +334,8 @@ export default {
             this.listaUsuarios = false;
             this.listaLanches = false;
             this.listaBebidas = false;
+            this.listaTaxa = false;
+            this.cadastroTaxa = false;
         },
         async listarPedidos() {
             // cria um array com os dados do pedido 
@@ -343,7 +385,12 @@ export default {
             }, 1000);
         },
         token() {
+            var email_storage = window.localStorage.getItem('email');
+            this.email = email_storage
             this.token_storage = this.$route.params.token
+        },
+        logout() {
+            this.$router.push("/admin")
         }
     },
     mounted() {

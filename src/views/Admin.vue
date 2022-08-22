@@ -86,17 +86,18 @@ export default {
             };
             // transforma o array de dados do pedido em texto 
             const dataJson = JSON.stringify(data);
-            // const req = await fetch("http://127.0.0.1:8000/api/login", {
-            const req = await fetch("https://pedidoparrilha.herokuapp.com/api/login", {
+            const req = await fetch("http://127.0.0.1:8000/api/login", {
+            // const req = await fetch("https://pedidoparrilha.herokuapp.com/api/login", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: dataJson
             });
+
             // traz a resposta dos dados criado
             const res = await req.json();
             this.token = res.access_token
 
-            // salva o token no localstorage 
+            window.localStorage.setItem('email', this.email);
             
             // verifica se o usuario é válido, se for faz o login se não for retorna mensagem de erro 
             if (res.error == "UnAuthorised Access") {
