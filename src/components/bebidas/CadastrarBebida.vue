@@ -1,10 +1,12 @@
 <template>
-    <div class="container" v-show="cadastroBebida">
+    <Sidenav />
+    <div class="container">
         <div class="row">
             <div class="titulo col-md-12 p-5">
                 <h1 class="text-secondary">Cadastrar Bebida</h1>
             </div>
         </div>
+        <Message :msg="msg" v-show="msg"/>
         <form class="row g-3" autocomplete="off" @submit.prevent>
             <div class="col-md-6">
                 <label for="nome" class="form-label">Nome:</label>
@@ -23,12 +25,15 @@
 </template>
 
 <script>
+import Sidenav from '../conteudo/Sidenav.vue';
+import Message from '../message/Message.vue';
 export default {
     name: "CadastarBebida",
     data() {
         return {
             nome: null,
             preco: null,
+            msg: '',
         };
     },
     methods: {
@@ -36,12 +41,12 @@ export default {
             // cria um array com os dados do pedido 
             const data = {
                 nome: this.nome,
-                preco: 'R$ ' + this.preco,
+                preco: "R$ " + this.preco,
             };
-            
-            if(data.nome === null || data.preco === null) {
-                alert('Porfavor preencha todos os campos');
-            } else {
+            if (data.nome === null || data.preco === null) {
+                alert("Porfavor preencha todos os campos");
+            }
+            else {
                 // transforma o array de dados do pedido em texto 
                 const dataJson = JSON.stringify(data);
                 // const req = await fetch("http://127.0.0.1:8000/api/bebidas", {
@@ -50,18 +55,18 @@ export default {
                     headers: { "Content-Type": "application/json" },
                     body: dataJson
                 });
-                
                 if (req.status === 200) {
+                    this.msg = "Bebida cadastrada com sucesso!";
                     this.nome = "";
                     this.preco = "";
-                    this.$router.go(this.$router.currentRoute)
+                    setTimeout(() => {
+                        this.msg = "";
+                    }, 2000);
                 }
-                setTimeout(() => {
-                    this.msg = "";
-                }, 2000);
             }
         }
     },
+    components: { Sidenav, Message }
 }
 </script>
 

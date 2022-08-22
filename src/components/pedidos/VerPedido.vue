@@ -1,4 +1,5 @@
 <template>
+  <Header />
   <div class="row mt-5">
     <div class="row col-12 text-center">
       <h4>
@@ -37,37 +38,43 @@
         </div>
     </div>
   </div>
+  {{this.$route.params.teste}}
 </template>
 
 <script>
+import Header from '../conteudo/Header.vue';
 export default {
-  name: "VerPedido",
-  data() {
-    return {
-      dadosPedido: [],
-    };
-  },
-  methods: {
-    async pedido() {
-      var id = this.$route.params.id;
-      // cria um array com os dados do pedido
-
-      try {
-        const req = await fetch(`https://pedidoparrilha.herokuapp.com/api/pedidos/${id}`);
-        // const req = await fetch(`http://127.0.0.1:8000/api/pedidos/${id}`);
-        const data = await req.json();
-        this.dadosPedido = data;
-      } catch (err) {
-        console.log("error", err);
-      }
+    name: "VerPedido",
+    data() {
+        return {
+            dadosPedido: [],
+            token: ""
+        };
     },
-    voltar() {
-        this.$router.go(-1)
-    }
-  },
-  mounted() {
-    this.pedido();
-  },
+    methods: {
+        async pedido() {
+            var id = this.$route.params.id;
+
+            // cria um array com os dados do pedido
+            try {
+                const req = await fetch(`https://pedidoparrilha.herokuapp.com/api/pedidos/${id}`);
+                // const req = await fetch(`http://127.0.0.1:8000/api/pedidos/${id}`);
+                const data = await req.json();
+                this.dadosPedido = data;
+            }
+            catch (err) {
+                console.log("error", err);
+            }
+        },
+        voltar() {
+            var token = this.$route.params.token;
+            this.$router.push({ path: `/pedidos/${token}`, params: {token: token}} );  
+        }
+    },
+    mounted() {
+        this.pedido();
+    },
+    components: { Header }
 };
 </script>
 

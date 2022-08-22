@@ -1,7 +1,6 @@
 <template>
-<div v-show="listaUsuarios">
+    <Sidenav />
     <div class="container">
-        <Message :msg="msg" v-show="msg" />
         <div class="row">
             <div class="titulo col-md-12 p-5 d-flex">
                 <div class="col-md-6">
@@ -34,8 +33,6 @@
             </tbody>
         </table>
     </div>
-</div>
-
 </template>
 
 <script>
@@ -49,9 +46,10 @@ $(document).ready(function(){
   });
 });
 import Message from '../message/Message.vue';
+import Sidenav from '../conteudo/Sidenav.vue';
 export default {
     name: "ListaUsuarios",
-    components: { Message },
+    components: { Message, Sidenav },
     data() {
         return {
             dadosUsuario: [],
@@ -61,7 +59,6 @@ export default {
     methods: {
         // carregar lista de usuarios
         async editarUsuario() {
-            
             // cria um array com os dados do pedido 
             // const req = await fetch("http://127.0.0.1:8000/api/usuarios");
             const req = await fetch("https://pedidoparrilha.herokuapp.com/api/usuarios");
@@ -83,14 +80,13 @@ export default {
                 setTimeout(() => {
                     this.msg = "";
                 }, 3000);
-
-                this.$router.go(this.$router.currentRoute)
             }
 
         },
         editUsuario(id) {
-            this.$router.push({ path: `/editar-usuario/${id}`, params: {id: id}} );
-        }
+            var token = this.$route.params.token;
+            this.$router.push({ path: `/editar-usuario/${token}/${id}`, params: {id: id, token: token}} );
+        },
     },
     mounted() {
         this.editarUsuario();

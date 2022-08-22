@@ -1,10 +1,12 @@
 <template>
-    <div class="container" v-show="cadastroLanche">
+    <Sidenav />
+    <div class="container">
         <div class="row">
             <div class="titulo col-md-12 p-5">
                 <h1 class="text-secondary">Cadastrar Lanche</h1>
             </div>
         </div>
+        <Message :msg="msg" v-show="msg"/>
         <!-- <form class="row g-3" autocomplete="off" @submit.prevent="createLanche" id="formulario"> -->
         <form class="row g-3" autocomplete="off" @submit.prevent id="formulario">
             <div class="col-md-6">
@@ -29,12 +31,15 @@
 </template>
 
 <script>
+import Sidenav from '../conteudo/Sidenav.vue';
+import Message from '../message/Message.vue';
 export default {
     name: "CadastarLanche",
     data() {
         return {
             nome: null,
             preco: null,
+            msg: '',
             foto: [],
         };
     },
@@ -43,42 +48,39 @@ export default {
             // cria um array com os dados do pedido 
             const data = {
                 nome: this.nome,
-                preco: 'R$ ' + this.preco
+                preco: "R$ " + this.preco
             };
-
             // // transforma o array de dados do pedido em texto 
             const dataJson = JSON.stringify(data);
-
             // const form = document.querySelector('#formulario');
             // const formData = new FormData(form);
             // const values = [...formData.entries()];
-                
-            if(this.nome === null || this.preco === null) {
-                alert('Porfavor preencha todos os campos');
-            } else {
+            if (this.nome === null || this.preco === null) {
+                alert("Porfavor preencha todos os campos");
+            }
+            else {
                 // const req = await fetch("http://127.0.0.1:8000/api/lanches", {
                 const req = await fetch("https://pedidoparrilha.herokuapp.com/api/lanches", {
                     method: "POST",
-                    headers: { "Content-Type": "application/json"},
+                    headers: { "Content-Type": "application/json" },
                     body: dataJson
                 });
-
                 if (req.status === 200) {
+                    this.msg = "Lanche cadastrado com sucesso!";
                     this.nome = "";
                     this.preco = "";
-                    this.$router.go(this.$router.currentRoute)
+                    setTimeout(() => {
+                        this.msg = "";
+                    }, 2000);
                 }
-
-                setTimeout(() => {
-                    this.msg = "";
-                }, 2000);
             }
         },
-        upload(event){
+        upload(event) {
             let file = event.target.files[0];
-            this.foto = file
+            this.foto = file;
         }
-    }
+    },
+    components: { Sidenav, Message }
 }
 </script>
 

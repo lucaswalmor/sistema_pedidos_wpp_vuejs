@@ -1,12 +1,13 @@
 <template>
-    <div class="container" v-show="cadastroUsuario">
-
+    <Sidenav />
+    <div class="container">
         <Message :msg="msg" v-show="msg" />
         <div class="row">
             <div class="titulo col-md-12 p-5">
                 <h1 class="text-secondary">Cadastrar Usuário</h1>
             </div>
         </div>
+        <Message :msg="msg" v-show="msg"/>
         <form class="row g-3" autocomplete="off" @submit.prevent>
             <div class="col-md-6">
                 <label for="name" class="form-label">Nome:</label>
@@ -29,10 +30,11 @@
 
 <script>
 import Message from '../message/Message.vue';
+import Sidenav from '../conteudo/Sidenav.vue';
 
 export default {
     name: "CadastrarUsuario",
-    components: { Message },    
+    components: { Message, Sidenav},    
     data() {
         return {
             name: null,
@@ -69,12 +71,10 @@ export default {
                     this.name = "";
                     this.email = "";
                     this.password = "";
-                    this.$router.go(this.$router.currentRoute)
+                    setTimeout(() => {
+                        this.msg = ''
+                    }, 2000);
                 }
-
-                setTimeout(() => {
-                    this.msg = ''
-                }, 2000);
             }
         },
     },

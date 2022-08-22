@@ -1,5 +1,5 @@
 <template>
-<div v-show="listaBebidas">
+    <Sidenav />
     <div class="container">
         <Message :msg="msg" v-show="msg" />
         <div class="row">
@@ -34,7 +34,6 @@
             </tbody>
         </table>
     </div>
-</div>
 </template>
 
 <script>
@@ -48,9 +47,10 @@ $(document).ready(function(){
   });
 });
 import Message from '../message/Message.vue';
+import Sidenav from '../conteudo/Sidenav.vue';
 export default {
     name: "ListarBebidas",
-    components: { Message },
+    components: { Message, Sidenav },
     data() {
         return {
             dadosBebidas: [],
@@ -83,12 +83,11 @@ export default {
                 setTimeout(() => {
                     this.msg = "";
                 }, 3000);
-
-                this.$router.go(this.$router.currentRoute)
             }
         },
         editarBebida(id) {
-            this.$router.push({ path: `/editar-bebida/${id}`, params: {id: id}} );
+            var token = this.$route.params.token;
+            this.$router.push({ path: `/editar-bebida/${token}/${id}`, params: {id: id, token: token}} );
         }
     },
     mounted() {

@@ -1,128 +1,48 @@
 <template>
-    <div class="header">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
-                <button class="btn btn-dark" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
-                    <i class="fa-solid fa-bars"></i>
-                </button>
-                <span id="data-hora"></span>
-            </div>
-        </nav>
-    </div>
-    <div class="sidenav">
-        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-            <div class="offcanvas-header">
-                <img src="/img/logo_teste.png" alt="" class="logo">
-                <button type="button" class="btn-close text-reset text-light" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body">
-                <div class="row text-center text-light">
-                    <h2>Nome cliente</h2>
-                </div>
-                <ul class="mt-5 nav flex-column" id="menu">
-                    <li class="nav-item">
-                        <a href="#" class="col-md-12 d-flex nav-link px-0" @click="dashboardView">
-                            <div class="col-md-2">
-                                <i class="fa-lg fa-solid fa-gauge"></i> 
-                            </div>
-                            <div class="col-md-6">
-                            <span>
-                                Dashboard
-                            </span>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#submenu3" data-bs-toggle="collapse"  class="col-md-12 d-flex nav-link px-0">
-                            <div class="col-md-2">
-                                <i class="fa-lg fa-solid fa-user-plus"></i>
-                            </div>
-                            <div class="col-md-6">
-                                <span>
-                                    Usuario
-                                </span>
-                            </div>
-                        </a>
-                        <ul class="collapse nav flex-column ms-1" id="submenu3" data-bs-parent="#menu">
-                            <li class="w-100 ms-4">
-                                <a href="#" class="nav-link px-0" @click="cadastrarNovoUsuario"> Cadastrar</a>
-                            </li>
-                            <li class="ms-4">
-                                <a href="#" class="nav-link px-0" @click="listarUsuarios"> Editar / Excluir</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#submenu4" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-                        <i class="fa-lg fa-solid fa-burger"></i> Lanches </a>
-                        <ul class="collapse nav flex-column ms-1" id="submenu4" data-bs-parent="#menu">
-                            <li class="w-100 ms-4">
-                                <a href="#" class="nav-link px-0" @click="cadastrarNovoLanche">Cadastrar</a>
-                            </li>
-                            <li class=" ms-4">
-                                <a href="#" class="nav-link px-0" @click="listarLanches">Editar / Excluir</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#submenu2" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-                        <i class="fa-lg fa-solid fa-martini-glass"></i> Bebidas </a>
-                        <ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
-                            <li class="w-100 ms-4">
-                                <a href="#" class="nav-link px-0" @click="cadastrarNovaBebida">Cadastrar</a>
-                            </li>
-                            <li class=" ms-4">
-                                <a href="#" class="nav-link px-0" @click="listarBebidas">Editar / Excluir</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#submenu1" data-bs-toggle="collapse" class="col-md-12 d-flex nav-link px-0">
-                            <div class="col-md-2">
-                                <i class="fa-lg fa-solid fa-dollar-sign"></i>
-                            </div>
-                            <div class="col-md-10">
-                            <span>
-                                Taxa de Entrega 
-                            </span>
-                            </div>
-                        </a>
-                        <ul class="collapse nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
-                            <!-- <li class="w-100 ms-4">
-                                <a href="#" class="nav-link px-0" @click="cadastrarNovaTaxa">Cadastrar</a>
-                            </li> -->
-                            <li class=" ms-4">
-                                <a href="#" class="nav-link px-0" @click="listarTaxas">Editar</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-                <ul class="nav fixed-bottom">
-                    <li class="nav-item">
-                        <a href="#" class="col-md-12 d-flex nav-link justify-content-around" @click="logout('/dashboard')">
-                            <div class="col-md-2">
-                                <i class="fa-lg fa-solid fa-power-off"></i>
-                            </div>
-                            <div class="col-md-6">
-                            <span>
-                                Desconectar
-                            </span>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
+    <Sidenav />
     <div class="col py-3 body-dashboard">
-        <div class="dashboard" v-show="dashboard">
+        <div class="dashboard">
             <div class="container">
                 <div class="row">
-                    <div class="titulo col-md-12 p-5">
-                        <h1 class="text-secondary">Dashboard</h1>
+                    <div class="titulo col-md-12 p-5 d-flex">
+                        <div class="col-md-6">
+                            <h1 class="text-secondary">Dashboard</h1>
+                        </div>
+                        <div class="col-md-5 pt-2 d-flex">
+                            <select class="form-control" v-model="selected">
+                                <option v-for="option in options" :key="option" :value="option.value">{{ option.text }}</option>
+                            </select>
+                            <button class="btn btn-dark text-warning fw-bold ms-2" @click="filtrarData">
+                                Filtrar
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <div class="row col-md-12 d-flex justify-content-around">
+                    <div class="col-md-5 d-flex cards text-card-pedidos card-pedidos">
+                        <div class="col-md-3 div-icon-dashboard">
+                            <i class="fa-5x fa-solid fa-scroll"></i>
+                        </div>
+                        <div class="col-md-9 text-center">
+                            <div><h6>Total Pedidos</h6></div>
+                            <div><h1>{{totalPedidos}}</h1></div>
+                        </div>
+                    </div>
+                        
+                    <div class="col-md-5 d-flex cards text-card-valor-total card-valor-total">
+                        <div class="col-md-3 div-icon-dashboard">
+                            <i class="fa-5x fa-solid fa-cash-register"></i>
+                        </div>
+                        <div class="col-md-9 text-center">
+                            <div><h6>{{text_valor}}</h6></div>
+                            <div v-if="selected === 'soma_total'"><h1>R$ {{somaValorTotal}}</h1></div>
+                            <div v-if="selected === 'dia'"><h1>{{somaValorDiaAtual}}</h1></div>
+                            <div v-if="selected === 'mes'"><h1>{{somaValorMesAtual}}</h1></div>
+                            <div v-if="selected === 'ano'"><h1>{{somaValorAnoAtual}}</h1></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-4 col-md-12 d-flex justify-content-around">
                     <div class="col-md-5 d-flex cards text-card-pedidos card-pedidos">
                         <div class="col-md-3 div-icon-dashboard">
                             <i class="fa-5x fa-solid fa-scroll"></i>
@@ -143,259 +63,182 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="titulo col-md-12 p-5 d-flex">
-                        <div class="col-md-6">
-                            <h1 class="text-secondary">Pedidos</h1>
-                        </div>
-                        <div class="col-md-5 pt-2">
-                            <input type="text" name="filter" id="filter" class="form-control" placeholder="Pesquisar...">
-                        </div>
-                    </div>
-                </div>
-                <div class="div-table">
-                    <Message :msg="msg" v-show="msg"/>
-                    <table class="table text-center table-striped table-responsive">
-                        <thead class="table-dark">
-                            <tr>
-                                <th>Nº</th>
-                                <th>Nome Cliente</th>
-                                <th>Telefone</th>
-                                <th>Forma Pag</th>
-                                <th>Total</th>
-                                <th>Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody id="myTable">
-                            <tr v-for="pedido in pedidos" :key="pedido.id">
-                                <th>{{pedido.id}}</th>
-                                <td>{{pedido.nome_cliente}}</td>
-                                <td>{{pedido.telefone}}</td>
-                                <td>{{pedido.forma_pagamento}}</td>
-                                <td>R$ {{pedido.valor_total}}</td>
-                                <td class="botao-acao-tabela">
-                                    <button class="btn btn-dark" @click="verPedido(pedido.id)"><i class="fa-solid fa-eye text-light"></i></button>
-                                    <button class="btn btn-danger" @click="cancelarPedido(pedido.id)"><i class="fa-solid fa-trash"></i></button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
             </div>
         </div>
-        <form @submit.prevent class="div-form-cadastro" enctype="multipart/form-data">
-            <CadastrarUsuario v-show="cadastroUsuario" />
-            <CadastrarLanche v-show="cadastroLanche"/>
-            <CadastrarBebida v-show="cadastroBebida"/>
-            <CadastrarTaxa v-show="cadastroTaxa"/>
-            <ListarTaxaEntrega v-show="listaTaxa"/>
-            <ListaUsuarios v-show="listaUsuarios"/>
-            <ListarLanches v-show="listaLanches"/>
-            <ListarBebidas v-show="listaBebidas"/>
-        </form>
     </div>
 </template>
 
 <script>
-// script de filtro de tabela
-$(document).ready(function(){
-  $("#filter").on("keyup", function() {
-    var value = $(this).val().toLowerCase();
-    $("#myTable tr").filter(function() {
-      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-    });
-  });
-});
-import CadastrarUsuario from "../usuarios/CadastrarUsuario.vue";
-import ListaUsuarios from "../usuarios/ListaUsuarios.vue";
-import CadastrarLanche from "../lanches/CadastrarLanche.vue";
-import ListarLanches from "../lanches/ListarLanches.vue";
-import ListarBebidas from "../bebidas/ListarBebidas.vue";
-import CadastrarBebida from "../bebidas/CadastrarBebida.vue";
-import CadastrarTaxa from "../taxa_entrega/CadastrarTaxa.vue";
-import ListarTaxaEntrega from "../taxa_entrega/ListarTaxaEntrega.vue";
+import Sidenav from "./Sidenav.vue";
 
 export default {
     name: "Dashboard",
-    components: { CadastrarUsuario, ListaUsuarios, CadastrarLanche, ListarLanches, ListarBebidas, CadastrarBebida, CadastrarTaxa, ListarTaxaEntrega },
+    components: {
+    Sidenav
+},
     data() {
         return {
-            cadastroUsuario: false,
-            cadastroLanche: false,
-            cadastroBebida: false,
-            cadastroTaxa: false,
-            listaUsuarios: false,
-            listaTaxa: false,
-            listaLanches: false,
-            dashboard: true,
             dadosUsuario: [],
             pedidos: [],
             totalPedidos: '',
+            somas_gerais: '',
             somaValorTotal: '',
+            somaValorDiaAtual: '',
+            somaValorMesAtual: '',
+            somaValorAnoAtual: '',
             dataHora: '',
             token_storage: '',
-            email: ''
+            email: '',
+            dia: '',
+            mes: '',
+            ano: '',
+            selected: '',
+            options: [
+                { text: 'Soma Total', value: 'soma_total' },
+                { text: 'Dia', value: 'dia' },
+                { text: 'Mês', value: 'mes' },
+                { text: 'Ano', value: 'ano' },
+            ],
+            text_valor: 'Soma Total'
         };
     },
     methods: {
-        cadastrarNovoUsuario() {
-            this.cadastroUsuario = true;
-            this.cadastroLanche = false;
-            this.cadastroBebida = false;
-            this.listaUsuarios = false;
-            this.listaLanches = false;
-            this.listaBebidas = false;
-            this.dashboard = false;
-            this.listaTaxa = false;
-            this.cadastroTaxa = false;
-        },
-        cadastrarNovoLanche() {
-            this.cadastroLanche = true;
-            this.cadastroUsuario = false;
-            this.cadastroBebida = false;
-            this.listaUsuarios = false;
-            this.listaLanches = false;
-            this.listaBebidas = false;
-            this.dashboard = false;
-            this.listaTaxa = false;
-            this.cadastroTaxa = false;
-        },
-        cadastrarNovaBebida() {
-            this.cadastroBebida = true;
-            this.cadastroLanche = false;
-            this.cadastroUsuario = false;
-            this.listaUsuarios = false;
-            this.listaLanches = false;
-            this.listaBebidas = false;
-            this.dashboard = false;
-            this.listaTaxa = false;
-            this.cadastroTaxa = false;
-        },
-        cadastrarNovaTaxa() {
-            this.cadastroTaxa = true;
-            this.cadastroBebida = false;
-            this.cadastroLanche = false;
-            this.cadastroUsuario = false;
-            this.listaUsuarios = false;
-            this.listaLanches = false;
-            this.listaBebidas = false;
-            this.dashboard = false;
-            this.listaTaxa = false;
-        },
-        listarUsuarios() {
-            this.listaUsuarios = true;
-            this.cadastroBebida = false;
-            this.cadastroLanche = false;
-            this.cadastroUsuario = false;
-            this.listaLanches = false;
-            this.listaBebidas = false;
-            this.dashboard = false;
-            this.listaTaxa = false;
-            this.cadastroTaxa = false;
-        },
-        listarLanches() {
-            this.listaLanches = true;
-            this.listaUsuarios = false;
-            this.cadastroBebida = false;
-            this.cadastroLanche = false;
-            this.cadastroUsuario = false;
-            this.listaBebidas = false;
-            this.dashboard = false;
-            this.listaTaxa = false;
-            this.cadastroTaxa = false;
-        },
-        listarBebidas() {
-            this.listaBebidas = true;
-            this.listaLanches = false;
-            this.listaUsuarios = false;
-            this.cadastroBebida = false;
-            this.cadastroLanche = false;
-            this.cadastroUsuario = false;
-            this.dashboard = false;
-            this.listaTaxa = false;
-            this.cadastroTaxa = false;
-        },
-        listarTaxas() {
-            this.listaTaxa = true;
-            this.listaBebidas = false;
-            this.listaLanches = false;
-            this.listaUsuarios = false;
-            this.cadastroBebida = false;
-            this.cadastroTaxa = false;
-            this.cadastroLanche = false;
-            this.cadastroUsuario = false;
-            this.dashboard = false;
-        },
-        dashboardView() {
-            this.dashboard = true;
-            this.cadastroBebida = false;
-            this.cadastroLanche = false;
-            this.cadastroUsuario = false;
-            this.listaUsuarios = false;
-            this.listaLanches = false;
-            this.listaBebidas = false;
-            this.listaTaxa = false;
-            this.cadastroTaxa = false;
-        },
         async listarPedidos() {
             // cria um array com os dados do pedido 
             // const req = await fetch("http://127.0.0.1:8000/api/pedidos");
             const req = await fetch("https://pedidoparrilha.herokuapp.com/api/pedidos");
             const data = await req.json();
             this.pedidos = data[0].pedidos;
-            this.somaValorTotal = data[0].somas;
+            this.somas_gerais = data[0].somas;
             this.totalPedidos = this.pedidos.length;
+
+            // busca as datas atuais, dia, mes e ano
+            var dia_atual = new Date().getDate();
+            var mes_atual = new Date().getMonth();
+            var ano_atual = new Date().getFullYear();
+            var arr = data[0].pedidos
             
+            // percorre os dados created_at vindas do banco de dados
+            for(var item in arr) {
+                // separa as datas 
+                var dia = arr[item].created_at.substring(8, 10);
+                var mes = arr[item].created_at.substring(5, 7);
+                var ano = arr[item].created_at.substring(0, 4);
+                if(dia == dia_atual || dia == mes_atual || dia == ano_atual) {
+                    // seta os valores para as variaveis
+                    this.dia = dia;
+                    this.mes = mes;
+                    this.ano = ano;
+                }
+            }
         },
-        async cancelarPedido(id) {
-            if (confirm(`Você realmente deseja deletar o pedido Nº ${id} `)) {
-                // const req = await fetch(`http://127.0.0.1:8000/api/pedidos/${id}`, {
-                const req = await fetch(`https://pedidoparrilha.herokuapp.com/api/pedidos/${id}`, {
-                    method: "DELETE"
+        async filtrarData() {
+            if(this.selected == 'dia') {
+                const data = {
+                    nome: this.selected,
+                    data: this.dia
+                };
+                // transforma o array de dados do pedido em texto 
+                const dataJson = JSON.stringify(data);
+
+                // const req = await fetch("http://127.0.0.1:8000/api/filtros", {
+                const req = await fetch("https://pedidoparrilha.herokuapp.com/api/filtros", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: dataJson
                 });
+                const dados_data = await req.json();
 
-                const res = await req.json();
-                // msg de pedido deletado
-                this.msg = `bebida Nº ${id} deletado com sucesso`;
+                if (req.status === 200) {
+                    var arr = dados_data
+                    var teste = []
+                    var soma = 0
+                    // Soma os valores vindo do mes 
+                    for(var item in arr) {
+                        teste[item] = parseFloat(arr[item].valor_total);      
+                        soma += parseFloat(teste[item]);
+                    }
+                    this.somaValorDiaAtual = 'R$ ' + soma;
+                    this.text_valor = 'Valor Total Dia';
+                } else {
+                    this.somaValorDiaAtual = 'Sem resultado';
+                }
 
-                setTimeout(() => {
-                    this.msg = "";
-                }, 3000);
+            } else if(this.selected == 'mes') {
+                const data = {
+                    nome: this.selected,
+                    data: this.mes
+                };
+                // transforma o array de dados do pedido em texto 
+                const dataJson = JSON.stringify(data);
 
-                this.$router.go(this.$router.currentRoute)
+                // const req = await fetch("http://127.0.0.1:8000/api/filtros", {
+                const req = await fetch("https://pedidoparrilha.herokuapp.com/api/filtros", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: dataJson
+                });
+                const dados_data = await req.json();
+
+                if(req.status === 200) {
+                    var arr = dados_data
+                    var teste = []
+                    var soma = 0
+                    // Soma os valores vindo do mes 
+                    for(var item in arr) {
+                        teste[item] = parseFloat(arr[item].valor_total);      
+                        soma += parseFloat(teste[item]);
+                    }
+                    this.somaValorMesAtual = 'R$ ' + soma;
+                    this.text_valor = 'Valor Total Mês';
+                } else {
+                    this.somaValorMesAtual = 'Sem resultado';
+                }
+            } else if(this.selected == 'ano') {
+                const data = {
+                    nome: this.selected,
+                    data: this.ano
+                };
+                // transforma o array de dados do pedido em texto 
+                const dataJson = JSON.stringify(data);
+                console.log(dataJson);
+
+                // const req = await fetch("http://127.0.0.1:8000/api/filtros", {
+                const req = await fetch("https://pedidoparrilha.herokuapp.com/api/filtros", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: dataJson
+                });
+                
+                if(req.status === 200) {
+                    const dados_data = await req.json();
+                    var arr = dados_data
+                    var teste = []
+                    var soma = 0
+                    // Soma os valores vindo do mes 
+                    for(var item in arr) {
+                        teste[item] = parseFloat(arr[item].valor_total);      
+                        soma += parseFloat(teste[item]);
+                    }
+                    
+                    this.somaValorAnoAtual = 'R$ ' + soma;
+                    this.text_valor = 'Valor Total Ano';
+                } else {
+                    this.somaValorAnoAtual = 'Sem Resultado'
+                }
+            } else if(this.selected === 'soma_total') {
+                this.somaValorTotal = this.somas_gerais;
+                this.text_valor = 'Valor Total';
             }
-        },
-        verPedido(id) {
-            this.$router.push({ path: `/ver-pedido/${id}`, params: {id: id}} );            
-        },
-        horas() {
-            const zeroFill = n => {
-                return ('0' + n).slice(-2);
-            }
-
-            // Cria intervalo
-            const interval = setInterval(() => {
-                // Pega o horário atual
-                const now = new Date();
-
-                // Formata a data conforme dd/mm/aaaa hh:ii:ss
-                const dataHora = zeroFill(now.getUTCDate()) + '/' + zeroFill((now.getMonth() + 1)) + '/' + now.getFullYear() + ' ' + zeroFill(now.getHours()) + ':' + zeroFill(now.getMinutes()) + ':' + zeroFill(now.getSeconds());
-                // Exibe na tela usando a div#data-hora
-                document.getElementById('data-hora').innerHTML = dataHora;
-            }, 1000);
         },
         token() {
             var email_storage = window.localStorage.getItem('email');
             this.email = email_storage
             this.token_storage = this.$route.params.token
         },
-        logout() {
-            this.$router.push("/admin")
-        }
     },
     mounted() {
         this.token();
-        this.horas();
         this.listarPedidos();
     }
 }

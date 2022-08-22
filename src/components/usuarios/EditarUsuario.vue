@@ -1,9 +1,10 @@
 <template>
-    <Header />
+    <Sidenav />
     <div class="container">
         <div class="row m-5">
             <h2>Editar Usuario</h2>
         </div>
+        <Message :msg="msg" v-show="msg"/>
         <form class="row g-3" autocomplete="off" @submit.prevent>
             <div class="col-md-6">
                 <label for="name" class="form-label">Nome:</label>
@@ -31,15 +32,18 @@
 
 <script>
 import Header from '../conteudo/Header.vue';
+import Sidenav from '../conteudo/Sidenav.vue';
+import Message from '../message/Message.vue';
 export default {
     name: "EditarUsuario",
-    components: { Header },
+    components: { Header, Sidenav, Message },
     data() {
         return {
             name: null,
             password: null,
             email: null,
-            dadosUsuarios: []
+            dadosUsuarios: [],
+            msg: ""
         };
     },
     methods: {
@@ -64,13 +68,13 @@ export default {
                 });
 
                 if (req.status === 200) {
-                    this.msg = "Usuario criado com sucesso";
+                    this.msg = "Usuario editado com sucesso";
                     this.name = "";
                     this.preco = "";
+                    setTimeout(() => {
+                        this.msg = ''
+                    }, 2000);
                 }
-
-                this.$router.push({ path: '/dashboard'} );
-
             }
 
         },
@@ -88,7 +92,8 @@ export default {
             }
         },
         voltar() {
-            this.$router.go(-1)
+            var token = this.$route.params.token;
+            this.$router.push({ path: `/listar-usuario/${token}`, params: {token: token } });
         }
     },
     mounted() {

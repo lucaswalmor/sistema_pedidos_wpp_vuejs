@@ -1,5 +1,5 @@
 <template>
-    <Header />
+    <Sidenav />
     <div class="container">
         <div class="row p-5">
             <h2>Editar Bebida</h2>
@@ -26,9 +26,10 @@
 
 <script>
 import Header from '../conteudo/Header.vue';
+import Sidenav from '../conteudo/Sidenav.vue';
 export default {
     name: "EditarBebida",
-    components: { Header },
+    components: { Header, Sidenav },
     data() {
         return {
             nome: null,
@@ -58,12 +59,13 @@ export default {
                 });
 
                 if (req.status === 200) {
+                    this.msg = "Bebida editada com sucesso";
                     this.nome = "";
                     this.preco = "";
+                    setTimeout(() => {
+                        this.msg = ''
+                    }, 2000);
                 }
-
-                this.$router.go(-1)
-
             }
 
         },
@@ -77,7 +79,8 @@ export default {
             this.dadosBebidas = data;
         },
         voltar() {
-            this.$router.go(-1)
+            var token = this.$route.params.token;
+            this.$router.push({ path: `/listar-bebida/${token}`, params: {token: token}} );
         }
     },
     mounted() {

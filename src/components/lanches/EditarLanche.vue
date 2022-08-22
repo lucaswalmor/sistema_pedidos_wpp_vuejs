@@ -1,9 +1,10 @@
 <template>
-    <Header />
+    <Sidenav />
     <div class="container">
         <div class="row p-5">
             <h2>Editar Lanche</h2>
         </div>
+        <Message :msg="msg" v-show="msg"/>
         <form class="row g-3" autocomplete="off" @submit.prevent>
             <div class="col-md-6">
                 <label for="nome" class="form-label">Nome:</label>
@@ -26,14 +27,17 @@
 
 <script>
 import Header from '../conteudo/Header.vue';
+import Sidenav from '../conteudo/Sidenav.vue';
+import Message from '../message/Message.vue';
 export default {
     name: "EditarLanche",
-    components: { Header },
+    components: { Header, Sidenav, Message },
     data() {
         return {
             nome: null,
             preco: null,
-            dadosLanche: []
+            dadosLanche: [],
+            msg: ''
         };
     },
     methods: {
@@ -56,11 +60,13 @@ export default {
                 });
 
                 if (req.status === 200) {
+                    this.msg = "Lanche editado com sucesso";
                     this.nome = "";
                     this.preco = "";
+                    setTimeout(() => {
+                        this.msg = ''
+                    }, 2000);
                 }
-
-                this.$router.go(-1)
             }
 
         },
@@ -73,7 +79,8 @@ export default {
             this.dadosLanche = data;
         },
         voltar() {
-            this.$router.go(-1)
+            var token = this.$route.params.token;
+            this.$router.push({ path: `/listar-lanche/${token}`, params: {token: token}} );
         }
     },
     mounted() {

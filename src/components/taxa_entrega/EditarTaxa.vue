@@ -33,7 +33,8 @@ export default {
         return {
             bairro: null,
             preco: null,
-            dadosTaxa: []
+            dadosTaxa: [],
+            msg: ''
         };
     },
     methods: {
@@ -56,12 +57,13 @@ export default {
                 });
 
                 if (req.status === 200) {
-                    this.msg = "Lanche criado com sucesso";
+                    this.msg = "Taxa editada com sucesso";
                     this.bairro = "";
                     this.preco = "";
+                    setTimeout(() => {
+                        this.msg = ''
+                    }, 2000);
                 }
-
-                this.$router.go(-1)
             }
 
         },
@@ -74,7 +76,8 @@ export default {
             this.dadosTaxa = data;
         },
         voltar() {
-            this.$router.go(-1)
+            var token = this.$route.params.token;
+            this.$router.push({ path: `/listar-taxa/${token}`, params: {token: token}} );
         }
     },
     mounted() {

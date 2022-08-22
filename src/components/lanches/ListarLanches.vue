@@ -1,7 +1,6 @@
 <template>
-<div v-show="listaLanches">
+    <Sidenav />
     <div class="container">
-
         <Message :msg="msg" v-show="msg" />
         <div class="row">
             <div class="titulo col-md-12 p-5 d-flex">
@@ -35,8 +34,6 @@
             </tbody>
         </table>
     </div>
-</div>
-
 </template>
 
 <script>
@@ -50,9 +47,10 @@ $(document).ready(function(){
   });
 });
 import Message from '../message/Message.vue';
+import Sidenav from '../conteudo/Sidenav.vue';
 export default {
     name: "ListaLanches",
-    components: { Message },
+    components: { Message, Sidenav },
     data() {
         return {
             dadosLanches: [],
@@ -67,7 +65,6 @@ export default {
             const req = await fetch("https://pedidoparrilha.herokuapp.com/api/lanches");
             const data = await req.json();
             this.dadosLanches = data;
-
         },
         // deletar usuario 
         async deletarLanche(id) {
@@ -83,12 +80,12 @@ export default {
                 setTimeout(() => {
                     this.msg = "";
                 }, 3000);
-
-                this.$router.go(this.$router.currentRoute)
             }
         },
+
         editarLanche(id) {
-            this.$router.push({ path: `/editar-lanche/${id}`, params: {id: id}} );
+            var token = this.$route.params.token;
+            this.$router.push({ path: `/editar-lanche/${token}/${id}`, params: {id: id, token: token}} );
         }
     },
     mounted() {

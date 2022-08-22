@@ -1,5 +1,5 @@
 <template>
-<div v-show="listaTaxa">
+    <Sidenav />
     <div class="container">
         <div class="row">
             <div class="titulo col-md-12 p-5 d-flex">
@@ -32,11 +32,11 @@
             </tbody>
         </table>
     </div>
-</div>
   
 </template>
 
 <script>
+import Sidenav from '../conteudo/Sidenav.vue';
 // script de filtro de tabela
 $(document).ready(function(){
   $("#filtro_taxa").on("keyup", function() {
@@ -61,7 +61,6 @@ export default {
             const req = await fetch("https://pedidoparrilha.herokuapp.com/api/taxa_entrega");
             const data = await req.json();
             this.dadosTaxa = data;
-
         },
         // deletar usuario 
         async deletarLanche(id) {
@@ -71,24 +70,23 @@ export default {
                     method: "DELETE"
                 });
                 const res = await req.json();
-                console.log(req)
+                console.log(req);
                 // msg de pedido deletado
                 this.msg = `Lanche Nº ${id} deletado com sucesso`;
                 setTimeout(() => {
                     this.msg = "";
                 }, 3000);
-
-                this.$router.go(this.$router.currentRoute)
             }
         },
         editTaxa(id) {
-            this.$router.push({ path: `/editar-taxa/${id}`, params: {id: id}} );
+            var token = this.$route.params.token;
+            this.$router.push({ path: `/editar-taxa/${token}/${id}`, params: { id: id, token: token} });
         }
     },
     mounted() {
         this.editarTaxa();
-    }
-
+    },
+    components: { Sidenav }
 }
 </script>
 
