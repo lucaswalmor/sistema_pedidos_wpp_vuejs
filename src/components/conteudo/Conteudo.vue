@@ -42,27 +42,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="row mt-4 col-md-12 d-flex justify-content-around">
-                    <div class="col-md-5 d-flex cards text-card-pedidos card-pedidos">
-                        <div class="col-md-3 div-icon-dashboard">
-                            <i class="fa-5x fa-solid fa-scroll"></i>
-                        </div>
-                        <div class="col-md-9 text-center">
-                            <div><h6>Total Pedidos</h6></div>
-                            <div><h1>{{totalPedidos}}</h1></div>
-                        </div>
-                    </div>
-                        
-                    <div class="col-md-5 d-flex cards text-card-valor-total card-valor-total">
-                        <div class="col-md-3 div-icon-dashboard">
-                            <i class="fa-5x fa-solid fa-cash-register"></i>
-                        </div>
-                        <div class="col-md-9 text-center">
-                            <div><h6>Valor Total</h6></div>
-                            <div><h1>R$ {{somaValorTotal}}</h1></div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
