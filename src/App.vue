@@ -17,6 +17,6 @@
 }
 
 body {
-  overflow: auto;
+  overflow: scroll;
 }
 </style>

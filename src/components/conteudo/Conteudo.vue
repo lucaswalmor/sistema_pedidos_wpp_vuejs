@@ -8,14 +8,16 @@
                         <div class="col-md-6">
                             <h1 class="text-secondary">Dashboard</h1>
                         </div>
-                        <div class="col-md-5 pt-2 d-flex">
-                            <select class="form-control" v-model="selected">
-                                <option v-for="option in options" :key="option" :value="option.value">{{ option.text }}</option>
-                            </select>
-                            <button class="btn btn-dark text-warning fw-bold ms-2" @click="filtrarData">
-                                Filtrar
-                            </button>
-                        </div>
+                    </div>
+                </div>
+                <div class="row d-flex justify-content-center pb-5">
+                    <div class="col-md-4 pt-2 d-flex">
+                        <select class="form-select" v-model="selected">
+                            <option v-for="option in options" :key="option" :value="option.value">{{ option.text }}</option>
+                        </select>
+                        <button class="btn btn-dark text-warning fw-bold ms-2" @click="filtrarData">
+                            Filtrar
+                        </button>
                     </div>
                 </div>
                 <div class="row col-md-12 d-flex justify-content-around">
@@ -34,7 +36,7 @@
                             <i class="fa-5x fa-solid fa-cash-register"></i>
                         </div>
                         <div class="col-md-9 text-center">
-                            <div><h6>{{text_valor}}</h6></div>
+                            <div v-if="selected"><h6>{{text_valor}}</h6></div>
                             <div v-if="selected === 'soma_total'"><h1>R$ {{somaValorTotal}}</h1></div>
                             <div v-if="selected === 'dia'"><h1>{{somaValorDiaAtual}}</h1></div>
                             <div v-if="selected === 'mes'"><h1>{{somaValorMesAtual}}</h1></div>
@@ -60,7 +62,6 @@ export default {
             dadosUsuario: [],
             pedidos: [],
             totalPedidos: '',
-            somas_gerais: '',
             somaValorTotal: '',
             somaValorDiaAtual: '',
             somaValorMesAtual: '',
@@ -71,7 +72,7 @@ export default {
             dia: '',
             mes: '',
             ano: '',
-            selected: '',
+            selected: 'soma_total',
             options: [
                 { text: 'Soma Total', value: 'soma_total' },
                 { text: 'Dia', value: 'dia' },
@@ -88,9 +89,8 @@ export default {
             const req = await fetch("https://pedidoparrilha.herokuapp.com/api/pedidos");
             const data = await req.json();
             this.pedidos = data[0].pedidos;
-            this.somas_gerais = data[0].somas;
+            this.somaValorTotal = data[0].somas;
             this.totalPedidos = this.pedidos.length;
-
             // busca as datas atuais, dia, mes e ano
             var dia_atual = new Date().getDate();
             var mes_atual = new Date().getMonth();
@@ -180,7 +180,6 @@ export default {
                 };
                 // transforma o array de dados do pedido em texto 
                 const dataJson = JSON.stringify(data);
-                console.log(dataJson);
 
                 // const req = await fetch("http://127.0.0.1:8000/api/filtros", {
                 const req = await fetch("https://pedidoparrilha.herokuapp.com/api/filtros", {
@@ -206,8 +205,10 @@ export default {
                     this.somaValorAnoAtual = 'Sem Resultado'
                 }
             } else if(this.selected === 'soma_total') {
-                this.somaValorTotal = this.somas_gerais;
+                this.somaValorTotal = this.somaValorTotal
                 this.text_valor = 'Valor Total';
+            } else {
+                this.text_valor = 'Sem Resultado';
             }
         },
         token() {
