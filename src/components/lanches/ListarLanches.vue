@@ -25,7 +25,7 @@
                 <tr v-for="lanche in dadosLanches" :key="lanche">
                     <th>{{lanche.id}}</th>
                     <td>{{lanche.nome}}</td>
-                    <td>{{lanche.preco}}</td>
+                    <td>R$ {{lanche.preco}}</td>
                     <td class="botao-acao-tabela">
                         <button class="btn btn-primary" @click="editarLanche(lanche.id)"><i class="fa-solid fa-user-pen"></i></button>
                         <button @click="deletarLanche(lanche.id)" class="btn btn-danger"><i class="fa-solid fa-user-xmark"></i></button>
@@ -61,8 +61,8 @@ export default {
         // carregar lista de usuarios
         async listarLanche() {
             // cria um array com os dados do pedido 
-            // const req = await fetch("http://127.0.0.1:8000/api/lanches");
-            const req = await fetch("https://pedidoparrilha.herokuapp.com/api/lanches");
+            const req = await fetch("http://127.0.0.1:8000/api/lanches");
+            // const req = await fetch("https://pedidoparrilha.herokuapp.com/api/lanches");
             const data = await req.json();
             this.dadosLanches = data;
         },

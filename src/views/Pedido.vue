@@ -28,6 +28,29 @@
           </div>
         </div>
         <div class="col-md-4">
+          <label for="cpf" class="form-label">CPF</label>
+          <input
+            type="text"
+            v-model="dadosPedido.cpf"
+            name="cpf"
+            id="cpf"
+            class="form-control"
+            placeholder="Ex: 00000000000"
+            minlength="14"
+            maxlength="14" 
+            v-maska="'###.###.###-##'"
+          />
+          <div
+            class="alert alert-warning fade show mt-2"
+            v-show="hasError"
+            v-if="!dadosPedido.cpf"
+            role="alert"
+            id="validacao-cpf"
+          >
+            preencha este campo!
+          </div>
+        </div>
+        <div class="col-md-4">
           <label for="telefone" class="form-label">Telefone</label>
           <input
             type="text"
@@ -47,8 +70,8 @@
             preencha este campo!
           </div>
         </div>
-        <div class="col-md-4">
-          <label for="telefone" class="form-label">CEP</label>
+        <div class="col-md-2">
+          <label for="cep" class="form-label">CEP</label>
           <input
             type="text"
             placeholder="Ex: 00000000"
@@ -727,7 +750,7 @@
         v-show="divFinPedido"
         id="link_wpp"
       >
-        <a :href="href" id="finalizar_pedido" @click="salvarPedidoDB" class="enviar_pedido mb-3"
+        <a :href="href" @click="salvarPedidoDB" class="enviar_pedido mb-3"
           >Enviar Pedido</a
         >
       </div>
@@ -775,6 +798,7 @@ export default {
       divHTMLpedido: false,
       dadosPedido: {
         nome: "",
+        cpf: "",
         telefone: "",
         rua: "",
         bairro: "",
@@ -963,6 +987,7 @@ export default {
         // cria um array com os dados do pedido 
         const data = {
             nome_cliente: this.dadosPedido.nome,
+            cpf: this.dadosPedido.cpf,
             rua: this.dadosPedido.rua,
             bairro: this.dadosPedido.bairro,
             apartamento: this.dadosPedido.apartamento,
@@ -978,15 +1003,12 @@ export default {
         // transforma o array de dados do pedido em texto 
         const dataJson = JSON.stringify(data);
 
-        const req = await fetch("http://127.0.0.1:8000/api/pedidos", {
-        // const req = await fetch("https://pedidoparrilha.herokuapp.com/api/pedidos", {
+        // const req = await fetch("http://127.0.0.1:8000/api/pedidos", {
+        const req = await fetch("https://pedidoparrilha.herokuapp.com/api/pedidos", {
             method: "POST",
-            headers: { "Content-Type": "application/json", "X-CSRF-Token": this.csrf },
+            headers: { "Content-Type": "application/json" },
             body: dataJson
         });
-
-        // traz a resposta dos dados criado
-        const res = await req.json();
     },
     // carregar lista de usuarios
     async listarLanche() {
