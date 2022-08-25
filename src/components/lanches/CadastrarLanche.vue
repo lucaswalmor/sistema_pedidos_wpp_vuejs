@@ -50,8 +50,8 @@ export default {
             if (this.nome === null || this.preco === null) {
                 alert("Porfavor preencha todos os campos");
             }else {
-                const req = await fetch("http://127.0.0.1:8000/api/lanches", {
-                // const req = await fetch("https://pedidoparrilha.herokuapp.com/api/lanches", {
+                // const req = await fetch("http://127.0.0.1:8000/api/lanches", {
+                const req = await fetch("https://pedidoparrilha.herokuapp.com/api/lanches", {
                     method: "POST",
                     // headers: { "Content-Type": "multipart/form-data" },
                     body: formData
