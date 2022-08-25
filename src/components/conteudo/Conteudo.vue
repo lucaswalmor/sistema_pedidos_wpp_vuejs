@@ -135,6 +135,7 @@ export default {
             if (option == 'dia') {
                 const data = {
                     filtro_valores: option,
+                    filtro_total_pedidos: null,
                     data: this.dia
                 };
 
@@ -147,8 +148,9 @@ export default {
                     headers: { "Content-Type": "application/json" },
                     body: dataJson
                 });
-                const dados_data = await req.json();
 
+                const dados_data = await req.json();
+                console.log(dados_data)
                 if (req.status === 200) {
                     this.somaValorDiaAtual = 'R$ ' + dados_data;
                     this.text_valor = 'Valor Total Dia';
