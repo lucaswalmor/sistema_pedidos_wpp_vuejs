@@ -51,9 +51,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div class="row col-md-12">
-                    <Graficos/>
-                </div> -->
             </div>
         </div>
     </div>
@@ -61,13 +58,11 @@
 
 <script>
 import Sidenav from "./Sidenav.vue";
-import Graficos from "../graficos/Graficos.vue";
 
 export default {
     name: "Dashboard",
     components: {
-        Sidenav,
-        Graficos
+        Sidenav
     },
     data() {
         return {
