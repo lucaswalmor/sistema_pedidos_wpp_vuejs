@@ -18,23 +18,23 @@
             </div>
             <div class="offcanvas-body">
                 <div class="row text-center text-light">
-                    <h2>Nome cliente</h2>
+                    <p>{{email_admin}}</p>
                 </div>
                 <ul class="mt-5 nav flex-column" id="menu">
                     <li class="nav-item">
-                        <a href="#" class="col-md-12 d-flex nav-link px-0" @click="dashboardView">
+                        <span class="col-md-12 d-flex nav-link px-0" @click="dashboardView">
                             <div class="col-md-2">
                                 <i class="fa-lg fa-solid fa-gauge"></i> 
                             </div>
                             <div class="col-md-6">
-                            <span>
-                                Dashboard
-                            </span>
+                                <span>
+                                    Dashboard
+                                </span>
                             </div>
-                        </a>
+                        </span>
                     </li>
                     <li>
-                        <a href="#submenu3" data-bs-toggle="collapse"  class="col-md-12 d-flex nav-link px-0">
+                        <span href="#submenu3" data-bs-toggle="collapse"  class="text-white col-md-12 d-flex nav-link px-0">
                             <div class="col-md-2">
                                 <i class="fa-lg fa-solid fa-user-plus"></i>
                             </div>
@@ -43,68 +43,84 @@
                                     Usuario
                                 </span>
                             </div>
-                        </a>
+                        </span>
                         <ul class="collapse nav flex-column ms-1" id="submenu3" data-bs-parent="#menu">
                             <li class="w-100 ms-4">
-                                <a href="#" class="nav-link px-0" @click="cadastrarNovoUsuario"> Cadastrar</a>
+                                <span class="nav-link px-0" @click="cadastrarNovoUsuario"> Cadastrar</span>
                             </li>
                             <li class="ms-4">
-                                <a href="#" class="nav-link px-0" @click="listarUsuarios"> Editar / Excluir</a>
+                                <span class="nav-link px-0" @click="listarUsuarios"> Editar / Excluir</span>
                             </li>
                         </ul>
                     </li>
                     <li>
-                        <a href="#submenu4" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-                        <i class="fa-lg fa-solid fa-burger"></i> Lanches </a>
+                        <span href="#submenu4" data-bs-toggle="collapse" class="col-md-12 d-flex nav-link px-0 align-middle">
+                            <div class="col-md-2">
+                                <i class="fa-lg fa-solid fa-burger"></i> 
+                            </div>
+                            <div class="col-md-6">
+                                <span>
+                                    Lanches
+                                </span>
+                            </div>
+                        </span>
                         <ul class="collapse nav flex-column ms-1" id="submenu4" data-bs-parent="#menu">
                             <li class="w-100 ms-4">
-                                <a href="#" class="nav-link px-0" @click="cadastrarNovoLanche">Cadastrar</a>
+                                <span class="nav-link px-0" @click="cadastrarNovoLanche">Cadastrar</span>
                             </li>
                             <li class=" ms-4">
-                                <a href="#" class="nav-link px-0" @click="listarLanches">Editar / Excluir</a>
+                                <span class="nav-link px-0" @click="listarLanches">Editar / Excluir</span>
                             </li>
                         </ul>
                     </li>
                     <li>
-                        <a href="#submenu2" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-                        <i class="fa-lg fa-solid fa-martini-glass"></i> Bebidas </a>
+                        <span href="#submenu2" data-bs-toggle="collapse" class="col-md-12 d-flex nav-link px-0 align-middle">
+                            <div class="col-md-2">
+                                <i class="fa-lg fa-solid fa-martini-glass"></i>
+                            </div>
+                            <div class="col-md-6">
+                                <span>
+                                    Bebidas
+                                </span>
+                            </div>
+                        </span>
                         <ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
                             <li class="w-100 ms-4">
-                                <a href="#" class="nav-link px-0" @click="cadastrarNovaBebida">Cadastrar</a>
+                                <span class="nav-link px-0" @click="cadastrarNovaBebida">Cadastrar</span>
                             </li>
                             <li class=" ms-4">
-                                <a href="#" class="nav-link px-0" @click="listarBebidas">Editar / Excluir</a>
+                                <span class="nav-link px-0" @click="listarBebidas">Editar / Excluir</span>
                             </li>
                         </ul>
                     </li>
-                    <li>
-                        <a href="#" class="col-md-12 d-flex nav-link px-0" @click="listarTaxas">
-                            <div class="col-md-2">
-                                <i class="fa-lg fa-solid fa-dollar-sign"></i>
-                            </div>
-                            <div class="col-md-10">
-                            <span>
-                                Taxa de Entrega 
-                            </span>
-                            </div>
-                        </a>
-                    </li>
                     <li class="nav-item">
-                        <a href="#" class="col-md-12 d-flex nav-link px-0" @click="pedidos_feitos">
+                        <span class="col-md-12 d-flex nav-link px-0" @click="pedidos_feitos">
                             <div class="col-md-2">
                                 <i class="fa-lg fa-solid fa-file-lines"></i>
                             </div>
                             <div class="col-md-6">
-                            <span>
-                                Pedidos
-                            </span>
+                                <span>
+                                    Pedidos
+                                </span>
                             </div>
-                        </a>
+                        </span>
+                    </li>
+                    <li class="nav-item">
+                        <span class="col-md-12 d-flex nav-link px-0" @click="listarTaxas">
+                            <div class="col-md-2">
+                                <i class="fa-lg fa-solid fa-dollar-sign"></i>
+                            </div>
+                            <div >
+                                <span>
+                                    Taxa Entrega 
+                                </span>
+                            </div>
+                        </span>
                     </li>
                 </ul>
                 <ul class="nav fixed-bottom">
                     <li class="nav-item">
-                        <a href="#" class="col-md-12 d-flex nav-link justify-content-around" @click="logout('/dashboard')">
+                        <span class="col-md-12 d-flex nav-link justify-content-around" @click="logout('/dashboard')">
                             <div class="col-md-2">
                                 <i class="fa-lg fa-solid fa-power-off"></i>
                             </div>
@@ -113,7 +129,7 @@
                                 Desconectar
                             </span>
                             </div>
-                        </a>
+                        </span>
                     </li>
                 </ul>
             </div>
@@ -124,6 +140,11 @@
 <script>
 export default {
     name: 'Sidenav',
+    data() {
+        return {
+            email_admin: ''
+        }
+    },
     methods: {
         dashboardView() {
             var token = this.$route.params.token;
@@ -189,17 +210,31 @@ export default {
                 document.getElementById('data-hora').innerHTML = dataHora;
             }, 1000);
         },
+
         logout() {
             this.$router.push("/admin")
         },
+
+        usuarioOnline() {
+            this.email_admin = window.localStorage.getItem('email');
+        }
     },
     mounted() {
         this.horas();
+        this.usuarioOnline();
     }
 }
 </script>
 
 <style scoped>
+span {
+    cursor: pointer;
+}
+
+span div i {
+    color: #f9a529;
+}
+
 .logo {
     width: 100px;
     margin-left: 50px;
@@ -211,12 +246,11 @@ export default {
     background-color: #333;
 }
 
-.offcanvas-body ul li a {
+.offcanvas-body ul li span {
     color: #fff;
-    text-decoration: none;
 }
 
-.offcanvas-body ul li a:hover {
+.offcanvas-body ul li span:hover {
     opacity: 0.6;
 }
 

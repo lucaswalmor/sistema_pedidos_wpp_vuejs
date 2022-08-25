@@ -1,5 +1,5 @@
 <template>
-  <Header />
+  <Sidenav />
   <div class="row mt-5">
     <div class="row col-12 text-center">
       <h4>
@@ -33,7 +33,7 @@
       </div>
         <div>
             <button class="btn btn-warning mt-5" style="font-weight: bold;" @click="voltar">
-                <span class="text-dark">Voltar ao dashboard</span>
+                <span class="text-dark">Voltar a tela de pedidos</span>
             </button>
         </div>
     </div>
@@ -43,6 +43,7 @@
 
 <script>
 import Header from '../conteudo/Header.vue';
+import Sidenav from '../conteudo/Sidenav.vue';
 export default {
     name: "VerPedido",
     data() {
@@ -74,7 +75,7 @@ export default {
     mounted() {
         this.pedido();
     },
-    components: { Header }
+    components: { Header, Sidenav }
 };
 </script>
 
