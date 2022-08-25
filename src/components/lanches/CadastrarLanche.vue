@@ -17,12 +17,11 @@
                 <label for="preco" class="form-label">Preco:</label>
                 <input type="text" class="form-control" name="preco" id="preco" placeholder="00.00" min="0" v-model="preco">
             </div>
-            <div class="col-md-6">
+            <!-- <div class="col-md-6">
                 <label for="foto" class="form-label">foto</label>
                 <input type="file" class="form-control" id="foto" name="foto" @change="upload($event)">
-            </div>  
+            </div>   -->
             <div class="col-md-12">
-                <!-- <input type="submit" class="form-control btn btn-secondary" > -->
                 <input type="submit" class="form-control btn btn-secondary" @click="createLanche">
             </div>
         </form>
