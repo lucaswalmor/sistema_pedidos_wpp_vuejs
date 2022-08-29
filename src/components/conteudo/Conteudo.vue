@@ -51,18 +51,26 @@
                         </div>
                     </div>
                 </div>
+                <div class="row mt-5">
+                    <div class="col h-50">
+                        <Grafico :dadosBackend="pedidos"/>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import Sidenav from "./Sidenav.vue";
 
-export default {
+import Sidenav from "./Sidenav.vue";
+import Grafico from "../graficos/Grafico.vue";
+
+export default {    
     name: "Dashboard",
     components: {
-        Sidenav
+        Sidenav,
+        Grafico
     },
     data() {
         return {
@@ -103,8 +111,8 @@ export default {
     methods: {
         async listarPedidos() {
             // cria um array com os dados do pedido 
-            // const req = await fetch("http://127.0.0.1:8000/api/pedidos");
-            const req = await fetch("https://pedidoparrilha.herokuapp.com/api/pedidos");
+            const req = await fetch("http://127.0.0.1:8000/api/pedidos");
+            // const req = await fetch("https://pedidoparrilha.herokuapp.com/api/pedidos");
             const data = await req.json();
             this.pedidos = data[0].pedidos;
             this.somaValorTotal = data[0].somas;
@@ -113,13 +121,11 @@ export default {
             var dia_atual = new Date().getDate();
             this.dia = dia_atual;
             
-            var mes_atual = new Date().getMonth();
-
+            var mes_atual = new Date().getMonth() + 1;
             if(mes_atual < 10){
-                var mes_atual = (mes_atual) + 1
                 this.mes = '0' + mes_atual;
             } else {
-                this.mes = (mes_atual) + 1;
+                this.mes = mes_atual;
             }
 
             var ano_atual = new Date().getFullYear();
@@ -145,7 +151,6 @@ export default {
                 });
 
                 const dados_data = await req.json();
-                console.log(dados_data)
                 if (req.status === 200) {
                     this.somaValorDiaAtual = 'R$ ' + dados_data;
                     this.text_valor = 'Valor Total Dia';
@@ -222,7 +227,6 @@ export default {
                 const dados_data = await req.json();
                 if (req.status === 200) {
                     this.somaPedidoDiaAtual = dados_data;
-                    this.text_valor = 'Valor Total Dia';
                     this.text_pedido = 'Total pedido dia';
                 } else {
                     this.somaPedidoDiaAtual = 'Sem resultado';
@@ -294,6 +298,8 @@ export default {
 </script>
 
 <style scoped>
+
+
 .botao-acao-tabela button {
     margin-left: 10px !important;
 }
@@ -407,15 +413,6 @@ export default {
     bottom:0;
 }
 
-.no-touch .scrollable.hover {
-    overflow-y:hidden;
-}
-
-.no-touch .scrollable.hover:hover {
-    overflow-y:auto;
-    overflow:visible;
-}
-
 a:hover,a:focus {
     text-decoration:none;
 }
@@ -434,11 +431,6 @@ nav ul,nav li {
     padding:0;
 }
 
-.main-menu li:hover>a,nav.main-menu li.active>a,.dropdown-menu>li>a:hover,.dropdown-menu>li>a:focus,.dropdown-menu>.active>a,.dropdown-menu>.active>a:hover,.dropdown-menu>.active>a:focus,.no-touch .dashboard-page nav.dashboard-menu ul li:hover a,.dashboard-page nav.dashboard-menu ul li.active a {
-    color:#fff;
-    background-color:#5fa2db;
-}
-
 .area {
     float: left;
     background: #e2e2e2;
@@ -448,7 +440,7 @@ nav ul,nav li {
 
 .cards {
     box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.46);
-    padding: 30px;
+    padding: 15px;
     background-color: #fff;
 }
 

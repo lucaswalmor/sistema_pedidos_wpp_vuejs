@@ -3,7 +3,7 @@
     <div class="col py-3 body-dashboard">
         <div class="div-table container">
             <div class="row">
-                <div class="titulo col-md-12 p-5 d-flex">
+                <div class="titulo col-md-12 p-5">
                     <div class="col-md-6">
                         <h1 class="text-secondary">Pedidos</h1>
                     </div>
@@ -50,7 +50,7 @@ $(document).ready(function(){
     });
   });
 });
-import Header from '../conteudo/Header.vue';
+
 import Sidenav from '../conteudo/Sidenav.vue';
 export default {
     name: "Pedidos",
@@ -100,7 +100,7 @@ export default {
     mounted() {
         this.listarPedidos();
     },
-    components: { Header, Sidenav }
+    components: { Sidenav }
 }
 </script>
 

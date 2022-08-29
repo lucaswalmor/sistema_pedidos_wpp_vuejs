@@ -1,10 +1,6 @@
 <template>
 
-  <div >
-    <!-- <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/admin">Admin</router-link>
-    </nav> -->
+  <div>
     <router-view/>
   </div>
 </template>
@@ -23,6 +19,6 @@ export default {
 }
 
 body {
-  overflow-y: scroll;
+  overflow-y: scroll !important;
 }
 </style>

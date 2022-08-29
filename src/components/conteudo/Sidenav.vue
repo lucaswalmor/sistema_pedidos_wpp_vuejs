@@ -13,12 +13,12 @@
     <div class="sidenav">
         <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
             <div class="offcanvas-header">
-                <img src="/img/logo_teste.png" alt="" class="logo">
+                <img src="/img/logo.jpg" alt="" class="logo">
                 <button type="button" class="btn-close text-reset text-light" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
                 <div class="row text-center text-light">
-                    <p>{{email_admin}}</p>
+                    <p><strong>{{email_admin}}</strong></p>
                 </div>
                 <ul class="mt-5 nav flex-column" id="menu">
                     <li class="nav-item">
@@ -27,7 +27,7 @@
                                 <i class="fa-lg fa-solid fa-gauge"></i> 
                             </div>
                             <div class="col-md-6">
-                                <span>
+                                <span class="offcanvas-span-titulo">
                                     Dashboard
                                 </span>
                             </div>
@@ -39,7 +39,7 @@
                                 <i class="fa-lg fa-solid fa-user-plus"></i>
                             </div>
                             <div class="col-md-6">
-                                <span>
+                                <span class="offcanvas-span-titulo">
                                     Usuario
                                 </span>
                             </div>
@@ -59,7 +59,7 @@
                                 <i class="fa-lg fa-solid fa-burger"></i> 
                             </div>
                             <div class="col-md-6">
-                                <span>
+                                <span class="offcanvas-span-titulo">
                                     Lanches
                                 </span>
                             </div>
@@ -79,7 +79,7 @@
                                 <i class="fa-lg fa-solid fa-martini-glass"></i>
                             </div>
                             <div class="col-md-6">
-                                <span>
+                                <span class="offcanvas-span-titulo">
                                     Bebidas
                                 </span>
                             </div>
@@ -99,8 +99,20 @@
                                 <i class="fa-lg fa-solid fa-file-lines"></i>
                             </div>
                             <div class="col-md-6">
-                                <span>
+                                <span class="offcanvas-span-titulo">
                                     Pedidos
+                                </span>
+                            </div>
+                        </span>
+                    </li>
+                    <li class="nav-item">
+                        <span class="col-md-12 d-flex nav-link px-0" @click="clientes">
+                            <div class="col-md-2">
+                                <i class="fa-lg fa-solid fa-users"></i>
+                            </div>
+                            <div class="col-md-6">
+                                <span class="offcanvas-span-titulo">
+                                    Clientes
                                 </span>
                             </div>
                         </span>
@@ -111,7 +123,7 @@
                                 <i class="fa-lg fa-solid fa-dollar-sign"></i>
                             </div>
                             <div >
-                                <span>
+                                <span class="offcanvas-span-titulo">
                                     Taxa Entrega 
                                 </span>
                             </div>
@@ -193,6 +205,12 @@ export default {
             this.$router.push({ path: `/listar-taxa/${token}`, params: {token: token}} );  
         },
 
+        clientes() {
+            var token = this.$route.params.token;
+            localStorage.removeItem('dados')
+            this.$router.push({ path: `/clientes/${token}`, params: {token: token}} );  
+        },
+
         // OUTROS
         horas() {
             const zeroFill = n => {
@@ -212,6 +230,7 @@ export default {
         },
 
         logout() {
+            localStorage.clear();
             this.$router.push("/admin")
         },
 
@@ -227,6 +246,7 @@ export default {
 </script>
 
 <style scoped>
+
 span {
     cursor: pointer;
 }
@@ -343,15 +363,6 @@ span div i {
     bottom:0;
 }
 
-.no-touch .scrollable.hover {
-    overflow-y:hidden;
-}
-
-.no-touch .scrollable.hover:hover {
-    overflow-y:auto;
-    overflow:visible;
-}
-
 a:hover,a:focus {
     text-decoration:none;
 }
@@ -417,6 +428,10 @@ nav ul,nav li {
 @media screen and (max-width: 425px) {
     .card-valor-total {
         margin: 35px;
+    }
+    
+    .offcanvas-span-titulo {
+        padding-left: 20px;
     }
 
     .cards {
